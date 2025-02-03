@@ -183,14 +183,7 @@ public class IngredientService {
         Ingredient ingredient = ingredientRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Ingredient not found by id=%s".formatted(id)));
 
-        for (CocktailIngredient ci : ingredient.getCocktails()) {
-            ci.setIngredient(null);
-            if (ci.getCocktail() != null) {
-                ci.getCocktail().getIngredients().remove(ci);
-            }
-            ci.setCocktail(null);
-        }
-        ingredient.getCocktails().clear();
+        removeAllIngredientRelations(ingredient);
 
         ingredientRepository.delete(ingredient);
     }
@@ -199,14 +192,7 @@ public class IngredientService {
         Ingredient ingredient = ingredientRepository.findByName(name)
                 .orElseThrow(() -> new IllegalArgumentException("Ingredient not found by name=%s".formatted(name)));
 
-        for (CocktailIngredient ci : ingredient.getCocktails()) {
-            ci.setIngredient(null);
-            if (ci.getCocktail() != null) {
-                ci.getCocktail().getIngredients().remove(ci);
-            }
-            ci.setCocktail(null);
-        }
-        ingredient.getCocktails().clear();
+        removeAllIngredientRelations(ingredient);
 
         ingredientRepository.delete(ingredient);
     }
@@ -249,14 +235,7 @@ public class IngredientService {
         }
 
         if (dto.getCocktails() != null) {
-            for (CocktailIngredient ci : ingredient.getCocktails()) {
-                ci.setIngredient(null);
-                if (ci.getCocktail() != null) {
-                    ci.getCocktail().getIngredients().remove(ci);
-                }
-                ci.setCocktail(null);
-            }
-            ingredient.getCocktails().clear();
+            removeAllIngredientRelations(ingredient);
 
             List<CocktailIngredient> newCocktails = dto.getCocktails().entrySet().stream()
                     .map(entry -> {
@@ -292,5 +271,16 @@ public class IngredientService {
                                 ci -> ci.getAmount()
                         ))
         );
+    }
+
+    private void removeAllIngredientRelations(Ingredient ingredient) {
+        for (CocktailIngredient ci : ingredient.getCocktails()) {
+            ci.setIngredient(null);
+            if (ci.getCocktail() != null) {
+                ci.getCocktail().getIngredients().remove(ci);
+            }
+            ci.setCocktail(null);
+        }
+        ingredient.getCocktails().clear();
     }
 }
