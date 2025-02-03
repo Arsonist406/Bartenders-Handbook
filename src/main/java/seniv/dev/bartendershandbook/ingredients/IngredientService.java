@@ -90,6 +90,7 @@ public class IngredientService {
         }
 
         Ingredient ingredient = new Ingredient();
+
         ingredient.setName(name);
         ingredient.setAbv(abv);
         ingredient.setCategory(category);
@@ -200,7 +201,7 @@ public class IngredientService {
                     return ci;
                 }).toList();
 
-        ingredient.setCocktails(newCocktails);
+        ingredient.getCocktails().addAll(newCocktails);
     }
 
     private void removeAllIngredientRelations(Ingredient ingredient) {
