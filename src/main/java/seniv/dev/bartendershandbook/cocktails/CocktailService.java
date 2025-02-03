@@ -11,8 +11,6 @@ import seniv.dev.bartendershandbook.ingredients.IngredientRepository;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,38 +33,14 @@ public class CocktailService {
 
     public List<CocktailResponseDTO> getAllCocktails() {
         return cocktailRepository.findAll().stream().map(
-                cocktail -> new CocktailResponseDTO(
-                        cocktail.getId(),
-                        cocktail.getName(),
-                        cocktail.getVolumeInML(),
-                        cocktail.getAbv(),
-                        cocktail.getGlass().getName(),
-                        cocktail.getDescription(),
-                        cocktail.getRecipe(),
-                        cocktail.getIngredients().stream()
-                                .collect(Collectors.toMap(
-                                        ci -> ci.getIngredient().getName(),
-                                        ci -> ci.getAmount()
-                                ))
-                )).toList();
+                this::createCocktailResponseDTO
+        ).toList();
     }
 
     public List<CocktailResponseDTO> getAllCocktailsThatContainsInfix(String infix) {
         return cocktailRepository.findByNameContaining(infix).stream().map(
-                cocktail -> new CocktailResponseDTO(
-                        cocktail.getId(),
-                        cocktail.getName(),
-                        cocktail.getVolumeInML(),
-                        cocktail.getAbv(),
-                        cocktail.getGlass().getName(),
-                        cocktail.getDescription(),
-                        cocktail.getRecipe(),
-                        cocktail.getIngredients().stream()
-                                .collect(Collectors.toMap(
-                                        ci -> ci.getIngredient().getName(),
-                                        ci -> ci.getAmount()
-                                ))
-                )).toList();
+                this::createCocktailResponseDTO
+        ).toList();
     }
 
     public List<CocktailResponseDTO> getAllCocktailsWithAbvBetween(BigDecimal min, BigDecimal max) {
@@ -78,60 +52,22 @@ public class CocktailService {
         }
 
         return cocktailRepository.findByAbvBetween(min, max).stream().map(
-                cocktail -> new CocktailResponseDTO(
-                        cocktail.getId(),
-                        cocktail.getName(),
-                        cocktail.getVolumeInML(),
-                        cocktail.getAbv(),
-                        cocktail.getGlass().getName(),
-                        cocktail.getDescription(),
-                        cocktail.getRecipe(),
-                        cocktail.getIngredients().stream()
-                                .collect(Collectors.toMap(
-                                        ci -> ci.getIngredient().getName(),
-                                        ci -> ci.getAmount()
-                                ))
-                )).toList();
+                this::createCocktailResponseDTO
+        ).toList();
     }
 
     public CocktailResponseDTO getCocktailById(Long id) {
         Cocktail cocktail = cocktailRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Cocktail not found by id=%s".formatted(id)));
 
-        return new CocktailResponseDTO(
-                cocktail.getId(),
-                cocktail.getName(),
-                cocktail.getVolumeInML(),
-                cocktail.getAbv(),
-                cocktail.getGlass().getName(),
-                cocktail.getDescription(),
-                cocktail.getRecipe(),
-                cocktail.getIngredients().stream()
-                        .collect(Collectors.toMap(
-                                ci -> ci.getIngredient().getName(),
-                                ci -> ci.getAmount()
-                        ))
-        );
+        return createCocktailResponseDTO(cocktail);
     }
 
     public CocktailResponseDTO getCocktailByName(String name) {
         Cocktail cocktail = cocktailRepository.findByName(name)
                 .orElseThrow(() -> new IllegalArgumentException("Cocktail not found by name=%s".formatted(name)));
 
-        return new CocktailResponseDTO(
-                cocktail.getId(),
-                cocktail.getName(),
-                cocktail.getVolumeInML(),
-                cocktail.getAbv(),
-                cocktail.getGlass().getName(),
-                cocktail.getDescription(),
-                cocktail.getRecipe(),
-                cocktail.getIngredients().stream()
-                        .collect(Collectors.toMap(
-                                ci -> ci.getIngredient().getName(),
-                                ci -> ci.getAmount()
-                        ))
-        );
+        return createCocktailResponseDTO(cocktail);
     }
 
     public CocktailResponseDTO createCocktail(CocktailRequestDTO dto) {
@@ -209,20 +145,7 @@ public class CocktailService {
 
         Cocktail savedCocktail = cocktailRepository.save(cocktail);
 
-        return new CocktailResponseDTO(
-                savedCocktail.getId(),
-                savedCocktail.getName(),
-                savedCocktail.getVolumeInML(),
-                savedCocktail.getAbv(),
-                savedCocktail.getGlass().getName(),
-                savedCocktail.getDescription(),
-                savedCocktail.getRecipe(),
-                savedCocktail.getIngredients().stream()
-                        .collect(Collectors.toMap(
-                                ci -> ci.getIngredient().getName(),
-                                ci -> ci.getAmount()
-                        ))
-        );
+        return createCocktailResponseDTO(savedCocktail);
     }
 
     public void deleteCocktailById(Long id) {
@@ -322,15 +245,19 @@ public class CocktailService {
 
         Cocktail savedCocktail = cocktailRepository.save(cocktail);
 
+        return createCocktailResponseDTO(savedCocktail);
+    }
+
+    private CocktailResponseDTO createCocktailResponseDTO(Cocktail cocktail) {
         return new CocktailResponseDTO(
-                savedCocktail.getId(),
-                savedCocktail.getName(),
-                savedCocktail.getVolumeInML(),
-                savedCocktail.getAbv(),
-                savedCocktail.getGlass().getName(),
-                savedCocktail.getDescription(),
-                savedCocktail.getRecipe(),
-                savedCocktail.getIngredients().stream()
+                cocktail.getId(),
+                cocktail.getName(),
+                cocktail.getVolumeInML(),
+                cocktail.getAbv(),
+                cocktail.getGlass().getName(),
+                cocktail.getDescription(),
+                cocktail.getRecipe(),
+                cocktail.getIngredients().stream()
                         .collect(Collectors.toMap(
                                 ci -> ci.getIngredient().getName(),
                                 ci -> ci.getAmount()
