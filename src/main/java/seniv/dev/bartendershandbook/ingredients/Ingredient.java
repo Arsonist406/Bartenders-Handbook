@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.PositiveOrZero;
 import seniv.dev.bartendershandbook.cocktails_ingredients.CocktailIngredient;
 
 import java.math.BigDecimal;

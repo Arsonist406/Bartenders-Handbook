@@ -2,8 +2,6 @@ package seniv.dev.bartendershandbook.glasses;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import seniv.dev.bartendershandbook.cocktails.CocktailRequestDTO;
-import seniv.dev.bartendershandbook.cocktails.CocktailResponseDTO;
 
 import java.util.List;
 

@@ -3,7 +3,9 @@ package seniv.dev.bartendershandbook.cocktails;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Positive;
 import seniv.dev.bartendershandbook.cocktails_ingredients.CocktailIngredient;
 import seniv.dev.bartendershandbook.glasses.Glass;
 
