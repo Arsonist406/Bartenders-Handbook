@@ -28,86 +28,34 @@ public class IngredientService {
 
     public List<IngredientResponseDTO> getAllIngredients() {
         return ingredientRepository.findAll().stream().map(
-                ingredient -> new IngredientResponseDTO(
-                        ingredient.getId(),
-                        ingredient.getName(),
-                        ingredient.getAbv(),
-                        ingredient.getCategory(),
-                        ingredient.getDescription(),
-                        ingredient.getCocktails().stream()
-                                .collect(Collectors.toMap(
-                                        ci -> ci.getCocktail().getName(),
-                                        ci -> ci.getAmount()
-                                ))
-                )).toList();
+                this::createIngredientResponseDTO
+        ).toList();
     }
 
     public List<IngredientResponseDTO> getAllIngredientsThatContainsInfix(String infix) {
         return ingredientRepository.findByNameContaining(infix).stream().map(
-                ingredient -> new IngredientResponseDTO(
-                        ingredient.getId(),
-                        ingredient.getName(),
-                        ingredient.getAbv(),
-                        ingredient.getCategory(),
-                        ingredient.getDescription(),
-                        ingredient.getCocktails().stream()
-                                .collect(Collectors.toMap(
-                                        ci -> ci.getCocktail().getName(),
-                                        ci -> ci.getAmount()
-                                ))
-                )).toList();
+                this::createIngredientResponseDTO
+        ).toList();
     }
 
     public List<IngredientResponseDTO> getAllIngredientsByCategory(Category category) {
         return ingredientRepository.findByCategory(category).stream().map(
-                ingredient -> new IngredientResponseDTO(
-                        ingredient.getId(),
-                        ingredient.getName(),
-                        ingredient.getAbv(),
-                        ingredient.getCategory(),
-                        ingredient.getDescription(),
-                        ingredient.getCocktails().stream()
-                                .collect(Collectors.toMap(
-                                        ci -> ci.getCocktail().getName(),
-                                        ci -> ci.getAmount()
-                                ))
-                )).toList();
+                this::createIngredientResponseDTO
+        ).toList();
     }
 
     public IngredientResponseDTO getIngredientById(Long id) {
         Ingredient ingredient = ingredientRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Ingredient not found by id=%s".formatted(id)));
 
-        return new IngredientResponseDTO(
-                        ingredient.getId(),
-                        ingredient.getName(),
-                        ingredient.getAbv(),
-                        ingredient.getCategory(),
-                        ingredient.getDescription(),
-                        ingredient.getCocktails().stream()
-                                .collect(Collectors.toMap(
-                                        ci -> ci.getCocktail().getName(),
-                                        ci -> ci.getAmount()
-                                ))
-        );
+        return createIngredientResponseDTO(ingredient);
     }
 
     public IngredientResponseDTO getIngredientByName(String name) {
         Ingredient ingredient = ingredientRepository.findByName(name)
                 .orElseThrow(() -> new IllegalArgumentException("Ingredient not found by name=%s".formatted(name)));
 
-        return new IngredientResponseDTO(
-                ingredient.getId(),
-                ingredient.getName(),
-                ingredient.getAbv(),
-                ingredient.getCategory(),
-                ingredient.getDescription(),
-                ingredient.getCocktails().stream()
-                        .collect(Collectors.toMap(
-                                ci -> ci.getCocktail().getName(),
-                                ci -> ci.getAmount()
-                        ))
-        );
+        return createIngredientResponseDTO(ingredient);
     }
 
     public IngredientResponseDTO createIngredient(IngredientRequestDTO dto) {
@@ -165,18 +113,7 @@ public class IngredientService {
 
         Ingredient savedIngredient = ingredientRepository.save(ingredient);
 
-        return new IngredientResponseDTO(
-                savedIngredient.getId(),
-                savedIngredient.getName(),
-                savedIngredient.getAbv(),
-                savedIngredient.getCategory(),
-                savedIngredient.getDescription(),
-                savedIngredient.getCocktails().stream()
-                        .collect(Collectors.toMap(
-                                ci -> ci.getIngredient().getName(),
-                                ci -> ci.getAmount()
-                        ))
-        );
+        return createIngredientResponseDTO(savedIngredient);
     }
 
     public void deleteIngredientById(Long id) {
@@ -259,13 +196,17 @@ public class IngredientService {
 
         Ingredient savedIngredient = ingredientRepository.save(ingredient);
 
+        return createIngredientResponseDTO(savedIngredient);
+    }
+
+    private IngredientResponseDTO createIngredientResponseDTO(Ingredient ingredient) {
         return new IngredientResponseDTO(
-                savedIngredient.getId(),
-                savedIngredient.getName(),
-                savedIngredient.getAbv(),
-                savedIngredient.getCategory(),
-                savedIngredient.getDescription(),
-                savedIngredient.getCocktails().stream()
+                ingredient.getId(),
+                ingredient.getName(),
+                ingredient.getAbv(),
+                ingredient.getCategory(),
+                ingredient.getDescription(),
+                ingredient.getCocktails().stream()
                         .collect(Collectors.toMap(
                                 ci -> ci.getIngredient().getName(),
                                 ci -> ci.getAmount()
