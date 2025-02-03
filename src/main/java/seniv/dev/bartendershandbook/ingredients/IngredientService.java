@@ -95,21 +95,7 @@ public class IngredientService {
         ingredient.setCategory(category);
         ingredient.setDescription(description);
 
-        List<CocktailIngredient> cocktails = dto.getCocktails().entrySet().stream()
-                .map(entry -> {
-                    Cocktail cocktail = cocktailRepository.findByName(entry.getKey())
-                            .orElseThrow(() -> new IllegalArgumentException("Cocktail not found by name=%s".formatted(entry.getKey())));
-
-                    CocktailIngredient ci = new CocktailIngredient();
-                    ci.setCocktail(cocktail);
-                    ci.setIngredient(ingredient);
-                    ci.setAmount(entry.getValue());
-
-                    return ci;
-                })
-                .toList();
-
-        ingredient.setCocktails(cocktails);
+        setIngredientRelations(ingredient, dto);
 
         Ingredient savedIngredient = ingredientRepository.save(ingredient);
 
@@ -174,24 +160,7 @@ public class IngredientService {
         if (dto.getCocktails() != null) {
             removeAllIngredientRelations(ingredient);
 
-            List<CocktailIngredient> newCocktails = dto.getCocktails().entrySet().stream()
-                    .map(entry -> {
-                        String ingredientName = entry.getKey();
-                        String amount = entry.getValue();
-
-                        Cocktail cocktail = cocktailRepository.findByName(ingredientName)
-                                .orElseThrow(() -> new IllegalArgumentException("Ingredient not by name=%s".formatted(ingredientName)));
-
-                        CocktailIngredient ci = new CocktailIngredient();
-                        ci.setIngredient(ingredient);
-                        ci.setCocktail(cocktail);
-                        ci.setAmount(amount);
-
-                        return ci;
-                    })
-                    .toList();
-
-            ingredient.setCocktails(newCocktails);
+            setIngredientRelations(ingredient, dto);
         }
 
         Ingredient savedIngredient = ingredientRepository.save(ingredient);
@@ -212,6 +181,26 @@ public class IngredientService {
                                 ci -> ci.getAmount()
                         ))
         );
+    }
+
+    private void setIngredientRelations(Ingredient ingredient, IngredientRequestDTO dto) {
+        List<CocktailIngredient> newCocktails = dto.getCocktails().entrySet().stream()
+                .map(entry -> {
+                    String cocktailName = entry.getKey();
+                    String amount = entry.getValue();
+
+                    Cocktail cocktail = cocktailRepository.findByName(cocktailName)
+                            .orElseThrow(() -> new IllegalArgumentException("Cocktail not by name=%s".formatted(cocktailName)));
+
+                    CocktailIngredient ci = new CocktailIngredient();
+                    ci.setIngredient(ingredient);
+                    ci.setCocktail(cocktail);
+                    ci.setAmount(amount);
+
+                    return ci;
+                }).toList();
+
+        ingredient.setCocktails(newCocktails);
     }
 
     private void removeAllIngredientRelations(Ingredient ingredient) {
