@@ -27,7 +27,7 @@ public class Cocktail {
 
     @Column(nullable = false)
     @Positive
-    private Integer volumeInML; // ml
+    private Integer volume; // ml
 
     @Column(precision = 5, scale = 2, nullable = false)
     @DecimalMin("0.00")
@@ -49,10 +49,10 @@ public class Cocktail {
 
     public Cocktail() {}
 
-    public Cocktail(Long id, String name, Integer volumeInML, Double abv, Glass glass, String description, String recipe, List<CocktailIngredient> ingredients) {
+    public Cocktail(Long id, String name, Integer volume, Double abv, Glass glass, String description, String recipe, List<CocktailIngredient> ingredients) {
         this.id = id;
         this.name = name;
-        this.volumeInML = volumeInML;
+        this.volume = volume;
         this.abv = BigDecimal.valueOf(abv);
         this.glass = glass;
         this.description = description;
@@ -68,8 +68,8 @@ public class Cocktail {
         return name;
     }
 
-    public Integer getVolumeInML() {
-        return volumeInML;
+    public Integer getVolume() {
+        return volume;
     }
 
     public Double getAbv() {
@@ -96,8 +96,8 @@ public class Cocktail {
         this.name = name;
     }
 
-    public void setVolumeInML(Integer volume) {
-        this.volumeInML = volume;
+    public void setVolume(Integer volume) {
+        this.volume = volume;
     }
 
     public void setAbv(Double abv) {

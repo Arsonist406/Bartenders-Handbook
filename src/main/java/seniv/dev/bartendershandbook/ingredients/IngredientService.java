@@ -3,13 +3,9 @@ package seniv.dev.bartendershandbook.ingredients;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import seniv.dev.bartendershandbook.cocktails.Cocktail;
 import seniv.dev.bartendershandbook.cocktails.CocktailRepository;
-import seniv.dev.bartendershandbook.cocktails.CocktailResponseDTO;
 import seniv.dev.bartendershandbook.cocktails_ingredients.CocktailIngredient;
-import seniv.dev.bartendershandbook.glasses.Glass;
 
 import java.util.List;
 import java.util.stream.Collectors;

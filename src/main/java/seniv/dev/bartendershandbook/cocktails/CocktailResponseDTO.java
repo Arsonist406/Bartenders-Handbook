@@ -6,7 +6,7 @@ public class CocktailResponseDTO {
 
     private Long id;
     private String name;
-    private Integer volumeInML; // ml
+    private Integer volume; // ml
     private Double abv;
     private String glass;
     private String description;
@@ -15,10 +15,10 @@ public class CocktailResponseDTO {
 
     public CocktailResponseDTO() {}
 
-    public CocktailResponseDTO(Long id, String name, Integer volumeInML, Double abv, String glass, String description, String recipe, Map<String, String> ingredients) {
+    public CocktailResponseDTO(Long id, String name, Integer volume, Double abv, String glass, String description, String recipe, Map<String, String> ingredients) {
         this.id = id;
         this.name = name;
-        this.volumeInML = volumeInML;
+        this.volume = volume;
         this.abv = abv;
         this.glass = glass;
         this.description = description;
@@ -34,8 +34,8 @@ public class CocktailResponseDTO {
         return name;
     }
 
-    public Integer getVolumeInML() {
-        return volumeInML;
+    public Integer getVolume() {
+        return volume;
     }
 
     public Double getAbv() {

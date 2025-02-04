@@ -83,7 +83,7 @@ public class CocktailService {
             throw new IllegalArgumentException("Name length must be smaller than 50 symbols");
         }
 
-        Integer volume = dto.getVolumeInML();
+        Integer volume = dto.getVolume();
         if (volume == null) {
             throw new IllegalArgumentException("Volume can't be null");
         }
@@ -122,7 +122,7 @@ public class CocktailService {
         Cocktail cocktail = new Cocktail();
 
         cocktail.setName(name);
-        cocktail.setVolumeInML(volume);
+        cocktail.setVolume(volume);
         cocktail.setAbv(abv);
         cocktail.setGlass(glass);
         cocktail.setDescription(description);
@@ -169,12 +169,12 @@ public class CocktailService {
             cocktail.setName(name);
         }
 
-        Integer volume = dto.getVolumeInML();
-        if (volume != null && !volume.equals(cocktail.getVolumeInML())) {
+        Integer volume = dto.getVolume();
+        if (volume != null && !volume.equals(cocktail.getVolume())) {
             if (volume <= 0) {
                 throw new IllegalArgumentException("Volume must be bigger than 0 ml");
             }
-            cocktail.setVolumeInML(volume);
+            cocktail.setVolume(volume);
         }
 
         Double abv = dto.getAbv();
@@ -222,7 +222,7 @@ public class CocktailService {
         return new CocktailResponseDTO(
                 cocktail.getId(),
                 cocktail.getName(),
-                cocktail.getVolumeInML(),
+                cocktail.getVolume(),
                 cocktail.getAbv(),
                 cocktail.getGlass().getName(),
                 cocktail.getDescription(),
