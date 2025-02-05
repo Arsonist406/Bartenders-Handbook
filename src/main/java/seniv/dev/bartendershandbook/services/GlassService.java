@@ -1,10 +1,12 @@
-package seniv.dev.bartendershandbook.glasses;
+package seniv.dev.bartendershandbook.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import seniv.dev.bartendershandbook.cocktails.Cocktail;
-import seniv.dev.bartendershandbook.cocktails.CocktailRepository;
+import seniv.dev.bartendershandbook.entities.cocktails.Cocktail;
+import seniv.dev.bartendershandbook.entities.cocktails.CocktailRepository;
+import seniv.dev.bartendershandbook.entities.glasses.Glass;
+import seniv.dev.bartendershandbook.entities.glasses.GlassRepository;
 
 import java.util.List;
 

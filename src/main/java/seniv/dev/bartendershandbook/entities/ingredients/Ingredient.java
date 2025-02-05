@@ -1,4 +1,4 @@
-package seniv.dev.bartendershandbook.ingredients;
+package seniv.dev.bartendershandbook.entities.ingredients;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
-import seniv.dev.bartendershandbook.cocktails_ingredients.CocktailIngredient;
+import seniv.dev.bartendershandbook.entities.cocktails_ingredients.CocktailIngredient;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ public class Ingredient {
     @Column(nullable = false, length = 50, unique = true)
     private String name;
 
-    @Column(precision = 5, scale = 2, nullable = false)
+    @Column(nullable = false, precision = 5, scale = 2)
     @DecimalMin("0.00")
     @DecimalMax("99.99")
     private BigDecimal abv;

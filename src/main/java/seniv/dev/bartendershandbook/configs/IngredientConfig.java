@@ -1,9 +1,12 @@
-package seniv.dev.bartendershandbook.ingredients;
+package seniv.dev.bartendershandbook.configs;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import seniv.dev.bartendershandbook.entities.ingredients.Category;
+import seniv.dev.bartendershandbook.entities.ingredients.Ingredient;
+import seniv.dev.bartendershandbook.entities.ingredients.IngredientRepository;
 
 import java.util.ArrayList;
 import java.util.List;

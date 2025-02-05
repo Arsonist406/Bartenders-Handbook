@@ -1,7 +1,10 @@
-package seniv.dev.bartendershandbook.cocktails;
+package seniv.dev.bartendershandbook.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import seniv.dev.bartendershandbook.entities.cocktails.CocktailRequestDTO;
+import seniv.dev.bartendershandbook.entities.cocktails.CocktailResponseDTO;
+import seniv.dev.bartendershandbook.services.CocktailService;
 
 import java.math.BigDecimal;
 import java.util.List;

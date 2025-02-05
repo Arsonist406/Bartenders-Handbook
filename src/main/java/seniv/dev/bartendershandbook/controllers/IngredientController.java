@@ -1,7 +1,14 @@
-package seniv.dev.bartendershandbook.ingredients;
+package seniv.dev.bartendershandbook.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import seniv.dev.bartendershandbook.entities.ingredients.Category;
+import seniv.dev.bartendershandbook.entities.ingredients.IngredientRequestDTO;
+import seniv.dev.bartendershandbook.entities.ingredients.IngredientResponseDTO;
+import seniv.dev.bartendershandbook.services.IngredientService;
+import seniv.dev.bartendershandbook.validation.Create;
+import seniv.dev.bartendershandbook.validation.Update;
 
 import java.util.List;
 

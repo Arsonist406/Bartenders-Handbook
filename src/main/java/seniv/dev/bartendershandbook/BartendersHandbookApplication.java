@@ -6,10 +6,11 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {
-        "seniv.dev.bartendershandbook.cocktails",
-        "seniv.dev.bartendershandbook.ingredients",
-        "seniv.dev.bartendershandbook.glasses",
-        "seniv.dev.bartendershandbook.cocktails_ingredients"
+        "seniv.dev.bartendershandbook.configs",
+        "seniv.dev.bartendershandbook.controllers",
+        "seniv.dev.bartendershandbook.entities",
+        "seniv.dev.bartendershandbook.services",
+        "seniv.dev.bartendershandbook.validation"
 })
 public class BartendersHandbookApplication {
 

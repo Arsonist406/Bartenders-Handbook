@@ -1,9 +1,11 @@
-package seniv.dev.bartendershandbook.glasses;
+package seniv.dev.bartendershandbook.configs;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import seniv.dev.bartendershandbook.entities.glasses.Glass;
+import seniv.dev.bartendershandbook.entities.glasses.GlassRepository;
 
 import java.util.List;
 

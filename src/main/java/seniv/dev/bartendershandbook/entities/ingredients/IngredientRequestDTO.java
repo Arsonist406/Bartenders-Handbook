@@ -1,32 +1,30 @@
-package seniv.dev.bartendershandbook.ingredients;
+package seniv.dev.bartendershandbook.entities.ingredients;
 
-import seniv.dev.bartendershandbook.cocktails_ingredients.CocktailIngredientDTO;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
+import seniv.dev.bartendershandbook.entities.cocktails_ingredients.CocktailIngredientDTO;
+import seniv.dev.bartendershandbook.validation.Create;
+import seniv.dev.bartendershandbook.validation.Update;
 
 import java.util.List;
 
-public class IngredientResponseDTO {
+public class IngredientRequestDTO {
 
-    private Long id;
     private String name;
     private Double abv;
     private Category category;
     private String description;
     private List<CocktailIngredientDTO> cocktails;
 
-    public IngredientResponseDTO() {
+    public IngredientRequestDTO() {
     }
 
-    public IngredientResponseDTO(Long id, String name, Double abv, Category category, String description, List<CocktailIngredientDTO> cocktails) {
-        this.id = id;
+    public IngredientRequestDTO(String name, Double abv, Category category, String description, List<CocktailIngredientDTO> cocktails) {
         this.name = name;
         this.abv = abv;
         this.category = category;
         this.description = description;
         this.cocktails = cocktails;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public String getName() {

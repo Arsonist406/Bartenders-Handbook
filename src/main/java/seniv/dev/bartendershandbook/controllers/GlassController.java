@@ -1,7 +1,9 @@
-package seniv.dev.bartendershandbook.glasses;
+package seniv.dev.bartendershandbook.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import seniv.dev.bartendershandbook.entities.glasses.Glass;
+import seniv.dev.bartendershandbook.services.GlassService;
 
 import java.util.List;
 

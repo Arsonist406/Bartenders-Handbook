@@ -1,10 +1,10 @@
-package seniv.dev.bartendershandbook.cocktails_ingredients;
+package seniv.dev.bartendershandbook.entities.cocktails_ingredients;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
-import seniv.dev.bartendershandbook.cocktails.Cocktail;
-import seniv.dev.bartendershandbook.ingredients.Ingredient;
+import seniv.dev.bartendershandbook.entities.cocktails.Cocktail;
+import seniv.dev.bartendershandbook.entities.ingredients.Ingredient;
 
 @Entity
 @Table(name = "cocktails_ingredients")
@@ -22,6 +22,7 @@ public class CocktailIngredient {
     @JoinColumn(name = "ingredient_id", nullable = false)
     private Ingredient ingredient;
 
+    @Column(nullable = false, length = 20)
     private String amount;
 
     public CocktailIngredient() {}

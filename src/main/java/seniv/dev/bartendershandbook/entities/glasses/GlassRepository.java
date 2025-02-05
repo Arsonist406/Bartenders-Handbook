@@ -1,4 +1,4 @@
-package seniv.dev.bartendershandbook.glasses;
+package seniv.dev.bartendershandbook.entities.glasses;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

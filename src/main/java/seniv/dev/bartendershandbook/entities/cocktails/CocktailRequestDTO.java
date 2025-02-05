@@ -1,24 +1,22 @@
-package seniv.dev.bartendershandbook.cocktails;
+package seniv.dev.bartendershandbook.entities.cocktails;
 
-import seniv.dev.bartendershandbook.cocktails_ingredients.CocktailIngredientDTO;
+import seniv.dev.bartendershandbook.entities.cocktails_ingredients.CocktailIngredientDTO;
 
 import java.util.List;
 
-public class CocktailResponseDTO {
+public class CocktailRequestDTO {
 
-    private Long id;
     private String name;
     private Integer volume; // ml
     private Double abv;
     private String glass;
     private String description;
     private String recipe;
-    private List<CocktailIngredientDTO> ingredients;
+    private List<CocktailIngredientDTO> ingredients; // key - name; value - amount
 
-    public CocktailResponseDTO() {}
+    public CocktailRequestDTO() {}
 
-    public CocktailResponseDTO(Long id, String name, Integer volume, Double abv, String glass, String description, String recipe, List<CocktailIngredientDTO> ingredients) {
-        this.id = id;
+    public CocktailRequestDTO(String name, Integer volume, Double abv, String glass, String description, String recipe, List<CocktailIngredientDTO> ingredients) {
         this.name = name;
         this.volume = volume;
         this.abv = abv;
@@ -26,10 +24,6 @@ public class CocktailResponseDTO {
         this.description = description;
         this.recipe = recipe;
         this.ingredients = ingredients;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public String getName() {

@@ -1,13 +1,15 @@
-package seniv.dev.bartendershandbook.cocktails_ingredients;
+package seniv.dev.bartendershandbook.configs;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
-import seniv.dev.bartendershandbook.cocktails.Cocktail;
-import seniv.dev.bartendershandbook.cocktails.CocktailRepository;
-import seniv.dev.bartendershandbook.ingredients.Ingredient;
-import seniv.dev.bartendershandbook.ingredients.IngredientRepository;
+import seniv.dev.bartendershandbook.entities.cocktails.Cocktail;
+import seniv.dev.bartendershandbook.entities.cocktails.CocktailRepository;
+import seniv.dev.bartendershandbook.entities.cocktails_ingredients.CocktailIngredient;
+import seniv.dev.bartendershandbook.entities.cocktails_ingredients.CocktailIngredientRepository;
+import seniv.dev.bartendershandbook.entities.ingredients.Ingredient;
+import seniv.dev.bartendershandbook.entities.ingredients.IngredientRepository;
 
 import java.util.List;
 

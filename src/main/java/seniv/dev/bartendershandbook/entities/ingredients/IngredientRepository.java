@@ -1,4 +1,4 @@
-package seniv.dev.bartendershandbook.ingredients;
+package seniv.dev.bartendershandbook.entities.ingredients;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

@@ -1,14 +1,18 @@
-package seniv.dev.bartendershandbook.cocktails;
+package seniv.dev.bartendershandbook.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import seniv.dev.bartendershandbook.cocktails_ingredients.CocktailIngredient;
-import seniv.dev.bartendershandbook.cocktails_ingredients.CocktailIngredientDTO;
-import seniv.dev.bartendershandbook.glasses.Glass;
-import seniv.dev.bartendershandbook.glasses.GlassRepository;
-import seniv.dev.bartendershandbook.ingredients.Ingredient;
-import seniv.dev.bartendershandbook.ingredients.IngredientRepository;
+import seniv.dev.bartendershandbook.entities.cocktails.Cocktail;
+import seniv.dev.bartendershandbook.entities.cocktails.CocktailRepository;
+import seniv.dev.bartendershandbook.entities.cocktails.CocktailRequestDTO;
+import seniv.dev.bartendershandbook.entities.cocktails.CocktailResponseDTO;
+import seniv.dev.bartendershandbook.entities.cocktails_ingredients.CocktailIngredient;
+import seniv.dev.bartendershandbook.entities.cocktails_ingredients.CocktailIngredientDTO;
+import seniv.dev.bartendershandbook.entities.glasses.Glass;
+import seniv.dev.bartendershandbook.entities.glasses.GlassRepository;
+import seniv.dev.bartendershandbook.entities.ingredients.Ingredient;
+import seniv.dev.bartendershandbook.entities.ingredients.IngredientRepository;
 
 import java.math.BigDecimal;
 import java.util.List;
