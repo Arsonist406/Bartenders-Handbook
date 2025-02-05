@@ -4,15 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import seniv.dev.bartendershandbook.entities.cocktails.Cocktail;
-import seniv.dev.bartendershandbook.entities.cocktails.CocktailRepository;
+import seniv.dev.bartendershandbook.entities.glasses.GlassDTO;
+import seniv.dev.bartendershandbook.repositories.CocktailRepository;
 import seniv.dev.bartendershandbook.entities.cocktails.CocktailRequestDTO;
 import seniv.dev.bartendershandbook.entities.cocktails.CocktailResponseDTO;
 import seniv.dev.bartendershandbook.entities.cocktails_ingredients.CocktailIngredient;
 import seniv.dev.bartendershandbook.entities.cocktails_ingredients.CocktailIngredientDTO;
 import seniv.dev.bartendershandbook.entities.glasses.Glass;
-import seniv.dev.bartendershandbook.entities.glasses.GlassRepository;
+import seniv.dev.bartendershandbook.repositories.GlassRepository;
 import seniv.dev.bartendershandbook.entities.ingredients.Ingredient;
-import seniv.dev.bartendershandbook.entities.ingredients.IngredientRepository;
+import seniv.dev.bartendershandbook.repositories.IngredientRepository;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -50,12 +51,12 @@ public class CocktailService {
     }
 
     public List<CocktailResponseDTO> getAllCocktailsWithAbvBetween(BigDecimal min, BigDecimal max) {
-        if (Double.parseDouble(String.valueOf(min)) < 0.00) {
-            throw new IllegalArgumentException("Min must be bigger than 0.00");
-        }
-        if (Double.parseDouble(String.valueOf(max)) > 99.99) {
-            throw new IllegalArgumentException("Max must be smaller than 99.99");
-        }
+//        if (Double.parseDouble(String.valueOf(min)) < 0.00) {
+//            throw new IllegalArgumentException("Min must be bigger than 0.00");
+//        }
+//        if (Double.parseDouble(String.valueOf(max)) > 99.99) {
+//            throw new IllegalArgumentException("Max must be smaller than 99.99");
+//        }
 
         return cocktailRepository.findByAbvBetween(min, max).stream().map(
                 this::createCocktailResponseDTO
@@ -79,66 +80,25 @@ public class CocktailService {
     public CocktailResponseDTO createCocktail(CocktailRequestDTO dto) {
 
         String name = dto.getName();
-        if (name == null) {
-            throw new IllegalArgumentException("Name can't be null");
-        }
         if (cocktailRepository.findByName(name).isPresent()) {
             throw new IllegalArgumentException("Name already taken");
         }
-        if (name.length() > 50) {
-            throw new IllegalArgumentException("Name length must be smaller than 50 symbols");
-        }
 
-        Integer volume = dto.getVolume();
-        if (volume == null) {
-            throw new IllegalArgumentException("Volume can't be null");
-        }
-        if (volume <= 0) {
-            throw new IllegalArgumentException("Volume must be bigger than 0 ml");
-        }
-
-        Double abv = dto.getAbv();
-        if (abv == null) {
-            throw new IllegalArgumentException("ABV can't be null");
-        }
-        if (abv > 99.99 || abv < 0.00) {
-            throw new IllegalArgumentException("ABV must be between 0% and 99.99%");
-        }
-
-        String glassName = dto.getGlass();
-        Glass glass;
-        if (glassName == null) {
-            glass = glassRepository.findByName("Default Glass")
-                    .orElseThrow(() -> new IllegalArgumentException("Default Glass not found"));
-        } else {
-            glass = glassRepository.findByName(glassName)
-                            .orElseThrow(() -> new IllegalArgumentException("Glass not found by name=%s".formatted(glassName)));
-        }
-
-        String description = dto.getDescription();
-        if (description.length() > 2000) {
-            throw new IllegalArgumentException("Description length must be smaller than 2000 symbols");
-        }
-
-        String recipe = dto.getRecipe();
-        if (recipe.length() > 2000) {
-            throw new IllegalArgumentException("Recipe length must be smaller than 2000 symbols");
-        }
+        Glass glass = glassRepository.findByName(dto.getName())
+                .orElseThrow(() -> new IllegalArgumentException("Glass not found by name=%s".formatted(dto.getName())));
 
         Cocktail cocktail = new Cocktail();
 
         cocktail.setName(name);
-        cocktail.setVolume(volume);
-        cocktail.setAbv(abv);
+        cocktail.setVolume(dto.getVolume());
+        cocktail.setAbv(dto.getAbv());
         cocktail.setGlass(glass);
-        cocktail.setDescription(description);
-        cocktail.setRecipe(recipe);
+        cocktail.setDescription(dto.getDescription());
+        cocktail.setRecipe(dto.getRecipe());
 
         setCocktailRelations(cocktail, dto);
 
-        Cocktail savedCocktail = cocktailRepository.save(cocktail);
-
-        return createCocktailResponseDTO(savedCocktail);
+        return createCocktailResponseDTO(cocktailRepository.save(cocktail));
     }
 
     public void deleteCocktailById(Long id) {
@@ -169,47 +129,32 @@ public class CocktailService {
             if (cocktailRepository.findByName(name).isPresent()) {
                 throw new IllegalArgumentException("Name already taken");
             }
-            if (name.length() > 50) {
-                throw new IllegalArgumentException("Name length must be smaller than 50 symbols");
-            }
             cocktail.setName(name);
         }
 
         Integer volume = dto.getVolume();
         if (volume != null && !volume.equals(cocktail.getVolume())) {
-            if (volume <= 0) {
-                throw new IllegalArgumentException("Volume must be bigger than 0 ml");
-            }
             cocktail.setVolume(volume);
         }
 
         Double abv = dto.getAbv();
         if (abv != null && !abv.equals(cocktail.getAbv())) {
-            if (abv > 99.99 || abv < 0.00) {
-                throw new IllegalArgumentException("ABV must be between 0% and 99.99%");
-            }
             cocktail.setAbv(abv);
         }
 
-        String glass = dto.getGlass();
-        if (glass != null && !glass.equals(cocktail.getGlass().getName())) {
-            cocktail.setGlass(glassRepository.findByName(glass)
-                    .orElseThrow(() -> new IllegalArgumentException("Glass not found by name=%s".formatted(glass))));
+        String glassName = dto.getGlass().getName();
+        if (glassName != null && !glassName.equals(cocktail.getGlass().getName())) {
+            cocktail.setGlass(glassRepository.findByName(glassName)
+                    .orElseThrow(() -> new IllegalArgumentException("Glass not found by name=%s".formatted(glassName))));
         }
 
         String description = dto.getDescription();
         if (description != null && !description.equals(cocktail.getDescription())) {
-            if (description.length() > 2000) {
-                throw new IllegalArgumentException("Description length must be smaller than 2000 symbols");
-            }
             cocktail.setDescription(description);
         }
 
         String recipe = dto.getRecipe();
         if (recipe != null && !recipe.equals(cocktail.getRecipe())) {
-            if (recipe.length() > 2000) {
-                throw new IllegalArgumentException("Recipe length must be smaller than 2000 symbols");
-            }
             cocktail.setDescription(description);
         }
 
@@ -219,9 +164,7 @@ public class CocktailService {
             setCocktailRelations(cocktail, dto);
         }
 
-        Cocktail savedCocktail = cocktailRepository.save(cocktail);
-
-        return createCocktailResponseDTO(savedCocktail);
+        return createCocktailResponseDTO(cocktailRepository.save(cocktail));
     }
 
     private CocktailResponseDTO createCocktailResponseDTO(Cocktail cocktail) {
