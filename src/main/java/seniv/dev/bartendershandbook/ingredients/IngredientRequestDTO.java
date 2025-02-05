@@ -1,6 +1,8 @@
 package seniv.dev.bartendershandbook.ingredients;
 
-import java.util.Map;
+import seniv.dev.bartendershandbook.cocktails_ingredients.CocktailIngredientDTO;
+
+import java.util.List;
 
 public class IngredientRequestDTO {
 
@@ -8,12 +10,12 @@ public class IngredientRequestDTO {
     private Double abv;
     private Category category;
     private String description;
-    private Map<String, String> cocktails; // key - name; value - amount
+    private List<CocktailIngredientDTO> cocktails;
 
     public IngredientRequestDTO() {
     }
 
-    public IngredientRequestDTO(String name, Double abv, Category category, String description, Map<String, String> cocktails) {
+    public IngredientRequestDTO(String name, Double abv, Category category, String description, List<CocktailIngredientDTO> cocktails) {
         this.name = name;
         this.abv = abv;
         this.category = category;
@@ -37,7 +39,7 @@ public class IngredientRequestDTO {
         return description;
     }
 
-    public Map<String, String> getCocktails() {
+    public List<CocktailIngredientDTO> getCocktails() {
         return cocktails;
     }
 }
