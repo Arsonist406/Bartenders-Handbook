@@ -4,10 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import seniv.dev.bartendershandbook.entities.cocktails.Cocktail;
-import seniv.dev.bartendershandbook.entities.cocktails.CocktailRepository;
+import seniv.dev.bartendershandbook.repositories.CocktailRepository;
 import seniv.dev.bartendershandbook.entities.cocktails_ingredients.CocktailIngredient;
 import seniv.dev.bartendershandbook.entities.cocktails_ingredients.CocktailIngredientDTO;
 import seniv.dev.bartendershandbook.entities.ingredients.*;
+import seniv.dev.bartendershandbook.repositories.IngredientRepository;
 
 import java.util.List;
 

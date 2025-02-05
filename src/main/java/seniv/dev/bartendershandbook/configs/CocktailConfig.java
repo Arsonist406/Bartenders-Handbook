@@ -5,9 +5,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import seniv.dev.bartendershandbook.entities.cocktails.Cocktail;
-import seniv.dev.bartendershandbook.entities.cocktails.CocktailRepository;
+import seniv.dev.bartendershandbook.repositories.CocktailRepository;
 import seniv.dev.bartendershandbook.entities.glasses.Glass;
-import seniv.dev.bartendershandbook.entities.glasses.GlassRepository;
+import seniv.dev.bartendershandbook.repositories.GlassRepository;
 
 import java.util.ArrayList;
 import java.util.List;

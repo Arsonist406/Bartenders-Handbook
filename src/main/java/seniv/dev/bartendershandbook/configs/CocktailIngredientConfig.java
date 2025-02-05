@@ -5,11 +5,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import seniv.dev.bartendershandbook.entities.cocktails.Cocktail;
-import seniv.dev.bartendershandbook.entities.cocktails.CocktailRepository;
+import seniv.dev.bartendershandbook.repositories.CocktailRepository;
 import seniv.dev.bartendershandbook.entities.cocktails_ingredients.CocktailIngredient;
-import seniv.dev.bartendershandbook.entities.cocktails_ingredients.CocktailIngredientRepository;
+import seniv.dev.bartendershandbook.repositories.CocktailIngredientRepository;
 import seniv.dev.bartendershandbook.entities.ingredients.Ingredient;
-import seniv.dev.bartendershandbook.entities.ingredients.IngredientRepository;
+import seniv.dev.bartendershandbook.repositories.IngredientRepository;
 
 import java.util.List;
 

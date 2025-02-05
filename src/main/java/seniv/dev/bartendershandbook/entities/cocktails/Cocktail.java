@@ -41,7 +41,7 @@ public class Cocktail {
     @Column(length = 2000)
     private String description;
 
-    @Column(length = 2000)
+    @Column(nullable = false, length = 2000)
     private String recipe;
 
     @OneToMany(mappedBy = "cocktail", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)

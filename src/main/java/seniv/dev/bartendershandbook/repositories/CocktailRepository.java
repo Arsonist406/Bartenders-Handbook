@@ -1,9 +1,10 @@
-package seniv.dev.bartendershandbook.entities.cocktails;
+package seniv.dev.bartendershandbook.repositories;
 
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import seniv.dev.bartendershandbook.entities.cocktails.Cocktail;
 import seniv.dev.bartendershandbook.entities.glasses.Glass;
 
 import java.math.BigDecimal;

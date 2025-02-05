@@ -9,6 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
         "seniv.dev.bartendershandbook.configs",
         "seniv.dev.bartendershandbook.controllers",
         "seniv.dev.bartendershandbook.entities",
+        "seniv.dev.bartendershandbook.repositories",
         "seniv.dev.bartendershandbook.services",
         "seniv.dev.bartendershandbook.validation"
 })

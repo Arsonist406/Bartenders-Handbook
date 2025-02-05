@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import seniv.dev.bartendershandbook.entities.ingredients.Category;
 import seniv.dev.bartendershandbook.entities.ingredients.Ingredient;
-import seniv.dev.bartendershandbook.entities.ingredients.IngredientRepository;
+import seniv.dev.bartendershandbook.repositories.IngredientRepository;
 
 import java.util.ArrayList;
 import java.util.List;
