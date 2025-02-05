@@ -6,9 +6,11 @@ import org.springframework.transaction.annotation.Transactional;
 import seniv.dev.bartendershandbook.cocktails.Cocktail;
 import seniv.dev.bartendershandbook.cocktails.CocktailRepository;
 import seniv.dev.bartendershandbook.cocktails_ingredients.CocktailIngredient;
+import seniv.dev.bartendershandbook.cocktails_ingredients.CocktailIngredientDTO;
 
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @Service
 public class IngredientService {
@@ -173,18 +175,18 @@ public class IngredientService {
                 ingredient.getCategory(),
                 ingredient.getDescription(),
                 ingredient.getCocktails().stream()
-                        .collect(Collectors.toMap(
-                                ci -> ci.getIngredient().getName(),
-                                ci -> ci.getAmount()
-                        ))
+                        .map(ci -> new CocktailIngredientDTO(
+                                ci.getCocktail().getName(),
+                                ci.getAmount()
+                        )).collect(toList())
         );
     }
 
     private void setIngredientRelations(Ingredient ingredient, IngredientRequestDTO dto) {
-        List<CocktailIngredient> newCocktails = dto.getCocktails().entrySet().stream()
-                .map(entry -> {
-                    String cocktailName = entry.getKey();
-                    String amount = entry.getValue();
+        List<CocktailIngredient> newCocktails = dto.getCocktails().stream()
+                .map(cid -> {
+                    String cocktailName = cid.getName();
+                    String amount = cid.getAmount();
 
                     Cocktail cocktail = cocktailRepository.findByName(cocktailName)
                             .orElseThrow(() -> new IllegalArgumentException("Cocktail not by name=%s".formatted(cocktailName)));

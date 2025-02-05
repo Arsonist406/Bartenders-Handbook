@@ -1,6 +1,8 @@
 package seniv.dev.bartendershandbook.cocktails;
 
-import java.util.Map;
+import seniv.dev.bartendershandbook.cocktails_ingredients.CocktailIngredientDTO;
+
+import java.util.List;
 
 public class CocktailResponseDTO {
 
@@ -11,11 +13,11 @@ public class CocktailResponseDTO {
     private String glass;
     private String description;
     private String recipe;
-    private Map<String, String> ingredients; // key - name; value - amount
+    private List<CocktailIngredientDTO> ingredients;
 
     public CocktailResponseDTO() {}
 
-    public CocktailResponseDTO(Long id, String name, Integer volume, Double abv, String glass, String description, String recipe, Map<String, String> ingredients) {
+    public CocktailResponseDTO(Long id, String name, Integer volume, Double abv, String glass, String description, String recipe, List<CocktailIngredientDTO> ingredients) {
         this.id = id;
         this.name = name;
         this.volume = volume;
@@ -54,7 +56,7 @@ public class CocktailResponseDTO {
         return recipe;
     }
 
-    public Map<String, String> getIngredients() {
+    public List<CocktailIngredientDTO> getIngredients() {
         return ingredients;
     }
 }

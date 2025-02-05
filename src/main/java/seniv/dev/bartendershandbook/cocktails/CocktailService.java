@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import seniv.dev.bartendershandbook.cocktails_ingredients.CocktailIngredient;
+import seniv.dev.bartendershandbook.cocktails_ingredients.CocktailIngredientDTO;
 import seniv.dev.bartendershandbook.glasses.Glass;
 import seniv.dev.bartendershandbook.glasses.GlassRepository;
 import seniv.dev.bartendershandbook.ingredients.Ingredient;
@@ -11,7 +12,8 @@ import seniv.dev.bartendershandbook.ingredients.IngredientRepository;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @Service
 public class CocktailService {
@@ -228,18 +230,19 @@ public class CocktailService {
                 cocktail.getDescription(),
                 cocktail.getRecipe(),
                 cocktail.getIngredients().stream()
-                        .collect(Collectors.toMap(
-                                ci -> ci.getIngredient().getName(),
-                                ci -> ci.getAmount()
+                        .map(ci -> new CocktailIngredientDTO(
+                                ci.getIngredient().getName(),
+                                ci.getAmount()
                         ))
+                        .collect(toList())
         );
     }
 
     private void setCocktailRelations(Cocktail cocktail, CocktailRequestDTO dto) {
-        List<CocktailIngredient> newIngredients = dto.getIngredients().entrySet().stream()
-                .map(entry -> {
-                    String ingredientName = entry.getKey();
-                    String amount = entry.getValue();
+        List<CocktailIngredient> newIngredients = dto.getIngredients().stream()
+                .map(cid -> {
+                    String ingredientName = cid.getName();
+                    String amount = cid.getAmount();
 
                     Ingredient ingredient = ingredientRepository.findByName(ingredientName)
                             .orElseThrow(() -> new IllegalArgumentException("Ingredient not by name=%s".formatted(ingredientName)));
