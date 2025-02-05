@@ -59,47 +59,22 @@ public class IngredientService {
 
     public IngredientResponseDTO createIngredient(IngredientRequestDTO dto) {
 
-        String name = dto.getName();
-        if (name == null) {
-            throw new IllegalArgumentException("Name can't be null");
-        }
-        if (ingredientRepository.findByName(name).isPresent()) {
+        if (ingredientRepository.findByName(dto.getName()).isPresent()) {
             throw new IllegalArgumentException("Name already taken");
-        }
-        if (name.length() > 50) {
-            throw new IllegalArgumentException("Name length must be smaller than 50 symbols");
-        }
-
-        Double abv = dto.getAbv();
-        if (abv == null) {
-            throw new IllegalArgumentException("ABV can't be null");
-        }
-        if (abv > 99.99 || abv < 0.00) {
-            throw new IllegalArgumentException("ABV must be between 0% and 99.99%");
-        }
-
-        Category category = dto.getCategory();
-        if (category == null) {
-            throw new IllegalArgumentException("Category can't be null");
-        }
-
-        String description = dto.getDescription();
-        if (description.length() > 2000) {
-            throw new IllegalArgumentException("Description length must be smaller than 2000 symbols");
         }
 
         Ingredient ingredient = new Ingredient();
 
-        ingredient.setName(name);
-        ingredient.setAbv(abv);
-        ingredient.setCategory(category);
-        ingredient.setDescription(description);
+        ingredient.setName(dto.getName());
+        ingredient.setAbv(dto.getAbv());
+        ingredient.setCategory(dto.getCategory());
+        ingredient.setDescription(dto.getDescription());
 
-        setIngredientRelations(ingredient, dto);
+        if (dto.getCocktails() != null) {
+            setIngredientRelations(ingredient, dto);
+        }
 
-        Ingredient savedIngredient = ingredientRepository.save(ingredient);
-
-        return createIngredientResponseDTO(savedIngredient);
+        return createIngredientResponseDTO(ingredientRepository.save(ingredient));
     }
 
     public void deleteIngredientById(Long id) {
@@ -130,17 +105,11 @@ public class IngredientService {
             if (ingredientRepository.findByName(name).isPresent()) {
                 throw new IllegalArgumentException("Name already taken");
             }
-            if (name.length() > 50) {
-                throw new IllegalArgumentException("Name length must be smaller than 50 symbols");
-            }
             ingredient.setName(name);
         }
 
         Double abv = dto.getAbv();
         if (abv != null && !abv.equals(ingredient.getAbv())) {
-            if (abv > 99.99 || abv < 0.00) {
-                throw new IllegalArgumentException("ABV must be between 0% and 99.99%");
-            }
             ingredient.setAbv(abv);
         }
 
@@ -151,9 +120,6 @@ public class IngredientService {
 
         String description = dto.getDescription();
         if (description != null && !description.equals(ingredient.getDescription())) {
-            if (description.length() > 2000) {
-                throw new IllegalArgumentException("Description length must be smaller than 2000 symbols");
-            }
             ingredient.setDescription(description);
         }
 
@@ -163,9 +129,7 @@ public class IngredientService {
             setIngredientRelations(ingredient, dto);
         }
 
-        Ingredient savedIngredient = ingredientRepository.save(ingredient);
-
-        return createIngredientResponseDTO(savedIngredient);
+        return createIngredientResponseDTO(ingredientRepository.save(ingredient));
     }
 
     private IngredientResponseDTO createIngredientResponseDTO(Ingredient ingredient) {
