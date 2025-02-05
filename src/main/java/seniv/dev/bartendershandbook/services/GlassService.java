@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import seniv.dev.bartendershandbook.entities.cocktails.Cocktail;
+import seniv.dev.bartendershandbook.entities.glasses.GlassDTO;
 import seniv.dev.bartendershandbook.repositories.CocktailRepository;
 import seniv.dev.bartendershandbook.entities.glasses.Glass;
 import seniv.dev.bartendershandbook.repositories.GlassRepository;
@@ -40,27 +41,17 @@ public class GlassService {
                 .orElseThrow(() -> new IllegalArgumentException("Glass not found by name=%s".formatted(name)));
     }
 
-    public Glass createGlass(Glass glass) {
-        Long id = glass.getId();
-        if (id != null) {
-            throw new IllegalArgumentException("Id must be null");
-        }
+    public Glass createGlass(GlassDTO dto) {
 
-        String name = glass.getName();
-        if (name == null) {
-            throw new IllegalArgumentException("Name can't be null");
-        }
+        String name = dto.getName();
         if (glassRepository.findByName(name).isPresent()) {
             throw new IllegalArgumentException("Name already taken");
         }
-        if (name.length() > 50) {
-            throw new IllegalArgumentException("Name length must be smaller than 50 symbols");
-        }
 
-        String description = glass.getDescription();
-        if (description.length() > 2000) {
-            throw new IllegalArgumentException("Description length must be smaller than 2000 symbols");
-        }
+        Glass glass = new Glass();
+
+        glass.setName(name);
+        glass.setDescription(dto.getDescription());
 
         return glassRepository.save(glass);
     }
@@ -92,24 +83,20 @@ public class GlassService {
     }
 
     @Transactional
-    public Glass updateGlass(Long id, String name, String description) {
+    public Glass updateGlass(Long id, GlassDTO dto) {
         Glass glass = glassRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Glass not found by id=%s".formatted(id)));
 
+        String name = dto.getName();
         if (name != null && !name.equals(glass.getName())) {
             if (glassRepository.findByName(name).isPresent()) {
                 throw new IllegalArgumentException("Name already taken");
             }
-            if (name.length() > 50) {
-                throw new IllegalArgumentException("Name length must be smaller than 50 symbols");
-            }
             glass.setName(name);
         }
 
+        String description = dto.getDescription();
         if (description != null && !description.equals(glass.getDescription())) {
-            if (description.length() > 2000) {
-                throw new IllegalArgumentException("Description length must be smaller than 2000 symbols");
-            }
             glass.setDescription(description);
         }
 
