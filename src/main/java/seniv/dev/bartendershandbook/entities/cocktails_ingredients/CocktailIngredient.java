@@ -27,8 +27,7 @@ public class CocktailIngredient {
 
     public CocktailIngredient() {}
 
-    public CocktailIngredient(Long id, Cocktail cocktail, Ingredient ingredient, String amount) {
-        this.id = id;
+    public CocktailIngredient(Cocktail cocktail, Ingredient ingredient, String amount) {
         this.cocktail = cocktail;
         this.ingredient = ingredient;
         this.amount = amount;

@@ -29,9 +29,9 @@ public class CocktailConfig {
             Glass deathGlass = glassRepository.findByName("Martini")
                     .orElseThrow(() -> new IllegalStateException("Glass 'Martini' not found"));
 
-            Cocktail mojito = new Cocktail(null, "Mojito", 300, 14.0, mojitoGlass, "Refreshing rum-based cocktail", "Muddle mint leaves, lime, and sugar in a glass. Add rum and top with soda water. Serve with ice and garnish with mint.", new ArrayList<>());
-            Cocktail bloodyMary = new Cocktail(null, "Bloody Mary", 400, 18.0, bloodyMaryGlass, "Spicy and savory vodka cocktail", "Mix vodka, tomato juice, lemon juice, Worcestershire sauce, Tabasco, salt, and pepper in a shaker. Pour into a glass filled with ice and garnish with celery.", new ArrayList<>());
-            Cocktail deathInTheAfternoon = new Cocktail(null, "Death in the Afternoon", 200, 12.07, deathGlass, "A refreshing champagne cocktail", "Pour tequila into a glass and top with champagne. Stir gently and garnish with a lime wedge.", new ArrayList<>());
+            Cocktail mojito = new Cocktail("Mojito", 300, 14.0, mojitoGlass, "Refreshing rum-based cocktail", "Muddle mint leaves, lime, and sugar in a glass. Add rum and top with soda water. Serve with ice and garnish with mint.", new ArrayList<>());
+            Cocktail bloodyMary = new Cocktail("Bloody Mary", 400, 18.0, bloodyMaryGlass, "Spicy and savory vodka cocktail", "Mix vodka, tomato juice, lemon juice, Worcestershire sauce, Tabasco, salt, and pepper in a shaker. Pour into a glass filled with ice and garnish with celery.", new ArrayList<>());
+            Cocktail deathInTheAfternoon = new Cocktail("Death in the Afternoon", 200, 12.07, deathGlass, "A refreshing champagne cocktail", "Pour tequila into a glass and top with champagne. Stir gently and garnish with a lime wedge.", new ArrayList<>());
 
             cocktailRepository.saveAll(List.of(mojito, bloodyMary, deathInTheAfternoon));
         };

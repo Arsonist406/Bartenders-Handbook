@@ -58,22 +58,22 @@ public class CocktailIngredientConfig {
             Ingredient champagne = ingredientRepository.findByName("Champagne")
                     .orElseThrow(() -> new IllegalStateException("Mojito not found"));
 
-            CocktailIngredient mojitoRum = new CocktailIngredient(null, mojito, rum, "50ml");
-            CocktailIngredient mojitoLimeJuice = new CocktailIngredient(null, mojito, limeJuice, "25ml");
-            CocktailIngredient mojitoMintLeaves = new CocktailIngredient(null, mojito, mintLeaves, "6 leaves");
-            CocktailIngredient mojitoSugar = new CocktailIngredient(null, mojito, sugar, "2 tsp");
-            CocktailIngredient mojitoSodaWater = new CocktailIngredient(null, mojito, sodaWater, "Top up");
+            CocktailIngredient mojitoRum = new CocktailIngredient(mojito, rum, "50ml");
+            CocktailIngredient mojitoLimeJuice = new CocktailIngredient(mojito, limeJuice, "25ml");
+            CocktailIngredient mojitoMintLeaves = new CocktailIngredient(mojito, mintLeaves, "6 leaves");
+            CocktailIngredient mojitoSugar = new CocktailIngredient(mojito, sugar, "2 tsp");
+            CocktailIngredient mojitoSodaWater = new CocktailIngredient(mojito, sodaWater, "Top up");
 
-            CocktailIngredient bloodyMaryVodka = new CocktailIngredient(null, bloodyMary, vodka, "40ml");
-            CocktailIngredient bloodyMaryTomatoJuice = new CocktailIngredient(null, bloodyMary, tomatoJuice, "100ml");
-            CocktailIngredient bloodyMaryLemonJuice = new CocktailIngredient(null, bloodyMary, lemonJuice, "10ml");
-            CocktailIngredient bloodyMaryWorcestershireSauce = new CocktailIngredient(null, bloodyMary, worcestershireSauce, "2 dashes");
-            CocktailIngredient bloodyMaryTabasco = new CocktailIngredient(null, bloodyMary, tabasco, "1 dash");
-            CocktailIngredient bloodyMarySalt = new CocktailIngredient(null, bloodyMary, salt, "Pinch");
-            CocktailIngredient bloodyMaryPepper = new CocktailIngredient(null, bloodyMary, pepper, "Pinch");
+            CocktailIngredient bloodyMaryVodka = new CocktailIngredient(bloodyMary, vodka, "40ml");
+            CocktailIngredient bloodyMaryTomatoJuice = new CocktailIngredient(bloodyMary, tomatoJuice, "100ml");
+            CocktailIngredient bloodyMaryLemonJuice = new CocktailIngredient(bloodyMary, lemonJuice, "10ml");
+            CocktailIngredient bloodyMaryWorcestershireSauce = new CocktailIngredient(bloodyMary, worcestershireSauce, "2 dashes");
+            CocktailIngredient bloodyMaryTabasco = new CocktailIngredient(bloodyMary, tabasco, "1 dash");
+            CocktailIngredient bloodyMarySalt = new CocktailIngredient(bloodyMary, salt, "Pinch");
+            CocktailIngredient bloodyMaryPepper = new CocktailIngredient(bloodyMary, pepper, "Pinch");
 
-            CocktailIngredient deathInTheAfternoonTequila = new CocktailIngredient(null, deathInTheAfternoon, tequila, "30ml");
-            CocktailIngredient deathInTheAfternoonChampagne = new CocktailIngredient(null, deathInTheAfternoon, champagne, "Top up");
+            CocktailIngredient deathInTheAfternoonTequila = new CocktailIngredient(deathInTheAfternoon, tequila, "30ml");
+            CocktailIngredient deathInTheAfternoonChampagne = new CocktailIngredient(deathInTheAfternoon, champagne, "Top up");
 
             cocktailIngredientRepository.saveAll(List.of(mojitoRum, mojitoLimeJuice, mojitoMintLeaves, mojitoSugar, mojitoSodaWater,
                     bloodyMaryVodka, bloodyMaryTomatoJuice, bloodyMaryLemonJuice, bloodyMaryWorcestershireSauce,

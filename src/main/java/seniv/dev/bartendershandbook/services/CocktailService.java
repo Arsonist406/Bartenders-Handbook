@@ -51,13 +51,6 @@ public class CocktailService {
     }
 
     public List<CocktailResponseDTO> getAllCocktailsWithAbvBetween(BigDecimal min, BigDecimal max) {
-//        if (Double.parseDouble(String.valueOf(min)) < 0.00) {
-//            throw new IllegalArgumentException("Min must be bigger than 0.00");
-//        }
-//        if (Double.parseDouble(String.valueOf(max)) > 99.99) {
-//            throw new IllegalArgumentException("Max must be smaller than 99.99");
-//        }
-
         return cocktailRepository.findByAbvBetween(min, max).stream().map(
                 this::createCocktailResponseDTO
         ).toList();
@@ -84,7 +77,7 @@ public class CocktailService {
             throw new IllegalArgumentException("Name already taken");
         }
 
-        Glass glass = glassRepository.findByName(dto.getName())
+        Glass glass = glassRepository.findByName(dto.getGlass().getName())
                 .orElseThrow(() -> new IllegalArgumentException("Glass not found by name=%s".formatted(dto.getName())));
 
         Cocktail cocktail = new Cocktail();
@@ -155,7 +148,7 @@ public class CocktailService {
 
         String recipe = dto.getRecipe();
         if (recipe != null && !recipe.equals(cocktail.getRecipe())) {
-            cocktail.setDescription(description);
+            cocktail.setRecipe(recipe);
         }
 
         if (dto.getIngredients() != null) {
@@ -215,4 +208,5 @@ public class CocktailService {
         }
         cocktail.getIngredients().clear();
     }
+
 }

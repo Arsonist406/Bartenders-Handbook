@@ -41,8 +41,7 @@ public class Ingredient {
     public Ingredient() {
     }
 
-    public Ingredient(Long id, String name, Double abv, Category category, String description, List<CocktailIngredient> cocktails) {
-        this.id = id;
+    public Ingredient(String name, Double abv, Category category, String description, List<CocktailIngredient> cocktails) {
         this.name = name;
         this.abv = BigDecimal.valueOf(abv);
         this.category = category;

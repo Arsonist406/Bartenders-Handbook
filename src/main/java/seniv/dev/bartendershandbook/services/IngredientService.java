@@ -155,7 +155,7 @@ public class IngredientService {
                     String amount = cid.getAmount();
 
                     Cocktail cocktail = cocktailRepository.findByName(cocktailName)
-                            .orElseThrow(() -> new IllegalArgumentException("Cocktail not by name=%s".formatted(cocktailName)));
+                            .orElseThrow(() -> new IllegalArgumentException("Cocktail not found by name=%s".formatted(cocktailName)));
 
                     CocktailIngredient ci = new CocktailIngredient();
                     ci.setIngredient(ingredient);

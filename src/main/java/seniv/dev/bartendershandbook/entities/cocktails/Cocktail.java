@@ -49,8 +49,7 @@ public class Cocktail {
 
     public Cocktail() {}
 
-    public Cocktail(Long id, String name, Integer volume, Double abv, Glass glass, String description, String recipe, List<CocktailIngredient> ingredients) {
-        this.id = id;
+    public Cocktail(String name, Integer volume, Double abv, Glass glass, String description, String recipe, List<CocktailIngredient> ingredients) {
         this.name = name;
         this.volume = volume;
         this.abv = BigDecimal.valueOf(abv);

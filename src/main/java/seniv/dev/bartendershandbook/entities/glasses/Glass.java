@@ -18,8 +18,7 @@ public class Glass {
     public Glass() {
     }
 
-    public Glass(Long id, String name, String description) {
-        this.id = id;
+    public Glass(String name, String description) {
         this.name = name;
         this.description = description;
     }
