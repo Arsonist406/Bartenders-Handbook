@@ -4,15 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import seniv.dev.bartendershandbook.entities.cocktails.Cocktail;
-import seniv.dev.bartendershandbook.entities.glasses.GlassDTO;
-import seniv.dev.bartendershandbook.repositories.CocktailRepository;
 import seniv.dev.bartendershandbook.entities.cocktails.CocktailRequestDTO;
 import seniv.dev.bartendershandbook.entities.cocktails.CocktailResponseDTO;
 import seniv.dev.bartendershandbook.entities.cocktails_ingredients.CocktailIngredient;
 import seniv.dev.bartendershandbook.entities.cocktails_ingredients.CocktailIngredientDTO;
 import seniv.dev.bartendershandbook.entities.glasses.Glass;
-import seniv.dev.bartendershandbook.repositories.GlassRepository;
 import seniv.dev.bartendershandbook.entities.ingredients.Ingredient;
+import seniv.dev.bartendershandbook.repositories.CocktailRepository;
+import seniv.dev.bartendershandbook.repositories.GlassRepository;
 import seniv.dev.bartendershandbook.repositories.IngredientRepository;
 
 import java.math.BigDecimal;
@@ -72,17 +71,16 @@ public class CocktailService {
 
     public CocktailResponseDTO createCocktail(CocktailRequestDTO dto) {
 
-        String name = dto.getName();
-        if (cocktailRepository.findByName(name).isPresent()) {
-            throw new IllegalArgumentException("Name already taken");
-        }
+        cocktailRepository.findByName(dto.getName()).ifPresent(temp -> {
+            throw new IllegalArgumentException("name=%s is already taken".formatted(dto.getName()));
+        });
 
         Glass glass = glassRepository.findByName(dto.getGlass().getName())
-                .orElseThrow(() -> new IllegalArgumentException("Glass not found by name=%s".formatted(dto.getName())));
+                .orElseThrow(() -> new IllegalArgumentException("Glass not found by name=%s".formatted(dto.getGlass().getName())));
 
         Cocktail cocktail = new Cocktail();
 
-        cocktail.setName(name);
+        cocktail.setName(dto.getName());
         cocktail.setVolume(dto.getVolume());
         cocktail.setAbv(dto.getAbv());
         cocktail.setGlass(glass);
@@ -119,9 +117,9 @@ public class CocktailService {
 
         String name = dto.getName();
         if (name != null && !name.equals(cocktail.getName())) {
-            if (cocktailRepository.findByName(name).isPresent()) {
-                throw new IllegalArgumentException("Name already taken");
-            }
+            cocktailRepository.findByName(name).ifPresent(temp -> {
+                throw new IllegalArgumentException("name=%s is already taken".formatted(name));
+            });
             cocktail.setName(name);
         }
 

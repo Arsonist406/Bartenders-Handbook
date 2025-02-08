@@ -1,7 +1,10 @@
 package seniv.dev.bartendershandbook.entities.ingredients;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import seniv.dev.bartendershandbook.entities.cocktails_ingredients.CocktailIngredientDTO;
 import seniv.dev.bartendershandbook.validation.Create;
 import seniv.dev.bartendershandbook.validation.Update;

@@ -4,10 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import seniv.dev.bartendershandbook.entities.cocktails.Cocktail;
-import seniv.dev.bartendershandbook.repositories.CocktailRepository;
 import seniv.dev.bartendershandbook.entities.cocktails_ingredients.CocktailIngredient;
 import seniv.dev.bartendershandbook.entities.cocktails_ingredients.CocktailIngredientDTO;
-import seniv.dev.bartendershandbook.entities.ingredients.*;
+import seniv.dev.bartendershandbook.entities.ingredients.Category;
+import seniv.dev.bartendershandbook.entities.ingredients.Ingredient;
+import seniv.dev.bartendershandbook.entities.ingredients.IngredientRequestDTO;
+import seniv.dev.bartendershandbook.entities.ingredients.IngredientResponseDTO;
+import seniv.dev.bartendershandbook.repositories.CocktailRepository;
 import seniv.dev.bartendershandbook.repositories.IngredientRepository;
 
 import java.util.List;
@@ -60,9 +63,9 @@ public class IngredientService {
 
     public IngredientResponseDTO createIngredient(IngredientRequestDTO dto) {
 
-        if (ingredientRepository.findByName(dto.getName()).isPresent()) {
-            throw new IllegalArgumentException("Name already taken");
-        }
+        ingredientRepository.findByName(dto.getName()).ifPresent(temp -> {
+                    throw new IllegalArgumentException("name=%s is already taken".formatted(dto.getName()));
+                });
 
         Ingredient ingredient = new Ingredient();
 
@@ -103,9 +106,9 @@ public class IngredientService {
 
         String name = dto.getName();
         if (name != null && !name.equals(ingredient.getName())) {
-            if (ingredientRepository.findByName(name).isPresent()) {
-                throw new IllegalArgumentException("Name already taken");
-            }
+            ingredientRepository.findByName(name).ifPresent(temp -> {
+                throw new IllegalArgumentException("name=%s is already taken".formatted(name));
+            });
             ingredient.setName(name);
         }
 

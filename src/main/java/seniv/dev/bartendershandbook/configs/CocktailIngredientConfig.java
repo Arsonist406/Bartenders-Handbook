@@ -5,10 +5,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import seniv.dev.bartendershandbook.entities.cocktails.Cocktail;
-import seniv.dev.bartendershandbook.repositories.CocktailRepository;
 import seniv.dev.bartendershandbook.entities.cocktails_ingredients.CocktailIngredient;
-import seniv.dev.bartendershandbook.repositories.CocktailIngredientRepository;
 import seniv.dev.bartendershandbook.entities.ingredients.Ingredient;
+import seniv.dev.bartendershandbook.repositories.CocktailIngredientRepository;
+import seniv.dev.bartendershandbook.repositories.CocktailRepository;
 import seniv.dev.bartendershandbook.repositories.IngredientRepository;
 
 import java.util.List;
@@ -25,7 +25,7 @@ public class CocktailIngredientConfig {
             Cocktail mojito = cocktailRepository.findByName("Mojito")
                     .orElseThrow(() -> new IllegalStateException("Mojito not found"));
             Cocktail bloodyMary = cocktailRepository.findByName("Bloody Mary")
-                    .orElseThrow(() -> new IllegalStateException("Bloody Mary not found"));;
+                    .orElseThrow(() -> new IllegalStateException("Bloody Mary not found"));
             Cocktail deathInTheAfternoon = cocktailRepository.findByName("Death in the Afternoon")
                     .orElseThrow(() -> new IllegalStateException("Death in the Afternoon not found"));
 
@@ -75,7 +75,8 @@ public class CocktailIngredientConfig {
             CocktailIngredient deathInTheAfternoonTequila = new CocktailIngredient(deathInTheAfternoon, tequila, "30ml");
             CocktailIngredient deathInTheAfternoonChampagne = new CocktailIngredient(deathInTheAfternoon, champagne, "Top up");
 
-            cocktailIngredientRepository.saveAll(List.of(mojitoRum, mojitoLimeJuice, mojitoMintLeaves, mojitoSugar, mojitoSodaWater,
+            cocktailIngredientRepository.saveAll(List.of(
+                    mojitoRum, mojitoLimeJuice, mojitoMintLeaves, mojitoSugar, mojitoSodaWater,
                     bloodyMaryVodka, bloodyMaryTomatoJuice, bloodyMaryLemonJuice, bloodyMaryWorcestershireSauce,
                     bloodyMaryTabasco, bloodyMarySalt, bloodyMaryPepper,
                     deathInTheAfternoonTequila, deathInTheAfternoonChampagne));

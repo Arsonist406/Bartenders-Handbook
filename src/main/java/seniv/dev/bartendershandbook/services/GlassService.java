@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import seniv.dev.bartendershandbook.entities.cocktails.Cocktail;
+import seniv.dev.bartendershandbook.entities.glasses.Glass;
 import seniv.dev.bartendershandbook.entities.glasses.GlassDTO;
 import seniv.dev.bartendershandbook.repositories.CocktailRepository;
-import seniv.dev.bartendershandbook.entities.glasses.Glass;
 import seniv.dev.bartendershandbook.repositories.GlassRepository;
 
 import java.util.List;
@@ -43,14 +43,13 @@ public class GlassService {
 
     public Glass createGlass(GlassDTO dto) {
 
-        String name = dto.getName();
-        if (glassRepository.findByName(name).isPresent()) {
-            throw new IllegalArgumentException("Name already taken");
-        }
+        glassRepository.findByName(dto.getName()).ifPresent(temp -> {
+            throw new IllegalArgumentException("name=%s is already taken".formatted(dto.getName()));
+        });
 
         Glass glass = new Glass();
 
-        glass.setName(name);
+        glass.setName(dto.getName());
         glass.setDescription(dto.getDescription());
 
         return glassRepository.save(glass);
@@ -89,9 +88,9 @@ public class GlassService {
 
         String name = dto.getName();
         if (name != null && !name.equals(glass.getName())) {
-            if (glassRepository.findByName(name).isPresent()) {
-                throw new IllegalArgumentException("Name already taken");
-            }
+            glassRepository.findByName(name).ifPresent(temp -> {
+                throw new IllegalArgumentException("name=%s is already taken".formatted(name));
+            });
             glass.setName(name);
         }
 
