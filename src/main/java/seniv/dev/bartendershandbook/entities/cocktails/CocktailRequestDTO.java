@@ -4,9 +4,10 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import seniv.dev.bartendershandbook.entities.cocktails_ingredients.CocktailIngredientDTO;
 import seniv.dev.bartendershandbook.entities.glasses.GlassDTO;
-import seniv.dev.bartendershandbook.validation.Create;
-import seniv.dev.bartendershandbook.validation.Update;
+import seniv.dev.bartendershandbook.entities.validation.Create;
+import seniv.dev.bartendershandbook.entities.validation.Update;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CocktailRequestDTO {
@@ -38,7 +39,7 @@ public class CocktailRequestDTO {
     @Valid
     @NotNull(groups = Create.class, message = "Can't be null")
     @Size(min = 2, groups = {Create.class, Update.class}, message = "Ingredients size min=2")
-    private List<CocktailIngredientDTO> ingredients;
+    private List<CocktailIngredientDTO> ingredients = new ArrayList<>();
 
     public CocktailRequestDTO() {}
 

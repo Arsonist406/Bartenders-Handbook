@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import seniv.dev.bartendershandbook.entities.cocktails.CocktailRequestDTO;
 import seniv.dev.bartendershandbook.entities.cocktails.CocktailResponseDTO;
 import seniv.dev.bartendershandbook.services.CocktailService;
-import seniv.dev.bartendershandbook.validation.Create;
-import seniv.dev.bartendershandbook.validation.Update;
+import seniv.dev.bartendershandbook.entities.validation.Create;
+import seniv.dev.bartendershandbook.entities.validation.Update;
 
 import java.math.BigDecimal;
 import java.util.List;

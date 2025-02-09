@@ -2,8 +2,8 @@ package seniv.dev.bartendershandbook.entities.cocktails_ingredients;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import seniv.dev.bartendershandbook.validation.Create;
-import seniv.dev.bartendershandbook.validation.Update;
+import seniv.dev.bartendershandbook.entities.validation.Create;
+import seniv.dev.bartendershandbook.entities.validation.Update;
 
 public class CocktailIngredientDTO {
 

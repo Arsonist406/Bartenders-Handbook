@@ -6,9 +6,10 @@ import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import seniv.dev.bartendershandbook.entities.cocktails_ingredients.CocktailIngredientDTO;
-import seniv.dev.bartendershandbook.validation.Create;
-import seniv.dev.bartendershandbook.validation.Update;
+import seniv.dev.bartendershandbook.entities.validation.Create;
+import seniv.dev.bartendershandbook.entities.validation.Update;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class IngredientRequestDTO {
@@ -30,7 +31,7 @@ public class IngredientRequestDTO {
     private String description;
 
     @Valid
-    private List<CocktailIngredientDTO> cocktails;
+    private List<CocktailIngredientDTO> cocktails  = new ArrayList<>();
 
     public IngredientRequestDTO() {}
 

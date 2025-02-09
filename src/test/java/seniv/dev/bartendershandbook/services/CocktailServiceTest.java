@@ -53,18 +53,15 @@ public class CocktailServiceTest {
         when(glassRepository.findByName("tGName")).thenReturn(Optional.of(spyGlass));
 
 
-        Ingredient spyIngredient1 = spy(new Ingredient());
-        Ingredient spyIngredient2 = spy(new Ingredient());
-        Ingredient spyIngredient3 = spy(new Ingredient());
+        Ingredient ingredient1 = new Ingredient();
+        Ingredient ingredient2 = new Ingredient();
+        Ingredient ingredient3 = new Ingredient();
 
-        spyIngredient1.setName("tIName1");
-        spyIngredient2.setName("tIName2");
-        spyIngredient3.setName("tIName3");
+        ingredient1.setName("tIName1");
+        ingredient2.setName("tIName2");
+        ingredient3.setName("tIName3");
 
-        when(ingredientRepository.findByName(anyString())).thenReturn(Optional.empty());
-        when(ingredientRepository.findByName("tIName1")).thenReturn(Optional.of(spyIngredient1));
-        when(ingredientRepository.findByName("tIName2")).thenReturn(Optional.of(spyIngredient2));
-        when(ingredientRepository.findByName("tIName3")).thenReturn(Optional.of(spyIngredient3));
+        when(ingredientRepository.findByNameIn(anyList())).thenReturn(List.of(ingredient1, ingredient2, ingredient3));
 
 
         GlassDTO spyGlassDTO = spy(new GlassDTO());
@@ -146,18 +143,15 @@ public class CocktailServiceTest {
                 .thenAnswer(invocation -> invocation.getArgument(0));
 
 
-        Ingredient spyIngredient1 = spy(new Ingredient());
-        Ingredient spyIngredient2 = spy(new Ingredient());
-        Ingredient spyIngredient3 = spy(new Ingredient());
+        Ingredient ingredient1 = new Ingredient();
+        Ingredient ingredient2 = new Ingredient();
+        Ingredient ingredient3 = new Ingredient();
 
-        spyIngredient1.setName("tIName1");
-        spyIngredient2.setName("tIName2");
-        spyIngredient3.setName("tIName3");
+        ingredient1.setName("tIName1");
+        ingredient2.setName("tIName2");
+        ingredient3.setName("tIName3");
 
-        when(ingredientRepository.findByName(anyString())).thenReturn(Optional.empty());
-        when(ingredientRepository.findByName("tIName1")).thenReturn(Optional.of(spyIngredient1));
-        when(ingredientRepository.findByName("tIName2")).thenReturn(Optional.of(spyIngredient2));
-        when(ingredientRepository.findByName("tIName3")).thenReturn(Optional.of(spyIngredient3));
+        when(ingredientRepository.findByNameIn(anyList())).thenReturn(List.of(ingredient1, ingredient2, ingredient3));
 
 
         GlassDTO spyGlassDTO = spy(new GlassDTO());

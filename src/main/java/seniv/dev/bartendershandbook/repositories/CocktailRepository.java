@@ -15,6 +15,8 @@ import java.util.Optional;
 public interface CocktailRepository extends JpaRepository<Cocktail, Long> {
     Optional<Cocktail> findByName(String name);
 
+    List<Cocktail> findByNameIn(List<String> name);
+
     List<Cocktail> findByNameContaining(String infix);
 
     List<Cocktail> findByAbvBetween(

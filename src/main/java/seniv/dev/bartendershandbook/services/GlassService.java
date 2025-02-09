@@ -60,10 +60,11 @@ public class GlassService {
                 .orElseThrow(() -> new IllegalArgumentException("Glass not found by id=%s".formatted(id)));
 
         List<Cocktail> cocktails = cocktailRepository.findByGlass(glass);
-        cocktails.stream().forEach(c ->
-                c.setGlass(glassRepository.findByName("Default Glass")
-                .orElseThrow(() -> new IllegalArgumentException("Default Glass not found")))
-        );
+
+        Glass defaultGlass = glassRepository.findByName("Default Glass")
+                .orElseThrow(() -> new IllegalArgumentException("Default Glass not found"));
+
+        cocktails.forEach(c -> c.setGlass(defaultGlass));
 
         glassRepository.delete(glass);
     }
@@ -73,10 +74,11 @@ public class GlassService {
                 .orElseThrow(() -> new IllegalArgumentException("Glass not found by name=%s".formatted(name)));
 
         List<Cocktail> cocktails = cocktailRepository.findByGlass(glass);
-        cocktails.stream().forEach(c ->
-                c.setGlass(glassRepository.findByName("Default Glass")
-                        .orElseThrow(() -> new IllegalArgumentException("Default Glass not found")))
-        );
+
+        Glass defaultGlass = glassRepository.findByName("Default Glass")
+                .orElseThrow(() -> new IllegalArgumentException("Default Glass not found"));
+
+        cocktails.forEach(c -> c.setGlass(defaultGlass));
 
         glassRepository.delete(glass);
     }

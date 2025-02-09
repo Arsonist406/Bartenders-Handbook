@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import seniv.dev.bartendershandbook.entities.glasses.Glass;
 import seniv.dev.bartendershandbook.entities.glasses.GlassDTO;
 import seniv.dev.bartendershandbook.services.GlassService;
-import seniv.dev.bartendershandbook.validation.Create;
-import seniv.dev.bartendershandbook.validation.Update;
+import seniv.dev.bartendershandbook.entities.validation.Create;
+import seniv.dev.bartendershandbook.entities.validation.Update;
 
 import java.util.List;
 

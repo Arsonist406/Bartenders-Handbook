@@ -2,6 +2,7 @@ package seniv.dev.bartendershandbook.entities.cocktails;
 
 import seniv.dev.bartendershandbook.entities.cocktails_ingredients.CocktailIngredientDTO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CocktailResponseDTO {
@@ -13,7 +14,7 @@ public class CocktailResponseDTO {
     private String glass;
     private String description;
     private String recipe;
-    private List<CocktailIngredientDTO> ingredients;
+    private List<CocktailIngredientDTO> ingredients = new ArrayList<>();
 
     public CocktailResponseDTO() {}
 

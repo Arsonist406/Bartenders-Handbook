@@ -14,6 +14,8 @@ import seniv.dev.bartendershandbook.repositories.CocktailRepository;
 import seniv.dev.bartendershandbook.repositories.IngredientRepository;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
@@ -152,21 +154,30 @@ public class IngredientService {
     }
 
     private void setIngredientRelations(Ingredient ingredient, IngredientRequestDTO dto) {
+
+        List<String> cocktailsNames = dto.getCocktails().stream()
+                .map(CocktailIngredientDTO::getName)
+                .toList();
+
+        Map<String, Cocktail> cocktailsMap = cocktailRepository.findByNameIn(cocktailsNames).stream()
+                .collect(Collectors.toMap(Cocktail::getName, cocktail -> cocktail));
+
+        List<String> notFoundNames = cocktailsNames.stream()
+                .filter(name -> !cocktailsMap.containsKey(name))
+                .toList();
+
+        if (!notFoundNames.isEmpty()) {
+            throw new IllegalArgumentException("Cocktails not found: " + notFoundNames);
+        }
+
         List<CocktailIngredient> newCocktails = dto.getCocktails().stream()
-                .map(cid -> {
-                    String cocktailName = cid.getName();
-                    String amount = cid.getAmount();
-
-                    Cocktail cocktail = cocktailRepository.findByName(cocktailName)
-                            .orElseThrow(() -> new IllegalArgumentException("Cocktail not found by name=%s".formatted(cocktailName)));
-
-                    CocktailIngredient ci = new CocktailIngredient();
-                    ci.setIngredient(ingredient);
-                    ci.setCocktail(cocktail);
-                    ci.setAmount(amount);
-
-                    return ci;
-                }).toList();
+                .map(cid ->
+                        new CocktailIngredient(
+                                cocktailsMap.get(cid.getName()),
+                                ingredient,
+                                cid.getAmount()
+                        )
+                ).toList();
 
         ingredient.getCocktails().addAll(newCocktails);
     }

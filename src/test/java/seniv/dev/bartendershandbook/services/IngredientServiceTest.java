@@ -21,6 +21,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static seniv.dev.bartendershandbook.entities.ingredients.Category.LIQUID;
@@ -48,10 +49,7 @@ public class IngredientServiceTest {
         cocktail2.setName("tCName2");
         cocktail3.setName("tCName3");
 
-        when(cocktailRepository.findByName(cocktail1.getName())).thenReturn(Optional.of(cocktail1));
-        when(cocktailRepository.findByName(cocktail2.getName())).thenReturn(Optional.of(cocktail2));
-        when(cocktailRepository.findByName(cocktail3.getName())).thenReturn(Optional.of(cocktail3));
-
+        when(cocktailRepository.findByNameIn(anyList())).thenReturn(List.of(cocktail1, cocktail2, cocktail3));
 
         List<CocktailIngredientDTO> cocktailsDTO = new ArrayList<>();
 
@@ -103,9 +101,7 @@ public class IngredientServiceTest {
         cocktail2.setName("tCName2");
         cocktail3.setName("tCName3");
 
-        when(cocktailRepository.findByName(cocktail1.getName())).thenReturn(Optional.of(cocktail1));
-        when(cocktailRepository.findByName(cocktail2.getName())).thenReturn(Optional.of(cocktail2));
-        when(cocktailRepository.findByName(cocktail3.getName())).thenReturn(Optional.of(cocktail3));
+        when(cocktailRepository.findByNameIn(anyList())).thenReturn(List.of(cocktail1, cocktail2, cocktail3));
 
 
         List<CocktailIngredientDTO> cocktailsDTO = new ArrayList<>();
