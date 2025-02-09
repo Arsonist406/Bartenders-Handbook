@@ -199,12 +199,9 @@ public class CocktailService {
     private void removeAllCocktailRelations(Cocktail cocktail) {
         for (CocktailIngredient ci : cocktail.getIngredients()) {
             ci.setCocktail(null);
-            if (ci.getIngredient() != null) {
-                ci.getIngredient().getCocktails().remove(ci);
-            }
+            ci.getIngredient().getCocktails().remove(ci);
             ci.setIngredient(null);
         }
         cocktail.getIngredients().clear();
     }
-
 }

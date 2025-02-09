@@ -174,9 +174,7 @@ public class IngredientService {
     private void removeAllIngredientRelations(Ingredient ingredient) {
         for (CocktailIngredient ci : ingredient.getCocktails()) {
             ci.setIngredient(null);
-            if (ci.getCocktail() != null) {
-                ci.getCocktail().getIngredients().remove(ci);
-            }
+            ci.getCocktail().getIngredients().remove(ci);
             ci.setCocktail(null);
         }
         ingredient.getCocktails().clear();
