@@ -13,6 +13,7 @@ import seniv.dev.bartendershandbook.module.ingredientDTO.IngredientRequestDTO;
 import seniv.dev.bartendershandbook.module.ingredientDTO.IngredientResponseDTO;
 import seniv.dev.bartendershandbook.repository.CocktailRepository;
 import seniv.dev.bartendershandbook.repository.IngredientRepository;
+import seniv.dev.bartendershandbook.service.ingredientService.IngredientServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,7 @@ import static seniv.dev.bartendershandbook.module.ingredient.Category.SOLID;
 public class IngredientServiceTest {
 
     @InjectMocks
-    private IngredientService ingredientService;
+    private IngredientServiceImpl ingredientService;
 
     @Spy
     private IngredientRepository ingredientRepository;

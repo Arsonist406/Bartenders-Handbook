@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.*;
 import seniv.dev.bartendershandbook.module.ingredient.Category;
 import seniv.dev.bartendershandbook.module.ingredientDTO.IngredientRequestDTO;
 import seniv.dev.bartendershandbook.module.ingredientDTO.IngredientResponseDTO;
-import seniv.dev.bartendershandbook.service.IngredientService;
 import seniv.dev.bartendershandbook.module.validation.Create;
 import seniv.dev.bartendershandbook.module.validation.Update;
+import seniv.dev.bartendershandbook.service.ingredientService.IngredientServiceImpl;
 
 import java.util.List;
 
@@ -16,10 +16,10 @@ import java.util.List;
 @RequestMapping("/api/ingredients/")
 public class IngredientController {
 
-    private final IngredientService ingredientService;
+    private final IngredientServiceImpl ingredientService;
 
     @Autowired
-    public IngredientController(IngredientService ingredientService) {
+    public IngredientController(IngredientServiceImpl ingredientService) {
         this.ingredientService = ingredientService;
     }
 

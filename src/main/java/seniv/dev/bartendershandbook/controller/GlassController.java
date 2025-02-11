@@ -5,9 +5,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import seniv.dev.bartendershandbook.module.glass.Glass;
 import seniv.dev.bartendershandbook.module.glassDTO.GlassDTO;
-import seniv.dev.bartendershandbook.service.GlassService;
 import seniv.dev.bartendershandbook.module.validation.Create;
 import seniv.dev.bartendershandbook.module.validation.Update;
+import seniv.dev.bartendershandbook.service.glassService.GlassServiceImpl;
 
 import java.util.List;
 
@@ -15,10 +15,10 @@ import java.util.List;
 @RequestMapping("/api/glasses/")
 public class GlassController {
 
-    private final GlassService glassService;
+    private final GlassServiceImpl glassService;
 
     @Autowired
-    public GlassController(GlassService glassService) {
+    public GlassController(GlassServiceImpl glassService) {
         this.glassService = glassService;
     }
 

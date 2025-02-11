@@ -7,9 +7,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import seniv.dev.bartendershandbook.module.cocktailDTO.CocktailRequestDTO;
 import seniv.dev.bartendershandbook.module.cocktailDTO.CocktailResponseDTO;
-import seniv.dev.bartendershandbook.service.cocktailService.CocktailService;
 import seniv.dev.bartendershandbook.module.validation.Create;
 import seniv.dev.bartendershandbook.module.validation.Update;
+import seniv.dev.bartendershandbook.service.cocktailService.CocktailServiceImpl;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -18,10 +18,10 @@ import java.util.List;
 @RequestMapping("/api/cocktails/")
 public class CocktailController {
 
-    private final CocktailService cocktailService;
+    private final CocktailServiceImpl cocktailService;
 
     @Autowired
-    public CocktailController(CocktailService cocktailService) {
+    public CocktailController(CocktailServiceImpl cocktailService) {
         this.cocktailService = cocktailService;
     }
 

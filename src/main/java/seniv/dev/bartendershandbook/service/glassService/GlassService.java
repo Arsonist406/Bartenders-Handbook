@@ -1,4 +1,4 @@
-package seniv.dev.bartendershandbook.service;
+package seniv.dev.bartendershandbook.service.glassService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,7 @@ import seniv.dev.bartendershandbook.repository.GlassRepository;
 import java.util.List;
 
 @Service
-public class GlassService {
+public class GlassService implements GlassServiceImpl {
 
     private final GlassRepository glassRepository;
     private final CocktailRepository cocktailRepository;

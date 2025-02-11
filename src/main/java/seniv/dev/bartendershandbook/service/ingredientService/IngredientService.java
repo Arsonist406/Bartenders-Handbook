@@ -1,4 +1,4 @@
-package seniv.dev.bartendershandbook.service;
+package seniv.dev.bartendershandbook.service.ingredientService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toList;
 
 @Service
-public class IngredientService {
+public class IngredientService implements IngredientServiceImpl {
 
     private final IngredientRepository ingredientRepository;
     private final CocktailRepository cocktailRepository;

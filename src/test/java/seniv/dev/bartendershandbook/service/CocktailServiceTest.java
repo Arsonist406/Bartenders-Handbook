@@ -16,7 +16,7 @@ import seniv.dev.bartendershandbook.module.ingredient.Ingredient;
 import seniv.dev.bartendershandbook.repository.CocktailRepository;
 import seniv.dev.bartendershandbook.repository.GlassRepository;
 import seniv.dev.bartendershandbook.repository.IngredientRepository;
-import seniv.dev.bartendershandbook.service.cocktailService.CocktailService;
+import seniv.dev.bartendershandbook.service.cocktailService.CocktailServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +32,7 @@ import static org.mockito.Mockito.*;
 public class CocktailServiceTest {
 
     @InjectMocks
-    private CocktailService cocktailService;
+    private CocktailServiceImpl cocktailService;
 
     @Spy
     private CocktailRepository cocktailRepository;

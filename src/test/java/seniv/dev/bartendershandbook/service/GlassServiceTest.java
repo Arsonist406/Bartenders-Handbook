@@ -10,6 +10,7 @@ import seniv.dev.bartendershandbook.module.glass.Glass;
 import seniv.dev.bartendershandbook.module.glassDTO.GlassDTO;
 import seniv.dev.bartendershandbook.repository.CocktailRepository;
 import seniv.dev.bartendershandbook.repository.GlassRepository;
+import seniv.dev.bartendershandbook.service.glassService.GlassServiceImpl;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +23,7 @@ import static org.mockito.Mockito.*;
 public class GlassServiceTest {
 
     @InjectMocks
-    private GlassService glassService;
+    private GlassServiceImpl glassService;
 
     @Spy
     private GlassRepository glassRepository;

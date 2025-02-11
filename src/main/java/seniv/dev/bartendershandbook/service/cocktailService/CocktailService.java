@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toList;
 
 @Service
-public class CocktailService {
+public class CocktailService implements CocktailServiceImpl {
 
     private final CocktailRepository cocktailRepository;
     private final GlassRepository glassRepository;
