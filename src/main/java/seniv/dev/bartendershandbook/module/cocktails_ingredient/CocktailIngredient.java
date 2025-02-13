@@ -8,7 +8,6 @@ import seniv.dev.bartendershandbook.module.ingredient.Ingredient;
 
 @Entity
 @Table(name = "cocktails_ingredients")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class CocktailIngredient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

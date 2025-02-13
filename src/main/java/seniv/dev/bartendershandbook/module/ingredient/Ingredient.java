@@ -14,7 +14,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "ingredients")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Ingredient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,7 +34,6 @@ public class Ingredient {
     private String description;
 
     @OneToMany(mappedBy = "ingredient", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    @JsonIgnore
     private List<CocktailIngredient> cocktails = new ArrayList<>();
 
     public Ingredient() {
