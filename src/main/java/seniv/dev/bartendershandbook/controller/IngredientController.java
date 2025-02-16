@@ -1,19 +1,24 @@
 package seniv.dev.bartendershandbook.controller;
 
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Size;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import seniv.dev.bartendershandbook.module.ingredient.Category;
-import seniv.dev.bartendershandbook.module.ingredientDTO.IngredientRequestDTO;
-import seniv.dev.bartendershandbook.module.ingredientDTO.IngredientResponseDTO;
-import seniv.dev.bartendershandbook.module.validation.Create;
-import seniv.dev.bartendershandbook.module.validation.Update;
+import seniv.dev.bartendershandbook.module.DTO.ingredientDTO.IngredientRequestDTO;
+import seniv.dev.bartendershandbook.module.DTO.ingredientDTO.IngredientResponseDTO;
+import seniv.dev.bartendershandbook.module.entity.ingredient.Category;
 import seniv.dev.bartendershandbook.service.ingredientService.IngredientServiceImpl;
+import seniv.dev.bartendershandbook.validation.Create;
+import seniv.dev.bartendershandbook.validation.Update;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/ingredients/")
+@RequestMapping("/api/ingredients")
+@Validated
 public class IngredientController {
 
     private final IngredientServiceImpl ingredientService;
@@ -23,65 +28,59 @@ public class IngredientController {
         this.ingredientService = ingredientService;
     }
 
-    @GetMapping("all")
+    @GetMapping("/")
     public List<IngredientResponseDTO> getAllIngredients() {
         return ingredientService.getAllIngredients();
     }
 
-    @GetMapping("all/{infix}")
-    public List<IngredientResponseDTO> getAllIngredientsThatContainsInfix(
-            @PathVariable("infix") String infix
+    @GetMapping("/search")
+    public List<IngredientResponseDTO> searchIngredients(
+            @RequestParam(required = false)
+            @Size(min = 1, max = 50, message = "min=1, max=50 symbols")
+            String infix,
+
+            @RequestParam(required = false)
+            @DecimalMin(value = "0.00", message = "min=0.00")
+            @DecimalMax(value = "99.99", message = "max=99.99")
+            BigDecimal min,
+
+            @RequestParam(required = false)
+            @DecimalMin(value = "0.00", message = "min=0.00")
+            @DecimalMax(value = "99.99", message = "max=99.99")
+            BigDecimal max,
+
+            @RequestParam(required = false)
+            Category category //todo: зробити перевірку на енум
     ) {
-        return ingredientService.getAllIngredientsThatContainsInfix(infix);
+        return ingredientService.searchIngredients(infix, min, max, category);
     }
 
-    @GetMapping("all/{category}")
-    public List<IngredientResponseDTO> getAllIngredientsByCategory(
-            @PathVariable("category") Category category
-    ) {
-        return ingredientService.getAllIngredientsByCategory(category);
-    }
-
-    @GetMapping("id/{id}")
+    @GetMapping("/{id}")
     public IngredientResponseDTO getIngredientById(
-            @PathVariable("id") Long id
+            @PathVariable Long id
     ) {
         return ingredientService.getIngredientById(id);
     }
 
-    @GetMapping("name/{name}")
-    public IngredientResponseDTO getIngredientByName(
-            @PathVariable ("name") String name
-    ) {
-        return ingredientService.getIngredientByName(name);
-    }
-
-    @PostMapping()
+    @PostMapping("/")
     public IngredientResponseDTO createIngredient(
             @RequestBody @Validated(Create.class) IngredientRequestDTO ingredient
     ) {
         return ingredientService.createIngredient(ingredient);
     }
 
-    @DeleteMapping("id/{id}")
+    @DeleteMapping("/{id}")
     public void deleteIngredientById(
-            @PathVariable("id") Long id
+            @PathVariable Long id
     ) {
         ingredientService.deleteIngredientById(id);
     }
 
-    @DeleteMapping("name/{name}")
-    public void deleteIngredientByName(
-            @PathVariable("name") String name
-    ) {
-        ingredientService.deleteIngredientByName(name);
-    }
-
-    @PutMapping("{id}")
-    public IngredientResponseDTO updateIngredient(
-            @PathVariable("id") Long id,
+    @PutMapping("/{id}")
+    public IngredientResponseDTO updateIngredientById(
+            @PathVariable Long id,
             @RequestBody @Validated(Update.class) IngredientRequestDTO ingredient
     ) {
-        return ingredientService.updateIngredient(id, ingredient);
+        return ingredientService.updateIngredientById(id, ingredient);
     }
 }

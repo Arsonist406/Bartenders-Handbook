@@ -3,16 +3,17 @@ package seniv.dev.bartendershandbook.service.ingredientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import seniv.dev.bartendershandbook.module.cocktail.Cocktail;
-import seniv.dev.bartendershandbook.module.cocktails_ingredient.CocktailIngredient;
-import seniv.dev.bartendershandbook.module.cocktails_ingredientDTO.CocktailIngredientDTO;
-import seniv.dev.bartendershandbook.module.ingredient.Category;
-import seniv.dev.bartendershandbook.module.ingredient.Ingredient;
-import seniv.dev.bartendershandbook.module.ingredientDTO.IngredientRequestDTO;
-import seniv.dev.bartendershandbook.module.ingredientDTO.IngredientResponseDTO;
+import seniv.dev.bartendershandbook.module.DTO.cocktails_ingredientDTO.CocktailIngredientDTO;
+import seniv.dev.bartendershandbook.module.DTO.ingredientDTO.IngredientRequestDTO;
+import seniv.dev.bartendershandbook.module.DTO.ingredientDTO.IngredientResponseDTO;
+import seniv.dev.bartendershandbook.module.entity.cocktail.Cocktail;
+import seniv.dev.bartendershandbook.module.entity.cocktailIngredient.CocktailIngredient;
+import seniv.dev.bartendershandbook.module.entity.ingredient.Category;
+import seniv.dev.bartendershandbook.module.entity.ingredient.Ingredient;
 import seniv.dev.bartendershandbook.repository.CocktailRepository;
 import seniv.dev.bartendershandbook.repository.IngredientRepository;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -23,7 +24,7 @@ import static java.util.stream.Collectors.toList;
 public class IngredientService implements IngredientServiceImpl {
 
     private final IngredientRepository ingredientRepository;
-    private final CocktailRepository cocktailRepository;
+    private final CocktailRepository cocktailRepository;    //TODO: репозиторій поміняти на сервіс
 
     @Autowired
     public IngredientService(IngredientRepository ingredientRepository, CocktailRepository cocktailRepository) {
@@ -37,28 +38,20 @@ public class IngredientService implements IngredientServiceImpl {
         ).toList();
     }
 
-    public List<IngredientResponseDTO> getAllIngredientsThatContainsInfix(String infix) {
-        return ingredientRepository.findByNameContaining(infix).stream().map(
-                this::createIngredientResponseDTO
-        ).toList();
-    }
-
-    public List<IngredientResponseDTO> getAllIngredientsByCategory(Category category) {
-        return ingredientRepository.findByCategory(category).stream().map(
-                this::createIngredientResponseDTO
-        ).toList();
+    public List<IngredientResponseDTO> searchIngredients(
+            String infix,
+            BigDecimal min,
+            BigDecimal max,
+            Category category
+    ) {
+       return ingredientRepository.findByNameContainingAndAbvBetweenAndCategory(infix, min, max, category).stream().map(
+               this::createIngredientResponseDTO
+       ).toList();
     }
 
     public IngredientResponseDTO getIngredientById(Long id) {
         Ingredient ingredient = ingredientRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Ingredient not found by id=%s".formatted(id)));
-
-        return createIngredientResponseDTO(ingredient);
-    }
-
-    public IngredientResponseDTO getIngredientByName(String name) {
-        Ingredient ingredient = ingredientRepository.findByName(name)
-                .orElseThrow(() -> new IllegalArgumentException("Ingredient not found by name=%s".formatted(name)));
 
         return createIngredientResponseDTO(ingredient);
     }
@@ -92,17 +85,8 @@ public class IngredientService implements IngredientServiceImpl {
         ingredientRepository.delete(ingredient);
     }
 
-    public void deleteIngredientByName(String name) {
-        Ingredient ingredient = ingredientRepository.findByName(name)
-                .orElseThrow(() -> new IllegalArgumentException("Ingredient not found by name=%s".formatted(name)));
-
-        removeAllIngredientRelations(ingredient);
-
-        ingredientRepository.delete(ingredient);
-    }
-
     @Transactional
-    public IngredientResponseDTO updateIngredient(Long id, IngredientRequestDTO dto) {
+    public IngredientResponseDTO updateIngredientById(Long id, IngredientRequestDTO dto) {
         Ingredient ingredient = ingredientRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Ingredient not found by id=%s".formatted(id)));
 
@@ -137,6 +121,7 @@ public class IngredientService implements IngredientServiceImpl {
 
         return createIngredientResponseDTO(ingredientRepository.save(ingredient));
     }
+
 
     private IngredientResponseDTO createIngredientResponseDTO(Ingredient ingredient) {
         return new IngredientResponseDTO(
