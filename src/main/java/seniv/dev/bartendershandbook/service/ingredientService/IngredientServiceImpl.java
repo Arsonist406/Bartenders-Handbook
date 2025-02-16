@@ -4,6 +4,7 @@ import org.springframework.transaction.annotation.Transactional;
 import seniv.dev.bartendershandbook.module.DTO.ingredientDTO.IngredientRequestDTO;
 import seniv.dev.bartendershandbook.module.DTO.ingredientDTO.IngredientResponseDTO;
 import seniv.dev.bartendershandbook.module.entity.ingredient.Category;
+import seniv.dev.bartendershandbook.module.entity.ingredient.Ingredient;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -22,4 +23,6 @@ public interface IngredientServiceImpl {
 
     @Transactional
     IngredientResponseDTO updateIngredientById(Long id, IngredientRequestDTO dto);
+
+    List<Ingredient> getIngredientsIn(List<String> ingredientsNames);
 }

@@ -1,6 +1,7 @@
 package seniv.dev.bartendershandbook.service.ingredientService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import seniv.dev.bartendershandbook.module.DTO.cocktails_ingredientDTO.CocktailIngredientDTO;
@@ -10,8 +11,8 @@ import seniv.dev.bartendershandbook.module.entity.cocktail.Cocktail;
 import seniv.dev.bartendershandbook.module.entity.cocktailIngredient.CocktailIngredient;
 import seniv.dev.bartendershandbook.module.entity.ingredient.Category;
 import seniv.dev.bartendershandbook.module.entity.ingredient.Ingredient;
-import seniv.dev.bartendershandbook.repository.CocktailRepository;
 import seniv.dev.bartendershandbook.repository.IngredientRepository;
+import seniv.dev.bartendershandbook.service.cocktailService.CocktailServiceImpl;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -24,12 +25,16 @@ import static java.util.stream.Collectors.toList;
 public class IngredientService implements IngredientServiceImpl {
 
     private final IngredientRepository ingredientRepository;
-    private final CocktailRepository cocktailRepository;    //TODO: репозиторій поміняти на сервіс
+
+    private final CocktailServiceImpl cocktailService;
 
     @Autowired
-    public IngredientService(IngredientRepository ingredientRepository, CocktailRepository cocktailRepository) {
+    public IngredientService(
+            IngredientRepository ingredientRepository,
+            @Lazy CocktailServiceImpl cocktailService
+    ) {
         this.ingredientRepository = ingredientRepository;
-        this.cocktailRepository = cocktailRepository;
+        this.cocktailService = cocktailService;
     }
 
     public List<IngredientResponseDTO> getAllIngredients() {
@@ -113,13 +118,18 @@ public class IngredientService implements IngredientServiceImpl {
             ingredient.setDescription(description);
         }
 
-        if (dto.getCocktails() != null) {
+        if (!dto.getCocktails().isEmpty()) {
             removeAllIngredientRelations(ingredient);
 
             setIngredientRelations(ingredient, dto);
         }
 
         return createIngredientResponseDTO(ingredientRepository.save(ingredient));
+    }
+
+
+    public List<Ingredient> getIngredientsIn(List<String> ingredientsNames) {
+        return ingredientRepository.findByNameIn(ingredientsNames);
     }
 
 
@@ -144,7 +154,7 @@ public class IngredientService implements IngredientServiceImpl {
                 .map(CocktailIngredientDTO::getName)
                 .toList();
 
-        Map<String, Cocktail> cocktailsMap = cocktailRepository.findByNameIn(cocktailsNames).stream()
+        Map<String, Cocktail> cocktailsMap = cocktailService.getCocktailsIn(cocktailsNames).stream()
                 .collect(Collectors.toMap(Cocktail::getName, cocktail -> cocktail));
 
         List<String> notFoundNames = cocktailsNames.stream()

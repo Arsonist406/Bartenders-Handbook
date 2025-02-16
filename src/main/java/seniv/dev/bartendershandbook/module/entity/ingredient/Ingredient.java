@@ -6,12 +6,12 @@ import jakarta.validation.constraints.DecimalMin;
 import seniv.dev.bartendershandbook.module.entity.cocktailIngredient.CocktailIngredient;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "ingredients")
 public class Ingredient {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,12 +32,17 @@ public class Ingredient {
 
     //TODO: замінити список - сетом
     @OneToMany(mappedBy = "ingredient", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    private List<CocktailIngredient> cocktails = new ArrayList<>();
+    private List<CocktailIngredient> cocktails;
 
-    public Ingredient() {
-    }
+    public Ingredient() {}
 
-    public Ingredient(String name, Double abv, Category category, String description, List<CocktailIngredient> cocktails) {
+    public Ingredient(
+            String name,
+            Double abv,
+            Category category,
+            String description,
+            List<CocktailIngredient> cocktails
+    ) {
         this.name = name;
         this.abv = BigDecimal.valueOf(abv);
         this.category = category;
