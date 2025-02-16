@@ -3,13 +3,13 @@ package seniv.dev.bartendershandbook.service.cocktailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import seniv.dev.bartendershandbook.module.cocktail.Cocktail;
-import seniv.dev.bartendershandbook.module.cocktailDTO.CocktailRequestDTO;
-import seniv.dev.bartendershandbook.module.cocktailDTO.CocktailResponseDTO;
-import seniv.dev.bartendershandbook.module.cocktails_ingredient.CocktailIngredient;
-import seniv.dev.bartendershandbook.module.cocktails_ingredientDTO.CocktailIngredientDTO;
-import seniv.dev.bartendershandbook.module.glass.Glass;
-import seniv.dev.bartendershandbook.module.ingredient.Ingredient;
+import seniv.dev.bartendershandbook.module.DTO.cocktailDTO.CocktailRequestDTO;
+import seniv.dev.bartendershandbook.module.DTO.cocktailDTO.CocktailResponseDTO;
+import seniv.dev.bartendershandbook.module.DTO.cocktails_ingredientDTO.CocktailIngredientDTO;
+import seniv.dev.bartendershandbook.module.entity.cocktail.Cocktail;
+import seniv.dev.bartendershandbook.module.entity.cocktailIngredient.CocktailIngredient;
+import seniv.dev.bartendershandbook.module.entity.glass.Glass;
+import seniv.dev.bartendershandbook.module.entity.ingredient.Ingredient;
 import seniv.dev.bartendershandbook.repository.CocktailRepository;
 import seniv.dev.bartendershandbook.repository.GlassRepository;
 import seniv.dev.bartendershandbook.repository.IngredientRepository;
@@ -25,8 +25,8 @@ import static java.util.stream.Collectors.toList;
 public class CocktailService implements CocktailServiceImpl {
 
     private final CocktailRepository cocktailRepository;
-    private final GlassRepository glassRepository;
-    private final IngredientRepository ingredientRepository;
+    private final GlassRepository glassRepository;    //TODO: репозиторій поміняти на сервіс
+    private final IngredientRepository ingredientRepository;    //TODO: репозиторій поміняти на сервіс
 
     @Autowired
     public CocktailService(
@@ -45,14 +45,21 @@ public class CocktailService implements CocktailServiceImpl {
         ).toList();
     }
 
-    public List<CocktailResponseDTO> getAllCocktailsThatContainsInfix(String infix) {
-        return cocktailRepository.findByNameContaining(infix).stream().map(
-                this::createCocktailResponseDTO
-        ).toList();
-    }
+    public List<CocktailResponseDTO> searchCocktails(String infix, BigDecimal min, BigDecimal max) {
+        if (infix == null) {
+            infix = "";
+        }
+        if (min == null) {
+            min = BigDecimal.valueOf(0.00);
+        }
+        if (max == null) {
+            max = BigDecimal.valueOf(99.99);
+        }
+        if (Double.parseDouble(String.valueOf(min)) > (Double.parseDouble(String.valueOf(max)))) {
+            throw new IllegalArgumentException("min must be smaller than max");
+        }
 
-    public List<CocktailResponseDTO> getAllCocktailsWithAbvBetween(BigDecimal min, BigDecimal max) {
-        return cocktailRepository.findByAbvBetween(min, max).stream().map(
+        return cocktailRepository.findByNameContainingAndAbvBetween(infix, min, max).stream().map(
                 this::createCocktailResponseDTO
         ).toList();
     }
@@ -60,13 +67,6 @@ public class CocktailService implements CocktailServiceImpl {
     public CocktailResponseDTO getCocktailById(Long id) {
         Cocktail cocktail = cocktailRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Cocktail not found by id=%s".formatted(id)));
-
-        return createCocktailResponseDTO(cocktail);
-    }
-
-    public CocktailResponseDTO getCocktailByName(String name) {
-        Cocktail cocktail = cocktailRepository.findByName(name)
-                .orElseThrow(() -> new IllegalArgumentException("Cocktail not found by name=%s".formatted(name)));
 
         return createCocktailResponseDTO(cocktail);
     }
@@ -103,17 +103,8 @@ public class CocktailService implements CocktailServiceImpl {
         cocktailRepository.delete(cocktail);
     }
 
-    public void deleteCocktailByName(String name) {
-        Cocktail cocktail = cocktailRepository.findByName(name)
-                .orElseThrow(() -> new IllegalArgumentException("Cocktail not found by name=%s".formatted(name)));
-
-        removeAllCocktailRelations(cocktail);
-
-        cocktailRepository.delete(cocktail);
-    }
-
     @Transactional
-    public CocktailResponseDTO updateCocktail(Long id, CocktailRequestDTO dto) {
+    public CocktailResponseDTO updateCocktailById(Long id, CocktailRequestDTO dto) {
         Cocktail cocktail = cocktailRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Cocktail not found by id=%s".formatted(id)));
 
@@ -159,6 +150,7 @@ public class CocktailService implements CocktailServiceImpl {
 
         return createCocktailResponseDTO(cocktailRepository.save(cocktail));
     }
+
 
     private CocktailResponseDTO createCocktailResponseDTO(Cocktail cocktail) {
         return new CocktailResponseDTO(
