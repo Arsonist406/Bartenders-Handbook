@@ -1,6 +1,6 @@
-package seniv.dev.bartendershandbook.module.cocktailDTO;
+package seniv.dev.bartendershandbook.module.DTO.cocktailDTO;
 
-import seniv.dev.bartendershandbook.module.cocktails_ingredientDTO.CocktailIngredientDTO;
+import seniv.dev.bartendershandbook.module.DTO.cocktails_ingredientDTO.CocktailIngredientDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +14,7 @@ public class CocktailResponseDTO {
     private String glass;
     private String description;
     private String recipe;
+    //TODO: замінити список - сетом
     private List<CocktailIngredientDTO> ingredients = new ArrayList<>();
 
     public CocktailResponseDTO() {}

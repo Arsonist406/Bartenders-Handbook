@@ -1,10 +1,8 @@
-package seniv.dev.bartendershandbook.module.cocktails_ingredient;
+package seniv.dev.bartendershandbook.module.entity.cocktailIngredient;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
-import seniv.dev.bartendershandbook.module.cocktail.Cocktail;
-import seniv.dev.bartendershandbook.module.ingredient.Ingredient;
+import seniv.dev.bartendershandbook.module.entity.cocktail.Cocktail;
+import seniv.dev.bartendershandbook.module.entity.ingredient.Ingredient;
 
 @Entity
 @Table(name = "cocktails_ingredients")

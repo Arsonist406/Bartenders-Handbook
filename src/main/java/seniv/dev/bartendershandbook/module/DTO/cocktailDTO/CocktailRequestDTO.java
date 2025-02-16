@@ -1,11 +1,11 @@
-package seniv.dev.bartendershandbook.module.cocktailDTO;
+package seniv.dev.bartendershandbook.module.DTO.cocktailDTO;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
-import seniv.dev.bartendershandbook.module.cocktails_ingredientDTO.CocktailIngredientDTO;
-import seniv.dev.bartendershandbook.module.glassDTO.GlassDTO;
-import seniv.dev.bartendershandbook.module.validation.Create;
-import seniv.dev.bartendershandbook.module.validation.Update;
+import seniv.dev.bartendershandbook.module.DTO.cocktails_ingredientDTO.CocktailIngredientDTO;
+import seniv.dev.bartendershandbook.module.DTO.glassDTO.GlassDTO;
+import seniv.dev.bartendershandbook.validation.Create;
+import seniv.dev.bartendershandbook.validation.Update;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +29,7 @@ public class CocktailRequestDTO {
     @NotNull(groups = Create.class, message = "Can't be null")
     private GlassDTO glass;
 
+    @NotNull(groups = Create.class, message = "Can't be null")
     @Size(max = 2000, groups = {Create.class, Update.class}, message = "Description length max=2000 symbols")
     private String description;
 
@@ -39,6 +40,7 @@ public class CocktailRequestDTO {
     @Valid
     @NotNull(groups = Create.class, message = "Can't be null")
     @Size(min = 2, groups = {Create.class, Update.class}, message = "Ingredients size min=2")
+    //TODO: замінити список - сетом
     private List<CocktailIngredientDTO> ingredients = new ArrayList<>();
 
     public CocktailRequestDTO() {}

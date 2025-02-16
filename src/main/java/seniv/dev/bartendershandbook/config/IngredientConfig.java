@@ -4,8 +4,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
-import seniv.dev.bartendershandbook.module.ingredient.Category;
-import seniv.dev.bartendershandbook.module.ingredient.Ingredient;
+import seniv.dev.bartendershandbook.module.entity.ingredient.Category;
+import seniv.dev.bartendershandbook.module.entity.ingredient.Ingredient;
 import seniv.dev.bartendershandbook.repository.IngredientRepository;
 
 import java.util.ArrayList;

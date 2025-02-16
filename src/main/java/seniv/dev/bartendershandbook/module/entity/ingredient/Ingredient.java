@@ -1,12 +1,9 @@
-package seniv.dev.bartendershandbook.module.ingredient;
+package seniv.dev.bartendershandbook.module.entity.ingredient;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
-import seniv.dev.bartendershandbook.module.cocktails_ingredient.CocktailIngredient;
+import seniv.dev.bartendershandbook.module.entity.cocktailIngredient.CocktailIngredient;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -30,9 +27,10 @@ public class Ingredient {
     @Enumerated(EnumType.STRING)
     private Category category;
 
-    @Column(length = 2000)
+    @Column(nullable = false, length = 2000)
     private String description;
 
+    //TODO: замінити список - сетом
     @OneToMany(mappedBy = "ingredient", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<CocktailIngredient> cocktails = new ArrayList<>();
 

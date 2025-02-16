@@ -1,7 +1,7 @@
-package seniv.dev.bartendershandbook.module.ingredientDTO;
+package seniv.dev.bartendershandbook.module.DTO.ingredientDTO;
 
-import seniv.dev.bartendershandbook.module.cocktails_ingredientDTO.CocktailIngredientDTO;
-import seniv.dev.bartendershandbook.module.ingredient.Category;
+import seniv.dev.bartendershandbook.module.DTO.cocktails_ingredientDTO.CocktailIngredientDTO;
+import seniv.dev.bartendershandbook.module.entity.ingredient.Category;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +13,7 @@ public class IngredientResponseDTO {
     private Double abv;
     private Category category;
     private String description;
+    //TODO: замінити список - сетом
     private List<CocktailIngredientDTO> cocktails = new ArrayList<>();
 
     public IngredientResponseDTO() {

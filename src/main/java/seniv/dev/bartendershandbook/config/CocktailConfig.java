@@ -4,8 +4,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
-import seniv.dev.bartendershandbook.module.cocktail.Cocktail;
-import seniv.dev.bartendershandbook.module.glass.Glass;
+import seniv.dev.bartendershandbook.module.entity.cocktail.Cocktail;
+import seniv.dev.bartendershandbook.module.entity.glass.Glass;
 import seniv.dev.bartendershandbook.repository.CocktailRepository;
 import seniv.dev.bartendershandbook.repository.GlassRepository;
 

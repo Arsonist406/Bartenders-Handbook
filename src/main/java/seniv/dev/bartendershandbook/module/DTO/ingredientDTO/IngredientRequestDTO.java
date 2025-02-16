@@ -1,14 +1,14 @@
-package seniv.dev.bartendershandbook.module.ingredientDTO;
+package seniv.dev.bartendershandbook.module.DTO.ingredientDTO;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import seniv.dev.bartendershandbook.module.cocktails_ingredientDTO.CocktailIngredientDTO;
-import seniv.dev.bartendershandbook.module.ingredient.Category;
-import seniv.dev.bartendershandbook.module.validation.Create;
-import seniv.dev.bartendershandbook.module.validation.Update;
+import seniv.dev.bartendershandbook.module.DTO.cocktails_ingredientDTO.CocktailIngredientDTO;
+import seniv.dev.bartendershandbook.module.entity.ingredient.Category;
+import seniv.dev.bartendershandbook.validation.Create;
+import seniv.dev.bartendershandbook.validation.Update;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,10 +28,12 @@ public class IngredientRequestDTO {
     //@Pattern(regexp = "SOLID|LIQUID", message = "Invalid category")
     private Category category;
 
+    @NotNull(groups = Create.class, message = "Can't be null")
     @Size(max = 2000, groups = {Create.class, Update.class}, message = "Description length max=2000 symbols")
     private String description;
 
     @Valid
+    //TODO: замінити список - сетом
     private List<CocktailIngredientDTO> cocktails  = new ArrayList<>();
 
     public IngredientRequestDTO() {}

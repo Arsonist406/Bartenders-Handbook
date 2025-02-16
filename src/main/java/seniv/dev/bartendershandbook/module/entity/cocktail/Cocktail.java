@@ -1,13 +1,11 @@
-package seniv.dev.bartendershandbook.module.cocktail;
+package seniv.dev.bartendershandbook.module.entity.cocktail;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Positive;
-import seniv.dev.bartendershandbook.module.cocktails_ingredient.CocktailIngredient;
-import seniv.dev.bartendershandbook.module.glass.Glass;
+import seniv.dev.bartendershandbook.module.entity.cocktailIngredient.CocktailIngredient;
+import seniv.dev.bartendershandbook.module.entity.glass.Glass;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -35,15 +33,17 @@ public class Cocktail {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "glass_id", referencedColumnName = "id", nullable = false)
+    //TODO: зробити сет; коктейль може подаватись у різних стаканах
     private Glass glass;
 
-    @Column(length = 2000)
+    @Column(nullable = false, length = 2000)
     private String description;
 
     @Column(nullable = false, length = 2000)
     private String recipe;
 
     @OneToMany(mappedBy = "cocktail", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    //TODO: замінити список - сетом
     private List<CocktailIngredient> ingredients = new ArrayList<>();
 
     public Cocktail() {}

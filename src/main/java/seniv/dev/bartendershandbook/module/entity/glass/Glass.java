@@ -1,4 +1,4 @@
-package seniv.dev.bartendershandbook.module.glass;
+package seniv.dev.bartendershandbook.module.entity.glass;
 
 import jakarta.persistence.*;
 

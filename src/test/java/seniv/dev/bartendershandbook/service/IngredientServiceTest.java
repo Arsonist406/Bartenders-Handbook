@@ -5,12 +5,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
-import seniv.dev.bartendershandbook.module.cocktail.Cocktail;
-import seniv.dev.bartendershandbook.module.cocktails_ingredient.CocktailIngredient;
-import seniv.dev.bartendershandbook.module.cocktails_ingredientDTO.CocktailIngredientDTO;
-import seniv.dev.bartendershandbook.module.ingredient.Ingredient;
-import seniv.dev.bartendershandbook.module.ingredientDTO.IngredientRequestDTO;
-import seniv.dev.bartendershandbook.module.ingredientDTO.IngredientResponseDTO;
+import seniv.dev.bartendershandbook.module.entity.cocktail.Cocktail;
+import seniv.dev.bartendershandbook.module.entity.cocktailIngredient.CocktailIngredient;
+import seniv.dev.bartendershandbook.module.DTO.cocktails_ingredientDTO.CocktailIngredientDTO;
+import seniv.dev.bartendershandbook.module.entity.ingredient.Ingredient;
+import seniv.dev.bartendershandbook.module.DTO.ingredientDTO.IngredientRequestDTO;
+import seniv.dev.bartendershandbook.module.DTO.ingredientDTO.IngredientResponseDTO;
 import seniv.dev.bartendershandbook.repository.CocktailRepository;
 import seniv.dev.bartendershandbook.repository.IngredientRepository;
 import seniv.dev.bartendershandbook.service.ingredientService.IngredientServiceImpl;
@@ -25,8 +25,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static seniv.dev.bartendershandbook.module.ingredient.Category.LIQUID;
-import static seniv.dev.bartendershandbook.module.ingredient.Category.SOLID;
+import static seniv.dev.bartendershandbook.module.entity.ingredient.Category.LIQUID;
+import static seniv.dev.bartendershandbook.module.entity.ingredient.Category.SOLID;
 
 @ExtendWith(MockitoExtension.class)
 public class IngredientServiceTest {
@@ -92,7 +92,7 @@ public class IngredientServiceTest {
     }
 
     @Test
-    public void testUpdateIngredient() {
+    public void testUpdateIngredientById() {
 
         Cocktail cocktail1 = new Cocktail();
         Cocktail cocktail2 = new Cocktail();
@@ -138,7 +138,7 @@ public class IngredientServiceTest {
         when(ingredientRepository.save(any(Ingredient.class)))
                 .thenAnswer(invocation -> invocation.getArgument(0));
 
-        IngredientResponseDTO actual = ingredientService.updateIngredient(1L, dto);
+        IngredientResponseDTO actual = ingredientService.updateIngredientById(1L, dto);
 
         assertEquals(dto.getName(), actual.getName());
         assertEquals(dto.getAbv(), actual.getAbv());
@@ -160,7 +160,7 @@ public class IngredientServiceTest {
         when(ingredientRepository.findByName(dto2.getName())).thenReturn(Optional.of(mockIngredient));
 
         assertThrows(IllegalArgumentException.class, () -> {
-            ingredientService.updateIngredient(1L, dto2);
+            ingredientService.updateIngredientById(1L, dto2);
         });
     }
 }

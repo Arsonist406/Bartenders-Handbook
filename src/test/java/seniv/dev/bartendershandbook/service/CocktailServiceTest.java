@@ -5,14 +5,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
-import seniv.dev.bartendershandbook.module.cocktail.Cocktail;
-import seniv.dev.bartendershandbook.module.cocktailDTO.CocktailRequestDTO;
-import seniv.dev.bartendershandbook.module.cocktailDTO.CocktailResponseDTO;
-import seniv.dev.bartendershandbook.module.cocktails_ingredient.CocktailIngredient;
-import seniv.dev.bartendershandbook.module.cocktails_ingredientDTO.CocktailIngredientDTO;
-import seniv.dev.bartendershandbook.module.glass.Glass;
-import seniv.dev.bartendershandbook.module.glassDTO.GlassDTO;
-import seniv.dev.bartendershandbook.module.ingredient.Ingredient;
+import seniv.dev.bartendershandbook.module.entity.cocktail.Cocktail;
+import seniv.dev.bartendershandbook.module.DTO.cocktailDTO.CocktailRequestDTO;
+import seniv.dev.bartendershandbook.module.DTO.cocktailDTO.CocktailResponseDTO;
+import seniv.dev.bartendershandbook.module.entity.cocktailIngredient.CocktailIngredient;
+import seniv.dev.bartendershandbook.module.DTO.cocktails_ingredientDTO.CocktailIngredientDTO;
+import seniv.dev.bartendershandbook.module.entity.glass.Glass;
+import seniv.dev.bartendershandbook.module.DTO.glassDTO.GlassDTO;
+import seniv.dev.bartendershandbook.module.entity.ingredient.Ingredient;
 import seniv.dev.bartendershandbook.repository.CocktailRepository;
 import seniv.dev.bartendershandbook.repository.GlassRepository;
 import seniv.dev.bartendershandbook.repository.IngredientRepository;
@@ -117,7 +117,7 @@ public class CocktailServiceTest {
     }
 
     @Test
-    public void testUpdateCocktail() {
+    public void testUpdateCocktailById() {
         Cocktail cocktail = new Cocktail();
 
         cocktail.setName("tCNameBefore");
@@ -191,7 +191,7 @@ public class CocktailServiceTest {
                 spyIngredients
         );
 
-        CocktailResponseDTO actual = cocktailService.updateCocktail(1L, dto);
+        CocktailResponseDTO actual = cocktailService.updateCocktailById(1L, dto);
 
         assertEquals(dto.getName(), actual.getName());
         assertEquals(dto.getVolume(), actual.getVolume());
@@ -218,7 +218,7 @@ public class CocktailServiceTest {
         when(cocktailRepository.findByName("tName2")).thenReturn(Optional.of(mockCocktail));
 
         assertThrows(IllegalArgumentException.class, () -> {
-            cocktailService.updateCocktail(1L, dto2);
+            cocktailService.updateCocktailById(1L, dto2);
         });
     }
 }
