@@ -26,12 +26,12 @@ public class GlassController {
     }
 
     @GetMapping("/")
-    public List<Glass> getAllGlasses() {
+    public List<GlassDTO> getAllGlasses() {
         return glassService.getAllGlasses();
     }
 
     @GetMapping("/search")
-    public List<Glass> searchGlasses(
+    public List<GlassDTO> searchGlasses(
             @RequestParam(required = false)
             @Size(min=1, max = 50, message = "min=1, max=50 symbols")
             String infix
@@ -40,14 +40,14 @@ public class GlassController {
     }
 
     @GetMapping("/{id}")
-    public Glass getGlassById(
+    public GlassDTO getGlassById(
             @PathVariable Long id
     ) {
         return glassService.getGlassById(id);
     }
 
     @PostMapping("/")
-    public Glass createGlass(
+    public GlassDTO createGlass(
             @RequestBody @Validated(Create.class) GlassDTO dto
     ) {
         return glassService.createGlass(dto);
@@ -64,7 +64,7 @@ public class GlassController {
     }
 
     @PutMapping("/{id}")
-    public Glass updateGlassById(
+    public GlassDTO updateGlassById(
             @PathVariable Long id,
             @RequestBody @Validated(Update.class) GlassDTO dto
     ) {

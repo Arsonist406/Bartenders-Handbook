@@ -12,11 +12,10 @@ public class Glass {
     @Column(nullable = false, length = 50, unique = true)
     private String name;
 
-    @Column(length = 2000)
+    @Column(nullable = false, length = 2000)
     private String description;
 
-    public Glass() {
-    }
+    public Glass() {}
 
     public Glass(String name, String description) {
         this.name = name;

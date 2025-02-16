@@ -8,16 +8,16 @@ import java.util.List;
 
 public interface GlassServiceImpl {
 
-    List<Glass> getAllGlasses();
+    List<GlassDTO> getAllGlasses();
 
-    List<Glass> searchGlasses(String infix);
+    List<GlassDTO> searchGlasses(String infix);
 
-    Glass getGlassById(Long id);
+    GlassDTO getGlassById(Long id);
 
-    Glass createGlass(GlassDTO dto);
+    GlassDTO createGlass(GlassDTO dto);
 
     void deleteGlassById(Long id);
 
     @Transactional
-    Glass updateGlassById(Long id, GlassDTO dto);
+    GlassDTO updateGlassById(Long id, GlassDTO dto);
 }
