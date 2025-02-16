@@ -1,6 +1,5 @@
 package seniv.dev.bartendershandbook.service.glassService;
 
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
