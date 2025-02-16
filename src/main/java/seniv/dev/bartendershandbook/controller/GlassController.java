@@ -1,18 +1,21 @@
 package seniv.dev.bartendershandbook.controller;
 
+import jakarta.validation.constraints.Size;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import seniv.dev.bartendershandbook.module.glass.Glass;
-import seniv.dev.bartendershandbook.module.glassDTO.GlassDTO;
-import seniv.dev.bartendershandbook.module.validation.Create;
-import seniv.dev.bartendershandbook.module.validation.Update;
+import seniv.dev.bartendershandbook.module.DTO.glassDTO.GlassDTO;
+import seniv.dev.bartendershandbook.module.entity.glass.Glass;
 import seniv.dev.bartendershandbook.service.glassService.GlassServiceImpl;
+import seniv.dev.bartendershandbook.validation.Create;
+import seniv.dev.bartendershandbook.validation.Update;
 
 import java.util.List;
 
+//TODO: зробити повернення glassDTO
 @RestController
-@RequestMapping("/api/glasses/")
+@RequestMapping("/api/glasses")
+@Validated
 public class GlassController {
 
     private final GlassServiceImpl glassService;
@@ -22,42 +25,37 @@ public class GlassController {
         this.glassService = glassService;
     }
 
-    @GetMapping("all")
+    @GetMapping("/")
     public List<Glass> getAllGlasses() {
         return glassService.getAllGlasses();
     }
 
-    @GetMapping("all/{infix}")
-    public List<Glass> getAllGlassesThatContainsInfix(
-            @PathVariable("infix") String infix
+    @GetMapping("/search")
+    public List<Glass> searchGlasses(
+            @RequestParam(required = false)
+            @Size(min=1, max = 50, message = "min=1, max=50 symbols")
+            String infix
     ) {
-        return glassService.getAllGlassesThatContainsInfix(infix);
+        return glassService.searchGlasses(infix);
     }
 
-    @GetMapping("id/{id}")
+    @GetMapping("/{id}")
     public Glass getGlassById(
-            @PathVariable("id") Long id
+            @PathVariable Long id
     ) {
         return glassService.getGlassById(id);
     }
 
-    @GetMapping("name/{name}")
-    public Glass getGlassByName(
-            @PathVariable("name") String name
-    ) {
-        return glassService.getGlassByName(name);
-    }
-
-    @PostMapping()
+    @PostMapping("/")
     public Glass createGlass(
             @RequestBody @Validated(Create.class) GlassDTO dto
     ) {
         return glassService.createGlass(dto);
     }
 
-    @DeleteMapping("id/{id}")
+    @DeleteMapping("/{id}")
     public void deleteGlassById(
-            @PathVariable("id") Long id
+            @PathVariable Long id
     ) {
         if (id == 1) {
             throw new IllegalArgumentException("Glass with id=1 can't be deleted");
@@ -65,24 +63,14 @@ public class GlassController {
         glassService.deleteGlassById(id);
     }
 
-    @DeleteMapping("name/{name}")
-    public void deleteGlassByName(
-            @PathVariable("name") String name
-    ) {
-        if (name.equals("Default Glass")) {
-            throw new IllegalArgumentException("Glass with name='Default Glass' can't be deleted");
-        }
-        glassService.deleteGlassByName(name);
-    }
-
-    @PutMapping("{id}")
-    public Glass updateGlass(
-            @PathVariable("id") Long id,
+    @PutMapping("/{id}")
+    public Glass updateGlassById(
+            @PathVariable Long id,
             @RequestBody @Validated(Update.class) GlassDTO dto
     ) {
         if (id == 1) {
             throw new IllegalArgumentException("Glass with id=1 can't be changed");
         }
-        return glassService.updateGlass(id, dto);
+        return glassService.updateGlassById(id, dto);
     }
 }

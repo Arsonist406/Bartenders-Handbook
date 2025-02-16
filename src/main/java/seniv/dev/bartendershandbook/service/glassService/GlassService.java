@@ -3,9 +3,9 @@ package seniv.dev.bartendershandbook.service.glassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import seniv.dev.bartendershandbook.module.cocktail.Cocktail;
-import seniv.dev.bartendershandbook.module.glass.Glass;
-import seniv.dev.bartendershandbook.module.glassDTO.GlassDTO;
+import seniv.dev.bartendershandbook.module.DTO.glassDTO.GlassDTO;
+import seniv.dev.bartendershandbook.module.entity.cocktail.Cocktail;
+import seniv.dev.bartendershandbook.module.entity.glass.Glass;
 import seniv.dev.bartendershandbook.repository.CocktailRepository;
 import seniv.dev.bartendershandbook.repository.GlassRepository;
 
@@ -15,7 +15,7 @@ import java.util.List;
 public class GlassService implements GlassServiceImpl {
 
     private final GlassRepository glassRepository;
-    private final CocktailRepository cocktailRepository;
+    private final CocktailRepository cocktailRepository;    //TODO: репозиторій поміняти на сервіс
 
     @Autowired
     public GlassService(GlassRepository glassRepository, CocktailRepository cocktailRepository) {
@@ -27,18 +27,13 @@ public class GlassService implements GlassServiceImpl {
         return glassRepository.findAll();
     }
 
-    public List<Glass> getAllGlassesThatContainsInfix(String infix) {
+    public List<Glass> searchGlasses(String infix) {
         return glassRepository.findByNameContaining(infix);
     }
 
     public Glass getGlassById(Long id) {
         return glassRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Glass not found by id=%s".formatted(id)));
-    }
-
-    public Glass getGlassByName(String name) {
-        return glassRepository.findByName(name)
-                .orElseThrow(() -> new IllegalArgumentException("Glass not found by name=%s".formatted(name)));
     }
 
     public Glass createGlass(GlassDTO dto) {
@@ -69,22 +64,8 @@ public class GlassService implements GlassServiceImpl {
         glassRepository.delete(glass);
     }
 
-    public void deleteGlassByName(String name) {
-        Glass glass = glassRepository.findByName(name)
-                .orElseThrow(() -> new IllegalArgumentException("Glass not found by name=%s".formatted(name)));
-
-        List<Cocktail> cocktails = cocktailRepository.findByGlass(glass);
-
-        Glass defaultGlass = glassRepository.findByName("Default Glass")
-                .orElseThrow(() -> new IllegalArgumentException("Default Glass not found"));
-
-        cocktails.forEach(c -> c.setGlass(defaultGlass));
-
-        glassRepository.delete(glass);
-    }
-
     @Transactional
-    public Glass updateGlass(Long id, GlassDTO dto) {
+    public Glass updateGlassById(Long id, GlassDTO dto) {
         Glass glass = glassRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Glass not found by id=%s".formatted(id)));
 
