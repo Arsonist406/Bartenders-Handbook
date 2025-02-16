@@ -11,6 +11,7 @@ import seniv.dev.bartendershandbook.module.entity.glass.Glass;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public interface CocktailRepository extends JpaRepository<Cocktail, Long> {
@@ -32,5 +33,5 @@ public interface CocktailRepository extends JpaRepository<Cocktail, Long> {
             BigDecimal abvBefore
     );
 
-    List<Cocktail> findByGlass(Glass glass);
+    List<Cocktail> findByGlassesContaining(Set<Glass> glasses);
 }

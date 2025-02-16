@@ -2,8 +2,8 @@ package seniv.dev.bartendershandbook.module.DTO.cocktailDTO;
 
 import seniv.dev.bartendershandbook.module.DTO.cocktails_ingredientDTO.CocktailIngredientDTO;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class CocktailResponseDTO {
 
@@ -11,20 +11,29 @@ public class CocktailResponseDTO {
     private String name;
     private Integer volume; // ml
     private Double abv;
-    private String glass;
+    private Set<String> glasses;
     private String description;
     private String recipe;
     //TODO: замінити список - сетом
-    private List<CocktailIngredientDTO> ingredients = new ArrayList<>();
+    private List<CocktailIngredientDTO> ingredients;
 
     public CocktailResponseDTO() {}
 
-    public CocktailResponseDTO(Long id, String name, Integer volume, Double abv, String glass, String description, String recipe, List<CocktailIngredientDTO> ingredients) {
+    public CocktailResponseDTO(
+            Long id,
+            String name,
+            Integer volume,
+            Double abv,
+            Set<String> glasses,
+            String description,
+            String recipe,
+            List<CocktailIngredientDTO> ingredients
+    ) {
         this.id = id;
         this.name = name;
         this.volume = volume;
         this.abv = abv;
-        this.glass = glass;
+        this.glasses = glasses;
         this.description = description;
         this.recipe = recipe;
         this.ingredients = ingredients;
@@ -46,8 +55,8 @@ public class CocktailResponseDTO {
         return abv;
     }
 
-    public String getGlass() {
-        return glass;
+    public Set<String> getGlasses() {
+        return glasses;
     }
 
     public String getDescription() {

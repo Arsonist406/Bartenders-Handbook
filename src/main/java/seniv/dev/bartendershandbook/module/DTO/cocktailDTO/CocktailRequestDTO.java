@@ -3,53 +3,58 @@ package seniv.dev.bartendershandbook.module.DTO.cocktailDTO;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import seniv.dev.bartendershandbook.module.DTO.cocktails_ingredientDTO.CocktailIngredientDTO;
-import seniv.dev.bartendershandbook.module.DTO.glassDTO.GlassDTO;
 import seniv.dev.bartendershandbook.validation.Create;
 import seniv.dev.bartendershandbook.validation.Update;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class CocktailRequestDTO {
 
     @NotNull(groups = Create.class, message = "Can't be null")
-    @Size(min = 2, max = 50, groups = {Create.class, Update.class}, message = "Name length min=2, max=50 symbols")
+    @Size(min = 2, max = 50, groups = {Create.class, Update.class}, message = "min=2, max=50 symbols")
     private String name;
 
     @NotNull(groups = Create.class, message = "Can't be null")
-    @Min(value = 1, groups = {Create.class, Update.class}, message = "Volume min=1" )
+    @Min(value = 1, groups = {Create.class, Update.class}, message = "min=1" )
     private Integer volume; // ml
 
     @NotNull(groups = Create.class, message = "Can't be null")
-    @DecimalMin(value = "0.00", groups = {Create.class, Update.class}, message = "Abv min=0.00")
-    @DecimalMax(value = "99.99", groups = {Create.class, Update.class}, message = "Abv max=99.99")
+    @DecimalMin(value = "0.00", groups = {Create.class, Update.class}, message = "min=0.00")
+    @DecimalMax(value = "99.99", groups = {Create.class, Update.class}, message = "max=99.99")
     private Double abv;
 
-    @Valid
     @NotNull(groups = Create.class, message = "Can't be null")
-    private GlassDTO glass;
+    private Set<String> glasses;
 
     @NotNull(groups = Create.class, message = "Can't be null")
-    @Size(max = 2000, groups = {Create.class, Update.class}, message = "Description length max=2000 symbols")
+    @Size(max = 2000, groups = {Create.class, Update.class}, message = "max=2000 symbols")
     private String description;
 
     @NotNull(groups = Create.class, message = "Can't be null")
-    @Size(max = 2000, groups = {Create.class, Update.class}, message = "Description length max=2000 symbols")
+    @Size(max = 2000, groups = {Create.class, Update.class}, message = "max=2000 symbols")
     private String recipe;
 
     @Valid
     @NotNull(groups = Create.class, message = "Can't be null")
-    @Size(min = 2, groups = {Create.class, Update.class}, message = "Ingredients size min=2")
     //TODO: замінити список - сетом
-    private List<CocktailIngredientDTO> ingredients = new ArrayList<>();
+    private List<CocktailIngredientDTO> ingredients;
 
     public CocktailRequestDTO() {}
 
-    public CocktailRequestDTO(String name, Integer volume, Double abv, GlassDTO glass, String description, String recipe, List<CocktailIngredientDTO> ingredients) {
+    public CocktailRequestDTO(
+            String name,
+            Integer volume,
+            Double abv,
+            Set<String> glasses,
+            String description,
+            String recipe,
+            List<CocktailIngredientDTO> ingredients
+    ) {
         this.name = name;
         this.volume = volume;
         this.abv = abv;
-        this.glass = glass;
+        this.glasses = glasses;
         this.description = description;
         this.recipe = recipe;
         this.ingredients = ingredients;
@@ -67,8 +72,8 @@ public class CocktailRequestDTO {
         return abv;
     }
 
-    public GlassDTO getGlass() {
-        return glass;
+    public Set<String> getGlasses() {
+        return glasses;
     }
 
     public String getDescription() {

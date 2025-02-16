@@ -1,6 +1,7 @@
 package seniv.dev.bartendershandbook.service.cocktailService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import seniv.dev.bartendershandbook.module.DTO.cocktailDTO.CocktailRequestDTO;
@@ -11,32 +12,31 @@ import seniv.dev.bartendershandbook.module.entity.cocktailIngredient.CocktailIng
 import seniv.dev.bartendershandbook.module.entity.glass.Glass;
 import seniv.dev.bartendershandbook.module.entity.ingredient.Ingredient;
 import seniv.dev.bartendershandbook.repository.CocktailRepository;
-import seniv.dev.bartendershandbook.repository.GlassRepository;
-import seniv.dev.bartendershandbook.repository.IngredientRepository;
+import seniv.dev.bartendershandbook.service.glassService.GlassServiceImpl;
+import seniv.dev.bartendershandbook.service.ingredientService.IngredientServiceImpl;
 
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.toList;
 
 @Service
 public class CocktailService implements CocktailServiceImpl {
 
     private final CocktailRepository cocktailRepository;
-    private final GlassRepository glassRepository;    //TODO: репозиторій поміняти на сервіс
-    private final IngredientRepository ingredientRepository;    //TODO: репозиторій поміняти на сервіс
+
+    private final GlassServiceImpl glassService;
+    private final IngredientServiceImpl ingredientService;
 
     @Autowired
     public CocktailService(
             CocktailRepository cocktailRepository,
-            GlassRepository glassRepository,
-            IngredientRepository ingredientRepository
+            @Lazy GlassServiceImpl glassService,
+            @Lazy IngredientServiceImpl ingredientService
     ) {
         this.cocktailRepository = cocktailRepository;
-        this.glassRepository = glassRepository;
-        this.ingredientRepository = ingredientRepository;
+        this.glassService = glassService;
+        this.ingredientService = ingredientService;
     }
 
     public List<CocktailResponseDTO> getAllCocktails() {
@@ -45,7 +45,11 @@ public class CocktailService implements CocktailServiceImpl {
         ).toList();
     }
 
-    public List<CocktailResponseDTO> searchCocktails(String infix, BigDecimal min, BigDecimal max) {
+    public List<CocktailResponseDTO> searchCocktails(
+            String infix,
+            BigDecimal min,
+            BigDecimal max
+    ) {
         if (infix == null) {
             infix = "";
         }
@@ -77,17 +81,17 @@ public class CocktailService implements CocktailServiceImpl {
             throw new IllegalArgumentException("name=%s is already taken".formatted(dto.getName()));
         });
 
-        Glass glass = glassRepository.findByName(dto.getGlass().getName())
-                .orElseThrow(() -> new IllegalArgumentException("Glass not found by name=%s".formatted(dto.getGlass().getName())));
+        Set<Glass> glasses = dto.getGlasses().stream().map(glassService::getGlassByName).collect(Collectors.toSet());
 
-        Cocktail cocktail = new Cocktail();
-
-        cocktail.setName(dto.getName());
-        cocktail.setVolume(dto.getVolume());
-        cocktail.setAbv(dto.getAbv());
-        cocktail.setGlass(glass);
-        cocktail.setDescription(dto.getDescription());
-        cocktail.setRecipe(dto.getRecipe());
+        Cocktail cocktail = new Cocktail(
+                dto.getName(),
+                dto.getVolume(),
+                dto.getAbv(),
+                glasses,
+                dto.getDescription(),
+                dto.getRecipe(),
+                new ArrayList<>()
+        );
 
         setCocktailRelations(cocktail, dto);
 
@@ -126,10 +130,12 @@ public class CocktailService implements CocktailServiceImpl {
             cocktail.setAbv(abv);
         }
 
-        String glassName = dto.getGlass().getName();
-        if (glassName != null && !glassName.equals(cocktail.getGlass().getName())) {
-            cocktail.setGlass(glassRepository.findByName(glassName)
-                    .orElseThrow(() -> new IllegalArgumentException("Glass not found by name=%s".formatted(glassName))));
+        Set<String> glassesName = dto.getGlasses();
+        if (glassesName != null) {
+            cocktail.getGlasses().clear();
+
+            cocktail.getGlasses().addAll(glassesName.stream()
+                    .map(glassService::getGlassByName).collect(Collectors.toSet()));
         }
 
         String description = dto.getDescription();
@@ -142,7 +148,7 @@ public class CocktailService implements CocktailServiceImpl {
             cocktail.setRecipe(recipe);
         }
 
-        if (dto.getIngredients() != null) {
+        if (!dto.getIngredients().isEmpty()) {
             removeAllCocktailRelations(cocktail);
 
             setCocktailRelations(cocktail, dto);
@@ -152,21 +158,33 @@ public class CocktailService implements CocktailServiceImpl {
     }
 
 
+    public List<Cocktail> getCocktailsByGlass(Glass glass) {
+        Set<Glass> glasses = new HashSet<>();
+        glasses.add(glass);
+        return cocktailRepository.findByGlassesContaining(glasses);
+    }
+
+    public List<Cocktail> getCocktailsIn(List<String> cocktailsName) {
+        return cocktailRepository.findByNameIn(cocktailsName);
+    }
+
+
     private CocktailResponseDTO createCocktailResponseDTO(Cocktail cocktail) {
         return new CocktailResponseDTO(
                 cocktail.getId(),
                 cocktail.getName(),
                 cocktail.getVolume(),
                 cocktail.getAbv(),
-                cocktail.getGlass().getName(),
+                cocktail.getGlasses().stream().map(
+                        Glass::getName
+                ).collect(Collectors.toSet()),
                 cocktail.getDescription(),
                 cocktail.getRecipe(),
                 cocktail.getIngredients().stream()
                         .map(ci -> new CocktailIngredientDTO(
                                 ci.getIngredient().getName(),
                                 ci.getAmount()
-                        ))
-                        .collect(toList())
+                        )).toList()
         );
     }
 
@@ -176,7 +194,7 @@ public class CocktailService implements CocktailServiceImpl {
                 .map(CocktailIngredientDTO::getName)
                 .toList();
 
-        Map<String, Ingredient> ingredientsMap = ingredientRepository.findByNameIn(ingredientsNames).stream()
+        Map<String, Ingredient> ingredientsMap = ingredientService.getIngredientsIn(ingredientsNames).stream()
                 .collect(Collectors.toMap(Ingredient::getName, ingredient -> ingredient));
 
         List<String> notFoundNames = ingredientsNames.stream()

@@ -10,7 +10,9 @@ import seniv.dev.bartendershandbook.repository.CocktailRepository;
 import seniv.dev.bartendershandbook.repository.GlassRepository;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Configuration
 public class CocktailConfig {
@@ -22,16 +24,55 @@ public class CocktailConfig {
             GlassRepository glassRepository
     ) {
         return (args) -> {
-            Glass mojitoGlass = glassRepository.findByName("Highball")
-                    .orElseThrow(() -> new IllegalStateException("Glass 'Highball' not found"));
-            Glass bloodyMaryGlass = glassRepository.findByName("Highball")
-                    .orElseThrow(() -> new IllegalStateException("Glass 'Highball' not found"));
-            Glass deathGlass = glassRepository.findByName("Martini")
-                    .orElseThrow(() -> new IllegalStateException("Glass 'Martini' not found"));
+            Set<Glass> mojitoGlasses = new HashSet<>();
+            mojitoGlasses.add(glassRepository.findByName("Default Glass")
+                    .orElseThrow(() -> new IllegalStateException("Glass 'Default Glass' not found")));
+            mojitoGlasses.add(glassRepository.findByName("Highball")
+                    .orElseThrow(() -> new IllegalStateException("Glass 'Highball' not found")));
+            mojitoGlasses.add(glassRepository.findByName("Hurricane")
+                    .orElseThrow(() -> new IllegalStateException("Glass 'Hurricane' not found")));
 
-            Cocktail mojito = new Cocktail("Mojito", 300, 14.0, mojitoGlass, "Refreshing rum-based cocktail", "Muddle mint leaves, lime, and sugar in a glass. Add rum and top with soda water. Serve with ice and garnish with mint.", new ArrayList<>());
-            Cocktail bloodyMary = new Cocktail("Bloody Mary", 400, 18.0, bloodyMaryGlass, "Spicy and savory vodka cocktail", "Mix vodka, tomato juice, lemon juice, Worcestershire sauce, Tabasco, salt, and pepper in a shaker. Pour into a glass filled with ice and garnish with celery.", new ArrayList<>());
-            Cocktail deathInTheAfternoon = new Cocktail("Death in the Afternoon", 200, 12.07, deathGlass, "A refreshing champagne cocktail", "Pour tequila into a glass and top with champagne. Stir gently and garnish with a lime wedge.", new ArrayList<>());
+
+            Set<Glass> bloodyMaryGlasses = new HashSet<>();
+            bloodyMaryGlasses.add(glassRepository.findByName("Default Glass")
+                    .orElseThrow(() -> new IllegalStateException("Glass 'Default Glass' not found")));
+            bloodyMaryGlasses.add(glassRepository.findByName("Highball")
+                    .orElseThrow(() -> new IllegalStateException("Glass 'Highball' not found")));
+
+
+            Set<Glass> deathGlasses = new HashSet<>();
+            deathGlasses.add(glassRepository.findByName("Default Glass")
+                    .orElseThrow(() -> new IllegalStateException("Glass 'Default Glass' not found")));
+            deathGlasses.add(glassRepository.findByName("Martini")
+                    .orElseThrow(() -> new IllegalStateException("Glass 'Martini' not found")));
+
+            Cocktail mojito = new Cocktail(
+                    "Mojito",
+                    300,
+                    14.0,
+                    mojitoGlasses,
+                    "Refreshing rum-based cocktail",
+                    "Muddle mint leaves, lime, and sugar in a glass. Add rum and top with soda water. Serve with ice and garnish with mint.",
+                    new ArrayList<>()
+            );
+            Cocktail bloodyMary = new Cocktail(
+                    "Bloody Mary",
+                    400,
+                    18.0,
+                    bloodyMaryGlasses,
+                    "Spicy and savory vodka cocktail",
+                    "Mix vodka, tomato juice, lemon juice, Worcestershire sauce, Tabasco, salt, and pepper in a shaker. Pour into a glass filled with ice and garnish with celery.",
+                    new ArrayList<>()
+            );
+            Cocktail deathInTheAfternoon = new Cocktail(
+                    "Death in the Afternoon",
+                    200,
+                    12.07,
+                    deathGlasses,
+                    "A refreshing champagne cocktail",
+                    "Pour tequila into a glass and top with champagne. Stir gently and garnish with a lime wedge.",
+                    new ArrayList<>()
+            );
 
             cocktailRepository.saveAll(List.of(mojito, bloodyMary, deathInTheAfternoon));
         };
