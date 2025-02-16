@@ -8,16 +8,19 @@ import seniv.dev.bartendershandbook.validation.Update;
 public class CocktailIngredientDTO {
 
     @NotNull(groups = {Create.class, Update.class}, message = "Can't be null")
-    @Size(min = 2, max = 50, groups = {Create.class, Update.class}, message = "Name length min=2, max=50 symbols")
+    @Size(min = 2, max = 50, groups = {Create.class, Update.class}, message = "min=2, max=50 symbols")
     private String name;
 
     @NotNull(groups = {Create.class, Update.class}, message = "Can't be null")
-    @Size(min = 2, max = 20, groups = {Create.class, Update.class}, message = "Amount length min=2, max=20 symbols")
+    @Size(max = 20, groups = {Create.class, Update.class}, message = "max=20 symbols")
     private String amount;
 
     public CocktailIngredientDTO() {}
 
-    public CocktailIngredientDTO(String name, String amount) {
+    public CocktailIngredientDTO(
+            String name,
+            String amount
+    ) {
         this.name = name;
         this.amount = amount;
     }

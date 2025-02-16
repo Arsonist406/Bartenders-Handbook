@@ -12,11 +12,19 @@ public class CocktailIngredient {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "cocktail_id", nullable = false)
+    @JoinColumn(
+            name = "cocktail_name",
+            referencedColumnName = "name",
+            nullable = false
+    )
     private Cocktail cocktail;
 
     @ManyToOne
-    @JoinColumn(name = "ingredient_id", nullable = false)
+    @JoinColumn(
+            name = "ingredient_name",
+            referencedColumnName = "name",
+            nullable = false
+    )
     private Ingredient ingredient;
 
     @Column(nullable = false, length = 20)
@@ -24,7 +32,11 @@ public class CocktailIngredient {
 
     public CocktailIngredient() {}
 
-    public CocktailIngredient(Cocktail cocktail, Ingredient ingredient, String amount) {
+    public CocktailIngredient(
+            Cocktail cocktail,
+            Ingredient ingredient,
+            String amount
+    ) {
         this.cocktail = cocktail;
         this.ingredient = ingredient;
         this.amount = amount;
