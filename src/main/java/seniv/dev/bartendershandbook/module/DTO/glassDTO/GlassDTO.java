@@ -9,16 +9,19 @@ import seniv.dev.bartendershandbook.validation.Update;
 public class GlassDTO {
 
     @NotNull(groups = Create.class, message = "Can't be null")
-    @Size(min = 2, max = 50, groups = {Create.class, Update.class}, message = "Name length min=2, max=50 symbols")
+    @Size(min = 2, max = 50, groups = {Create.class, Update.class}, message = "min=2, max=50 symbols")
     private String name;
 
     @NotNull(groups = Create.class, message = "Can't be null")
-    @Size(max = 2000, groups = {Create.class, Update.class}, message = "Description length max=2000 symbols")
+    @Size(max = 2000, groups = {Create.class, Update.class}, message = "max=2000 symbols")
     private String description;
 
     public GlassDTO() {}
 
-    public GlassDTO(String name, String description) {
+    public GlassDTO(
+            String name,
+            String description
+    ) {
         this.name = name;
         this.description = description;
     }

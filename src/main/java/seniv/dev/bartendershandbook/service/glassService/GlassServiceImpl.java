@@ -20,4 +20,6 @@ public interface GlassServiceImpl {
 
     @Transactional
     GlassDTO updateGlassById(Long id, GlassDTO dto);
+
+    Glass getGlassByName(String name);
 }

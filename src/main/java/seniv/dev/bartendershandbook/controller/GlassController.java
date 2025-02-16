@@ -5,14 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import seniv.dev.bartendershandbook.module.DTO.glassDTO.GlassDTO;
-import seniv.dev.bartendershandbook.module.entity.glass.Glass;
 import seniv.dev.bartendershandbook.service.glassService.GlassServiceImpl;
 import seniv.dev.bartendershandbook.validation.Create;
 import seniv.dev.bartendershandbook.validation.Update;
 
 import java.util.List;
 
-//TODO: зробити повернення glassDTO
 @RestController
 @RequestMapping("/api/glasses")
 @Validated
@@ -33,7 +31,7 @@ public class GlassController {
     @GetMapping("/search")
     public List<GlassDTO> searchGlasses(
             @RequestParam(required = false)
-            @Size(min=1, max = 50, message = "min=1, max=50 symbols")
+            @Size(min = 1, max = 50, message = "min=1, max=50 symbols")
             String infix
     ) {
         return glassService.searchGlasses(infix);
@@ -57,9 +55,6 @@ public class GlassController {
     public void deleteGlassById(
             @PathVariable Long id
     ) {
-        if (id == 1) {
-            throw new IllegalArgumentException("Glass with id=1 can't be deleted");
-        }
         glassService.deleteGlassById(id);
     }
 
@@ -68,9 +63,6 @@ public class GlassController {
             @PathVariable Long id,
             @RequestBody @Validated(Update.class) GlassDTO dto
     ) {
-        if (id == 1) {
-            throw new IllegalArgumentException("Glass with id=1 can't be changed");
-        }
         return glassService.updateGlassById(id, dto);
     }
 }
