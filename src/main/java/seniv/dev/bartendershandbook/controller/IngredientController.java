@@ -6,35 +6,34 @@ import jakarta.validation.constraints.Size;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import seniv.dev.bartendershandbook.module.DTO.ingredientDTO.IngredientRequestDTO;
-import seniv.dev.bartendershandbook.module.DTO.ingredientDTO.IngredientResponseDTO;
-import seniv.dev.bartendershandbook.module.entity.ingredient.Category;
-import seniv.dev.bartendershandbook.service.ingredientService.IngredientServiceImpl;
-import seniv.dev.bartendershandbook.validation.Create;
-import seniv.dev.bartendershandbook.validation.Update;
+import seniv.dev.bartendershandbook.module.dto.IngredientDTO;
+import seniv.dev.bartendershandbook.module.entity.IngredientCategory;
+import seniv.dev.bartendershandbook.service.IngredientService;
+import seniv.dev.bartendershandbook.validation.group.Create;
+import seniv.dev.bartendershandbook.validation.group.Update;
 
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/ingredients")
 @Validated
 public class IngredientController {
 
-    private final IngredientServiceImpl ingredientService;
+    private final IngredientService ingredientService;
 
     @Autowired
-    public IngredientController(IngredientServiceImpl ingredientService) {
+    public IngredientController(IngredientService ingredientService) {
         this.ingredientService = ingredientService;
     }
 
     @GetMapping("/")
-    public List<IngredientResponseDTO> getAllIngredients() {
+    public Set<IngredientDTO> getAllIngredients() {
         return ingredientService.getAllIngredients();
     }
 
     @GetMapping("/search")
-    public List<IngredientResponseDTO> searchIngredients(
+    public Set<IngredientDTO> searchIngredients(
             @RequestParam(required = false)
             @Size(min = 1, max = 50, message = "min=1, max=50 symbols")
             String infix,
@@ -50,21 +49,21 @@ public class IngredientController {
             BigDecimal max,
 
             @RequestParam(required = false)
-            Category category //todo: зробити перевірку на енум
+            IngredientCategory category
     ) {
         return ingredientService.searchIngredients(infix, min, max, category);
     }
 
     @GetMapping("/{id}")
-    public IngredientResponseDTO getIngredientById(
+    public IngredientDTO getIngredientById(
             @PathVariable Long id
     ) {
         return ingredientService.getIngredientById(id);
     }
 
     @PostMapping("/")
-    public IngredientResponseDTO createIngredient(
-            @RequestBody @Validated(Create.class) IngredientRequestDTO ingredient
+    public IngredientDTO createIngredient(
+            @RequestBody @Validated(Create.class) IngredientDTO ingredient
     ) {
         return ingredientService.createIngredient(ingredient);
     }
@@ -77,9 +76,9 @@ public class IngredientController {
     }
 
     @PutMapping("/{id}")
-    public IngredientResponseDTO updateIngredientById(
+    public IngredientDTO updateIngredientById(
             @PathVariable Long id,
-            @RequestBody @Validated(Update.class) IngredientRequestDTO ingredient
+            @RequestBody @Validated(Update.class) IngredientDTO ingredient
     ) {
         return ingredientService.updateIngredientById(id, ingredient);
     }

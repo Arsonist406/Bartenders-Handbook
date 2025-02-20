@@ -5,21 +5,21 @@ import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Size;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import seniv.dev.bartendershandbook.module.entity.ingredient.Category;
-import seniv.dev.bartendershandbook.module.entity.ingredient.Ingredient;
+import seniv.dev.bartendershandbook.module.entity.Ingredient;
+import seniv.dev.bartendershandbook.module.entity.IngredientCategory;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public interface IngredientRepository extends JpaRepository<Ingredient, Long> {
 
     Optional<Ingredient> findByName(String name);
 
-    List<Ingredient> findByNameIn(List<String> name);
+    Set<Ingredient> findByNameIn(Set<String> name);
 
-    List<Ingredient> findByNameContainingAndAbvBetweenAndCategory(
+    Set<Ingredient> findByNameContainingAndAbvBetweenAndCategory(
             @Size(min = 1, max = 50, message = "min=1, max=50 symbols")
             String infix,
 
@@ -31,6 +31,6 @@ public interface IngredientRepository extends JpaRepository<Ingredient, Long> {
             @DecimalMax(value = "99.99", message = "max=99.99")
             BigDecimal abvBefore,
 
-            Category category //todo: зробити перевірку на енум
+            IngredientCategory category
     );
 }

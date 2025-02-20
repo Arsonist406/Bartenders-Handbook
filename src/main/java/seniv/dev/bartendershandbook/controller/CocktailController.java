@@ -6,34 +6,34 @@ import jakarta.validation.constraints.Size;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import seniv.dev.bartendershandbook.module.DTO.cocktailDTO.CocktailRequestDTO;
-import seniv.dev.bartendershandbook.module.DTO.cocktailDTO.CocktailResponseDTO;
-import seniv.dev.bartendershandbook.service.cocktailService.CocktailServiceImpl;
-import seniv.dev.bartendershandbook.validation.Create;
-import seniv.dev.bartendershandbook.validation.Update;
+import seniv.dev.bartendershandbook.module.dto.CocktailDTO;
+import seniv.dev.bartendershandbook.service.CocktailService;
+import seniv.dev.bartendershandbook.validation.group.Create;
+import seniv.dev.bartendershandbook.validation.group.Update;
 
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/cocktails")
 @Validated
 public class CocktailController {
 
-    private final CocktailServiceImpl cocktailService;
+    private final CocktailService cocktailService;
 
     @Autowired
-    public CocktailController(CocktailServiceImpl cocktailService) {
+    public CocktailController(CocktailService cocktailService) {
         this.cocktailService = cocktailService;
     }
 
     @GetMapping("/")
-    public List<CocktailResponseDTO> getAllCocktails() {
+    public Set<CocktailDTO> getAllCocktails() {
         return cocktailService.getAllCocktails();
     }
 
+    //todo: searchDTO
     @GetMapping("/search")
-    public List<CocktailResponseDTO> searchCocktails(
+    public Set<CocktailDTO> searchCocktails(
             @RequestParam(required = false)
             @Size(min = 1, max = 50, message = "min=1, max=50 symbols")
             String infix,
@@ -52,15 +52,15 @@ public class CocktailController {
     }
 
     @GetMapping("/{id}")
-    public CocktailResponseDTO getCocktailById(
+    public CocktailDTO getCocktailById(
             @PathVariable Long id
     ) {
         return cocktailService.getCocktailById(id);
     }
 
     @PostMapping("/")
-    public CocktailResponseDTO createCocktail(
-            @RequestBody @Validated(Create.class) CocktailRequestDTO cocktail
+    public CocktailDTO createCocktail(
+            @RequestBody @Validated(Create.class) CocktailDTO cocktail
     ) {
         return cocktailService.createCocktail(cocktail);
     }
@@ -73,9 +73,9 @@ public class CocktailController {
     }
 
     @PutMapping("/{id}")
-    public CocktailResponseDTO updateCocktailById(
+    public CocktailDTO updateCocktailById(
             @PathVariable Long id,
-            @RequestBody @Validated(Update.class) CocktailRequestDTO cocktail
+            @RequestBody @Validated(Update.class) CocktailDTO cocktail
     ) {
         return cocktailService.updateCocktailById(id, cocktail);
     }

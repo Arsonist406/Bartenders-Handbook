@@ -4,32 +4,33 @@ import jakarta.validation.constraints.Size;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import seniv.dev.bartendershandbook.module.DTO.glassDTO.GlassDTO;
-import seniv.dev.bartendershandbook.service.glassService.GlassServiceImpl;
-import seniv.dev.bartendershandbook.validation.Create;
-import seniv.dev.bartendershandbook.validation.Update;
+import seniv.dev.bartendershandbook.module.dto.GlassDTO;
+import seniv.dev.bartendershandbook.service.GlassService;
+import seniv.dev.bartendershandbook.validation.group.Create;
+import seniv.dev.bartendershandbook.validation.group.Update;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/glasses")
 @Validated
 public class GlassController {
 
-    private final GlassServiceImpl glassService;
+    private final GlassService glassService;
 
     @Autowired
-    public GlassController(GlassServiceImpl glassService) {
+    public GlassController(GlassService glassService) {
         this.glassService = glassService;
     }
 
     @GetMapping("/")
-    public List<GlassDTO> getAllGlasses() {
+    public Set<GlassDTO> getAllGlasses() {
         return glassService.getAllGlasses();
     }
 
     @GetMapping("/search")
-    public List<GlassDTO> searchGlasses(
+    public Set<GlassDTO> searchGlasses(
             @RequestParam(required = false)
             @Size(min = 1, max = 50, message = "min=1, max=50 symbols")
             String infix

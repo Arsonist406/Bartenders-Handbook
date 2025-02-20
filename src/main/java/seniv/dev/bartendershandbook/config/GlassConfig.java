@@ -4,7 +4,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
-import seniv.dev.bartendershandbook.module.entity.glass.Glass;
+import seniv.dev.bartendershandbook.module.entity.Glass;
 import seniv.dev.bartendershandbook.repository.GlassRepository;
 
 import java.util.HashSet;

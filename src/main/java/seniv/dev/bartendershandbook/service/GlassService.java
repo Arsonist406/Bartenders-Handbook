@@ -1,16 +1,17 @@
-package seniv.dev.bartendershandbook.service.glassService;
+package seniv.dev.bartendershandbook.service;
 
 import org.springframework.transaction.annotation.Transactional;
-import seniv.dev.bartendershandbook.module.DTO.glassDTO.GlassDTO;
-import seniv.dev.bartendershandbook.module.entity.glass.Glass;
+import seniv.dev.bartendershandbook.module.dto.GlassDTO;
+import seniv.dev.bartendershandbook.module.entity.Glass;
 
 import java.util.List;
+import java.util.Set;
 
-public interface GlassServiceImpl {
+public interface GlassService {
 
-    List<GlassDTO> getAllGlasses();
+    Set<GlassDTO> getAllGlasses();
 
-    List<GlassDTO> searchGlasses(String infix);
+    Set<GlassDTO> searchGlasses(String infix);
 
     GlassDTO getGlassById(Long id);
 
@@ -20,6 +21,7 @@ public interface GlassServiceImpl {
 
     @Transactional
     GlassDTO updateGlassById(Long id, GlassDTO dto);
+
 
     Glass getGlassByName(String name);
 }

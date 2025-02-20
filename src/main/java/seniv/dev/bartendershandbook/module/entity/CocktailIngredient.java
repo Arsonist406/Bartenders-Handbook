@@ -1,12 +1,16 @@
-package seniv.dev.bartendershandbook.module.entity.cocktailIngredient;
+package seniv.dev.bartendershandbook.module.entity;
 
 import jakarta.persistence.*;
-import seniv.dev.bartendershandbook.module.entity.cocktail.Cocktail;
-import seniv.dev.bartendershandbook.module.entity.ingredient.Ingredient;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Table(name = "cocktails_ingredients")
+@Getter
+@Setter
+@NoArgsConstructor
 public class CocktailIngredient {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -30,8 +34,6 @@ public class CocktailIngredient {
     @Column(nullable = false, length = 20)
     private String amount;
 
-    public CocktailIngredient() {}
-
     public CocktailIngredient(
             Cocktail cocktail,
             Ingredient ingredient,
@@ -39,34 +41,6 @@ public class CocktailIngredient {
     ) {
         this.cocktail = cocktail;
         this.ingredient = ingredient;
-        this.amount = amount;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public Cocktail getCocktail() {
-        return cocktail;
-    }
-
-    public Ingredient getIngredient() {
-        return ingredient;
-    }
-
-    public String getAmount() {
-        return amount;
-    }
-
-    public void setCocktail(Cocktail cocktail) {
-        this.cocktail = cocktail;
-    }
-
-    public void setIngredient(Ingredient ingredient) {
-        this.ingredient = ingredient;
-    }
-
-    public void setAmount(String amount) {
         this.amount = amount;
     }
 }

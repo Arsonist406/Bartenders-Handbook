@@ -4,12 +4,12 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
-import seniv.dev.bartendershandbook.module.entity.cocktail.Cocktail;
-import seniv.dev.bartendershandbook.module.entity.glass.Glass;
+import seniv.dev.bartendershandbook.module.entity.Cocktail;
+import seniv.dev.bartendershandbook.module.entity.Glass;
 import seniv.dev.bartendershandbook.repository.CocktailRepository;
 import seniv.dev.bartendershandbook.repository.GlassRepository;
 
-import java.util.ArrayList;
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -49,29 +49,29 @@ public class CocktailConfig {
             Cocktail mojito = new Cocktail(
                     "Mojito",
                     300,
-                    14.0,
+                    BigDecimal.valueOf(14.0),
                     mojitoGlasses,
                     "Refreshing rum-based cocktail",
                     "Muddle mint leaves, lime, and sugar in a glass. Add rum and top with soda water. Serve with ice and garnish with mint.",
-                    new ArrayList<>()
+                    new HashSet<>()
             );
             Cocktail bloodyMary = new Cocktail(
                     "Bloody Mary",
                     400,
-                    18.0,
+                    BigDecimal.valueOf(18.0),
                     bloodyMaryGlasses,
                     "Spicy and savory vodka cocktail",
                     "Mix vodka, tomato juice, lemon juice, Worcestershire sauce, Tabasco, salt, and pepper in a shaker. Pour into a glass filled with ice and garnish with celery.",
-                    new ArrayList<>()
+                    new HashSet<>()
             );
             Cocktail deathInTheAfternoon = new Cocktail(
                     "Death in the Afternoon",
                     200,
-                    12.07,
+                    BigDecimal.valueOf(12.07),
                     deathGlasses,
                     "A refreshing champagne cocktail",
                     "Pour tequila into a glass and top with champagne. Stir gently and garnish with a lime wedge.",
-                    new ArrayList<>()
+                    new HashSet<>()
             );
 
             cocktailRepository.saveAll(List.of(mojito, bloodyMary, deathInTheAfternoon));

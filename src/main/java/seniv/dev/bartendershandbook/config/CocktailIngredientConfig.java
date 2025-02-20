@@ -4,9 +4,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
-import seniv.dev.bartendershandbook.module.entity.cocktail.Cocktail;
-import seniv.dev.bartendershandbook.module.entity.cocktailIngredient.CocktailIngredient;
-import seniv.dev.bartendershandbook.module.entity.ingredient.Ingredient;
+import seniv.dev.bartendershandbook.module.entity.Cocktail;
+import seniv.dev.bartendershandbook.module.entity.CocktailIngredient;
+import seniv.dev.bartendershandbook.module.entity.Ingredient;
 import seniv.dev.bartendershandbook.repository.CocktailIngredientRepository;
 import seniv.dev.bartendershandbook.repository.CocktailRepository;
 import seniv.dev.bartendershandbook.repository.IngredientRepository;
@@ -30,33 +30,33 @@ public class CocktailIngredientConfig {
                     .orElseThrow(() -> new IllegalStateException("Death in the Afternoon not found"));
 
             Ingredient rum = ingredientRepository.findByName("Rum")
-                    .orElseThrow(() -> new IllegalStateException("Mojito not found"));
+                    .orElseThrow(() -> new IllegalStateException("Rum not found"));
             Ingredient limeJuice = ingredientRepository.findByName("Lime Juice")
-                    .orElseThrow(() -> new IllegalStateException("Mojito not found"));
+                    .orElseThrow(() -> new IllegalStateException("Lime Juice not found"));
             Ingredient mintLeaves = ingredientRepository.findByName("Mint Leaves")
-                    .orElseThrow(() -> new IllegalStateException("Mojito not found"));
+                    .orElseThrow(() -> new IllegalStateException("Mint Leaves not found"));
             Ingredient sugar = ingredientRepository.findByName("Sugar")
-                    .orElseThrow(() -> new IllegalStateException("Mojito not found"));
+                    .orElseThrow(() -> new IllegalStateException("Sugar not found"));
             Ingredient sodaWater = ingredientRepository.findByName("Soda Water")
-                    .orElseThrow(() -> new IllegalStateException("Mojito not found"));
-            Ingredient vodka = ingredientRepository.findByName("Vodka")
-                    .orElseThrow(() -> new IllegalStateException("Mojito not found"));
+                    .orElseThrow(() -> new IllegalStateException("Soda Water not found"));
+            Ingredient vodka = ingredientRepository.findByName("Horilka")
+                    .orElseThrow(() -> new IllegalStateException("Horilka not found"));
             Ingredient tomatoJuice = ingredientRepository.findByName("Tomato Juice")
-                    .orElseThrow(() -> new IllegalStateException("Mojito not found"));
+                    .orElseThrow(() -> new IllegalStateException("Tomato Juice not found"));
             Ingredient lemonJuice = ingredientRepository.findByName("Lemon Juice")
-                    .orElseThrow(() -> new IllegalStateException("Mojito not found"));
+                    .orElseThrow(() -> new IllegalStateException("Lemon Juice not found"));
             Ingredient worcestershireSauce = ingredientRepository.findByName("Worcestershire Sauce")
-                    .orElseThrow(() -> new IllegalStateException("Mojito not found"));
+                    .orElseThrow(() -> new IllegalStateException("Worcestershire Sauce not found"));
             Ingredient tabasco = ingredientRepository.findByName("Tabasco")
-                    .orElseThrow(() -> new IllegalStateException("Mojito not found"));
+                    .orElseThrow(() -> new IllegalStateException("Tabasco not found"));
             Ingredient salt = ingredientRepository.findByName("Salt")
-                    .orElseThrow(() -> new IllegalStateException("Mojito not found"));
+                    .orElseThrow(() -> new IllegalStateException("Salt not found"));
             Ingredient pepper = ingredientRepository.findByName("Pepper")
-                    .orElseThrow(() -> new IllegalStateException("Mojito not found"));
+                    .orElseThrow(() -> new IllegalStateException("Pepper not found"));
             Ingredient tequila = ingredientRepository.findByName("Tequila")
-                    .orElseThrow(() -> new IllegalStateException("Mojito not found"));
+                    .orElseThrow(() -> new IllegalStateException("Tequila not found"));
             Ingredient champagne = ingredientRepository.findByName("Champagne")
-                    .orElseThrow(() -> new IllegalStateException("Mojito not found"));
+                    .orElseThrow(() -> new IllegalStateException("Champagne not found"));
 
             CocktailIngredient mojitoRum = new CocktailIngredient(mojito, rum, "50ml");
             CocktailIngredient mojitoLimeJuice = new CocktailIngredient(mojito, limeJuice, "25ml");
