@@ -9,7 +9,6 @@ import seniv.dev.bartendershandbook.service.GlassService;
 import seniv.dev.bartendershandbook.validation.group.Create;
 import seniv.dev.bartendershandbook.validation.group.Update;
 
-import java.util.List;
 import java.util.Set;
 
 @RestController

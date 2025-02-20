@@ -4,7 +4,6 @@ import org.springframework.transaction.annotation.Transactional;
 import seniv.dev.bartendershandbook.module.dto.GlassDTO;
 import seniv.dev.bartendershandbook.module.entity.Glass;
 
-import java.util.List;
 import java.util.Set;
 
 public interface GlassService {
