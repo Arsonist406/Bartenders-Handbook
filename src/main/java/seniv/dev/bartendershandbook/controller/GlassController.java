@@ -24,14 +24,9 @@ public class GlassController {
     }
 
     @GetMapping("/")
-    public Set<GlassDTO> getAllGlasses() {
-        return glassService.getAllGlasses();
-    }
-
-    @GetMapping("/search")
     public Set<GlassDTO> searchGlasses(
-            @RequestParam(required = false)
-            @Size(min = 1, max = 50, message = "min=1, max=50 symbols")
+            @RequestParam(defaultValue = "")
+            @Size(max = 50, message = "max=50 symbols")
             String infix
     ) {
         return glassService.searchGlasses(infix);

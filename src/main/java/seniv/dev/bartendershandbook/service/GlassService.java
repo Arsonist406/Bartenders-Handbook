@@ -8,8 +8,6 @@ import java.util.Set;
 
 public interface GlassService {
 
-    Set<GlassDTO> getAllGlasses();
-
     Set<GlassDTO> searchGlasses(String infix);
 
     GlassDTO getGlassById(Long id);

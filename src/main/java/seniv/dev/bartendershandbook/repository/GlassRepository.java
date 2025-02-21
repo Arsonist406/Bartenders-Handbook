@@ -14,7 +14,7 @@ public interface GlassRepository extends JpaRepository<Glass, Long> {
     Optional<Glass> findByName(String name);
 
     Set<Glass> findByNameContaining(
-            @Size(min = 1, max = 50, message = "min=1, max=50 symbols")
+            @Size(max = 50, message = "max=50 symbols")
             String infix
     );
 }

@@ -34,18 +34,7 @@ public class GlassServiceImpl implements GlassService {
         this.glassMapper = glassMapper;
     }
 
-    public Set<GlassDTO> getAllGlasses() {
-        return glassRepository.findAll()
-                .stream()
-                .map(glassMapper::glassToGlassDTO)
-                .collect(Collectors.toSet());
-    }
-
     public Set<GlassDTO> searchGlasses(String infix) {
-        if (infix == null) {
-            infix = "";
-        }
-
         return glassRepository.findByNameContaining(infix)
                 .stream()
                 .map(glassMapper::glassToGlassDTO)
