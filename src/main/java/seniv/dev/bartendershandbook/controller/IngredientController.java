@@ -28,30 +28,22 @@ public class IngredientController {
     }
 
     @GetMapping("/")
-    public Set<IngredientDTO> getAllIngredients() {
-        return ingredientService.getAllIngredients();
-    }
-
-    @GetMapping("/search")
     public Set<IngredientDTO> searchIngredients(
-            @RequestParam(required = false)
-            @Size(min = 1, max = 50, message = "min=1, max=50 symbols")
+            @RequestParam(defaultValue = "")
+            @Size(max = 50, message = "max=50 symbols")
             String infix,
 
-            @RequestParam(required = false)
+            @RequestParam(defaultValue = "0.00")
             @DecimalMin(value = "0.00", message = "min=0.00")
             @DecimalMax(value = "99.99", message = "max=99.99")
             BigDecimal min,
 
-            @RequestParam(required = false)
+            @RequestParam(defaultValue = "99.99")
             @DecimalMin(value = "0.00", message = "min=0.00")
             @DecimalMax(value = "99.99", message = "max=99.99")
-            BigDecimal max,
-
-            @RequestParam(required = false)
-            IngredientCategory category
+            BigDecimal max
     ) {
-        return ingredientService.searchIngredients(infix, min, max, category);
+        return ingredientService.searchIngredients(infix, min, max);
     }
 
     @GetMapping("/{id}")

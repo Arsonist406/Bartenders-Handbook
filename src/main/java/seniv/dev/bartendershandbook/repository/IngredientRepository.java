@@ -19,8 +19,8 @@ public interface IngredientRepository extends JpaRepository<Ingredient, Long> {
 
     Set<Ingredient> findByNameIn(Set<String> name);
 
-    Set<Ingredient> findByNameContainingAndAbvBetweenAndCategory(
-            @Size(min = 1, max = 50, message = "min=1, max=50 symbols")
+    Set<Ingredient> findByNameContainingAndAbvBetween(
+            @Size(max = 50, message = "max=50 symbols")
             String infix,
 
             @DecimalMin(value = "0.00", message = "min=0.00")
@@ -29,8 +29,6 @@ public interface IngredientRepository extends JpaRepository<Ingredient, Long> {
 
             @DecimalMin(value = "0.00", message = "min=0.00")
             @DecimalMax(value = "99.99", message = "max=99.99")
-            BigDecimal abvBefore,
-
-            IngredientCategory category
+            BigDecimal abvBefore
     );
 }

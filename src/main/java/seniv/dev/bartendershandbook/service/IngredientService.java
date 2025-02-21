@@ -10,9 +10,7 @@ import java.util.Set;
 
 public interface IngredientService {
 
-    Set<IngredientDTO> getAllIngredients();
-
-    Set<IngredientDTO> searchIngredients(String infix, BigDecimal min, BigDecimal max, IngredientCategory category);
+    Set<IngredientDTO> searchIngredients(String infix, BigDecimal min, BigDecimal max);
 
     IngredientDTO getIngredientById(Long id);
 

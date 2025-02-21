@@ -42,33 +42,16 @@ public class IngredientServiceImpl implements IngredientService {
         this.ingredientMapper = ingredientMapper;
     }
 
-    public Set<IngredientDTO> getAllIngredients() {
-        return ingredientRepository.findAll()
-                .stream()
-                .map(ingredientMapper::ingredientToIngredientDTO)
-                .collect(Collectors.toSet());
-    }
-
     public Set<IngredientDTO> searchIngredients(
             String infix,
             BigDecimal min,
-            BigDecimal max,
-            IngredientCategory category
+            BigDecimal max
     ) {
-        if (infix == null) {
-            infix = "";
-        }
-        if (min == null) {
-            min = BigDecimal.valueOf(0.00);
-        }
-        if (max == null) {
-            max = BigDecimal.valueOf(99.99);
-        }
         if (Double.parseDouble(String.valueOf(min)) > (Double.parseDouble(String.valueOf(max)))) {
             throw new MinMaxException("min must be smaller than max");
         }
 
-       return ingredientRepository.findByNameContainingAndAbvBetweenAndCategory(infix, min, max, category)
+       return ingredientRepository.findByNameContainingAndAbvBetween(infix, min, max)
                .stream()
                .map(ingredientMapper::ingredientToIngredientDTO)
                .collect(Collectors.toSet());
