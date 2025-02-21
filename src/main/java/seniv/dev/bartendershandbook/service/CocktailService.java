@@ -10,8 +10,6 @@ import java.util.Set;
 
 public interface CocktailService {
 
-    Set<CocktailDTO> getAllCocktails();
-
     Set<CocktailDTO> searchCocktails(String infix, BigDecimal min, BigDecimal max);
 
     CocktailDTO getCocktailById(Long id);

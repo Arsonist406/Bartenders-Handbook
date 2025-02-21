@@ -20,7 +20,7 @@ public interface CocktailRepository extends JpaRepository<Cocktail, Long> {
     Set<Cocktail> findByNameIn(Set<String> name);
 
     Set<Cocktail> findByNameContainingAndAbvBetween(
-            @Size(min = 1, max = 50, message = "min=1, max=50 symbols")
+            @Size(max = 50, message = "max=50 symbols")
             String infix,
 
             @DecimalMin(value = "0.00", message = "min=0.00")

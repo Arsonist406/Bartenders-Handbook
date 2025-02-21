@@ -26,24 +26,19 @@ public class CocktailController {
         this.cocktailService = cocktailService;
     }
 
-    @GetMapping("/")
-    public Set<CocktailDTO> getAllCocktails() {
-        return cocktailService.getAllCocktails();
-    }
-
     //todo: searchDTO
-    @GetMapping("/search")
+    @GetMapping("/")
     public Set<CocktailDTO> searchCocktails(
-            @RequestParam(required = false)
-            @Size(min = 1, max = 50, message = "min=1, max=50 symbols")
+            @RequestParam(defaultValue = "")
+            @Size(max = 50, message = "max=50 symbols")
             String infix,
 
-            @RequestParam(required = false)
+            @RequestParam(defaultValue = "0.00")
             @DecimalMin(value = "0.00", message = "min=0.00")
             @DecimalMax(value = "99.99", message = "max=99.99")
             BigDecimal min,
 
-            @RequestParam(required = false)
+            @RequestParam(defaultValue = "99.99")
             @DecimalMin(value = "0.00", message = "min=0.00")
             @DecimalMax(value = "99.99", message = "max=99.99")
             BigDecimal max

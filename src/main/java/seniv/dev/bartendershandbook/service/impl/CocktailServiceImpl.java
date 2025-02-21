@@ -49,27 +49,11 @@ public class CocktailServiceImpl implements CocktailService {
         this.cocktailMapper = cocktailMapper;
     }
 
-    public Set<CocktailDTO> getAllCocktails() {
-        return cocktailRepository.findAll()
-                .stream()
-                .map(cocktailMapper::cocktailToCocktailDTO)
-                .collect(Collectors.toSet());
-    }
-
     public Set<CocktailDTO> searchCocktails(
             String infix,
             BigDecimal min,
             BigDecimal max
     ) {
-        if (infix == null) {
-            infix = "";
-        }
-        if (min == null) {
-            min = BigDecimal.valueOf(0.00);
-        }
-        if (max == null) {
-            max = BigDecimal.valueOf(99.99);
-        }
         if (Double.parseDouble(String.valueOf(min)) > (Double.parseDouble(String.valueOf(max)))) {
             throw new MinMaxException("min must be smaller than max");
         }
