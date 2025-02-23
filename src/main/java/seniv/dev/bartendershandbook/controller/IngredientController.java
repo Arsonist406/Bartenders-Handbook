@@ -55,7 +55,7 @@ public class IngredientController {
 
     @PostMapping("/")
     public IngredientDTO createIngredient(
-            @RequestBody @Validated(Create.class) IngredientDTO ingredient
+            @RequestBody @Validated(CreateGroup.class) IngredientDTO ingredient
     ) {
         return ingredientService.createIngredient(ingredient);
     }
@@ -70,7 +70,7 @@ public class IngredientController {
     @PutMapping("/{id}")
     public IngredientDTO updateIngredientById(
             @PathVariable Long id,
-            @RequestBody @Validated(Update.class) IngredientDTO ingredient
+            @RequestBody @Validated(UpdateGroup.class) IngredientDTO ingredient
     ) {
         return ingredientService.updateIngredientById(id, ingredient);
     }

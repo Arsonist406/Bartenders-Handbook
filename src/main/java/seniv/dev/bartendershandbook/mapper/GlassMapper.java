@@ -2,6 +2,7 @@ package seniv.dev.bartendershandbook.mapper;
 
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import seniv.dev.bartendershandbook.module.dto.GlassDTO;
 import seniv.dev.bartendershandbook.module.entity.Glass;
@@ -13,6 +14,7 @@ public abstract class GlassMapper {
 
     public abstract GlassDTO glassToGlassDTO(Glass glass);
 
+    @Mapping(target = "id", ignore = true)
     public abstract Glass glassDTOtoGlass(GlassDTO dto);
 
     @AfterMapping

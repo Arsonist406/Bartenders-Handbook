@@ -55,7 +55,7 @@ public class CocktailController {
 
     @PostMapping("/")
     public CocktailDTO createCocktail(
-            @RequestBody @Validated(Create.class) CocktailDTO cocktail
+            @RequestBody @Validated(CreateGroup.class) CocktailDTO cocktail
     ) {
         return cocktailService.createCocktail(cocktail);
     }
@@ -70,7 +70,7 @@ public class CocktailController {
     @PutMapping("/{id}")
     public CocktailDTO updateCocktailById(
             @PathVariable Long id,
-            @RequestBody @Validated(Update.class) CocktailDTO cocktail
+            @RequestBody @Validated(UpdateGroup.class) CocktailDTO cocktail
     ) {
         return cocktailService.updateCocktailById(id, cocktail);
     }

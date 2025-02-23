@@ -37,6 +37,7 @@ public abstract class CocktailMapper {
     @Mapping(target = "name", source = "ingredient.name")
     public abstract CocktailIngredientDTO cocktailIngredientToCocktailIngredientDTO(CocktailIngredient ci);
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "glasses", qualifiedByName = "findGlassesByName")
     @Mapping(target = "ingredients", ignore = true)
     public abstract Cocktail cocktailDTOtoCocktail(CocktailDTO dto);

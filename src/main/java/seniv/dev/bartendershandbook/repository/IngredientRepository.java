@@ -6,7 +6,6 @@ import jakarta.validation.constraints.Size;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import seniv.dev.bartendershandbook.module.entity.Ingredient;
-import seniv.dev.bartendershandbook.module.entity.IngredientCategory;
 
 import java.math.BigDecimal;
 import java.util.Optional;

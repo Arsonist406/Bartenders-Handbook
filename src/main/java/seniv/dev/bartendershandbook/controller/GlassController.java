@@ -41,7 +41,7 @@ public class GlassController {
 
     @PostMapping("/")
     public GlassDTO createGlass(
-            @RequestBody @Validated(Create.class) GlassDTO dto
+            @RequestBody @Validated(CreateGroup.class) GlassDTO dto
     ) {
         return glassService.createGlass(dto);
     }
@@ -56,7 +56,7 @@ public class GlassController {
     @PutMapping("/{id}")
     public GlassDTO updateGlassById(
             @PathVariable Long id,
-            @RequestBody @Validated(Update.class) GlassDTO dto
+            @RequestBody @Validated(UpdateGroup.class) GlassDTO dto
     ) {
         return glassService.updateGlassById(id, dto);
     }

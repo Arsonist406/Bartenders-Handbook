@@ -19,7 +19,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-//TODO: подумати над іншими ExceptionHandler
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
