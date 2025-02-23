@@ -8,6 +8,7 @@ import seniv.dev.bartendershandbook.exceptionHandler.exception.IsAlreadyTakenExc
 import seniv.dev.bartendershandbook.exceptionHandler.exception.NotFoundByException;
 import seniv.dev.bartendershandbook.mapper.GlassMapper;
 import seniv.dev.bartendershandbook.module.dto.GlassDTO;
+import seniv.dev.bartendershandbook.module.dto.SearchDTO;
 import seniv.dev.bartendershandbook.module.entity.Glass;
 import seniv.dev.bartendershandbook.repository.GlassRepository;
 import seniv.dev.bartendershandbook.service.CocktailService;
@@ -34,8 +35,12 @@ public class GlassServiceImpl implements GlassService {
         this.glassMapper = glassMapper;
     }
 
-    public Set<GlassDTO> searchGlasses(String infix) {
-        return glassRepository.findByNameContaining(infix)
+    public Set<GlassDTO> searchGlasses(SearchDTO searchDTO) {
+        if (searchDTO.getInfix() == null) {
+            searchDTO.setInfix("");
+        }
+
+        return glassRepository.findByNameContaining(searchDTO.getInfix())
                 .stream()
                 .map(glassMapper::glassToGlassDTO)
                 .collect(Collectors.toSet());

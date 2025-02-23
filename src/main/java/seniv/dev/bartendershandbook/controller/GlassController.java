@@ -1,13 +1,14 @@
 package seniv.dev.bartendershandbook.controller;
 
-import jakarta.validation.constraints.Size;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import seniv.dev.bartendershandbook.module.dto.GlassDTO;
+import seniv.dev.bartendershandbook.module.dto.SearchDTO;
 import seniv.dev.bartendershandbook.service.GlassService;
-import seniv.dev.bartendershandbook.validation.group.Create;
-import seniv.dev.bartendershandbook.validation.group.Update;
+import seniv.dev.bartendershandbook.validation.group.CreateGroup;
+import seniv.dev.bartendershandbook.validation.group.GlassGroup;
+import seniv.dev.bartendershandbook.validation.group.UpdateGroup;
 
 import java.util.Set;
 
@@ -25,11 +26,9 @@ public class GlassController {
 
     @GetMapping("/")
     public Set<GlassDTO> searchGlasses(
-            @RequestParam(defaultValue = "")
-            @Size(max = 50, message = "max=50 symbols")
-            String infix
+            @RequestBody @Validated(GlassGroup.class) SearchDTO searchDTO
     ) {
-        return glassService.searchGlasses(infix);
+        return glassService.searchGlasses(searchDTO);
     }
 
     @GetMapping("/{id}")
