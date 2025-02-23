@@ -2,15 +2,15 @@ package seniv.dev.bartendershandbook.service;
 
 import org.springframework.transaction.annotation.Transactional;
 import seniv.dev.bartendershandbook.module.dto.CocktailDTO;
+import seniv.dev.bartendershandbook.module.dto.SearchDTO;
 import seniv.dev.bartendershandbook.module.entity.Cocktail;
 import seniv.dev.bartendershandbook.module.entity.Glass;
 
-import java.math.BigDecimal;
 import java.util.Set;
 
 public interface CocktailService {
 
-    Set<CocktailDTO> searchCocktails(String infix, BigDecimal min, BigDecimal max);
+    Set<CocktailDTO> searchCocktails(SearchDTO searchDTO);
 
     CocktailDTO getCocktailById(Long id);
 
