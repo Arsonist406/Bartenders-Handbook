@@ -2,15 +2,14 @@ package seniv.dev.bartendershandbook.service;
 
 import org.springframework.transaction.annotation.Transactional;
 import seniv.dev.bartendershandbook.module.dto.IngredientDTO;
+import seniv.dev.bartendershandbook.module.dto.SearchDTO;
 import seniv.dev.bartendershandbook.module.entity.Ingredient;
-import seniv.dev.bartendershandbook.module.entity.IngredientCategory;
 
-import java.math.BigDecimal;
 import java.util.Set;
 
 public interface IngredientService {
 
-    Set<IngredientDTO> searchIngredients(String infix, BigDecimal min, BigDecimal max);
+    Set<IngredientDTO> searchIngredients(SearchDTO searchDTO);
 
     IngredientDTO getIngredientById(Long id);
 

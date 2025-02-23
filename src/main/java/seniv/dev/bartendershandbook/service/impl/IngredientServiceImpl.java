@@ -11,6 +11,7 @@ import seniv.dev.bartendershandbook.exceptionHandler.exception.NotFoundInExcepti
 import seniv.dev.bartendershandbook.mapper.IngredientMapper;
 import seniv.dev.bartendershandbook.module.dto.CocktailIngredientDTO;
 import seniv.dev.bartendershandbook.module.dto.IngredientDTO;
+import seniv.dev.bartendershandbook.module.dto.SearchDTO;
 import seniv.dev.bartendershandbook.module.entity.Cocktail;
 import seniv.dev.bartendershandbook.module.entity.CocktailIngredient;
 import seniv.dev.bartendershandbook.module.entity.Ingredient;
@@ -43,15 +44,22 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     public Set<IngredientDTO> searchIngredients(
-            String infix,
-            BigDecimal min,
-            BigDecimal max
+            SearchDTO searchDTO
     ) {
-        if (Double.parseDouble(String.valueOf(min)) > (Double.parseDouble(String.valueOf(max)))) {
+        if (searchDTO.getInfix() == null) {
+            searchDTO.setInfix("");
+        }
+        if (searchDTO.getMin() == null) {
+            searchDTO.setMin(BigDecimal.valueOf(0.00));
+        }
+        if (searchDTO.getMax() == null) {
+            searchDTO.setMax(BigDecimal.valueOf(99.99));
+        }
+        if (Double.parseDouble(String.valueOf(searchDTO.getMin())) > (Double.parseDouble(String.valueOf(searchDTO.getMax())))) {
             throw new MinMaxException("min must be smaller than max");
         }
 
-       return ingredientRepository.findByNameContainingAndAbvBetween(infix, min, max)
+       return ingredientRepository.findByNameContainingAndAbvBetween(searchDTO.getInfix(), searchDTO.getMin(), searchDTO.getMax())
                .stream()
                .map(ingredientMapper::ingredientToIngredientDTO)
                .collect(Collectors.toSet());
