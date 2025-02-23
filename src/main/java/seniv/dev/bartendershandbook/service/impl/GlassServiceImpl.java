@@ -60,6 +60,7 @@ public class GlassServiceImpl implements GlassService {
         return glassMapper.glassToGlassDTO(glassRepository.save(glassMapper.glassDTOtoGlass(dto)));
     }
 
+    @Transactional
     public void deleteGlassById(Long id) {
         Glass glass = glassRepository.findById(id)
                 .orElseThrow(() -> new NotFoundByException(Glass.class, "id", id));

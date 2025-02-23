@@ -79,13 +79,14 @@ public class CocktailServiceImpl implements CocktailService {
 
     public CocktailDTO createCocktail(CocktailDTO dto) {
 
-        cocktailRepository.findByName(dto.name()).ifPresent(temp -> {
+        cocktailRepository.findByName(dto.name()).ifPresent(_ -> {
             throw new IsAlreadyTakenException("name", dto.name());
         });
 
         return cocktailMapper.cocktailToCocktailDTO(cocktailRepository.save(cocktailMapper.cocktailDTOtoCocktail(dto)));
     }
 
+    @Transactional
     public void deleteCocktailById(Long id) {
         Cocktail cocktail = cocktailRepository.findById(id)
                 .orElseThrow(() -> new NotFoundByException(Cocktail.class, "id", id));
@@ -171,6 +172,7 @@ public class CocktailServiceImpl implements CocktailService {
         return cocktailRepository.findByNameIn(cocktailsName);
     }
 
+    @Transactional
     public void setCocktailRelations(Cocktail cocktail, CocktailDTO dto) {
 
         Set<String> ingredientsNames = dto.ingredients()

@@ -1,6 +1,5 @@
 package seniv.dev.bartendershandbook.service;
 
-import org.springframework.transaction.annotation.Transactional;
 import seniv.dev.bartendershandbook.module.dto.IngredientDTO;
 import seniv.dev.bartendershandbook.module.dto.SearchDTO;
 import seniv.dev.bartendershandbook.module.entity.Ingredient;
@@ -17,7 +16,6 @@ public interface IngredientService {
 
     void deleteIngredientById(Long id);
 
-    @Transactional
     IngredientDTO updateIngredientById(Long id, IngredientDTO dto);
 
 

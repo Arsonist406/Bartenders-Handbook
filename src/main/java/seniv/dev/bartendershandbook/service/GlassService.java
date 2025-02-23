@@ -1,6 +1,5 @@
 package seniv.dev.bartendershandbook.service;
 
-import org.springframework.transaction.annotation.Transactional;
 import seniv.dev.bartendershandbook.module.dto.GlassDTO;
 import seniv.dev.bartendershandbook.module.dto.SearchDTO;
 import seniv.dev.bartendershandbook.module.entity.Glass;
@@ -17,7 +16,6 @@ public interface GlassService {
 
     void deleteGlassById(Long id);
 
-    @Transactional
     GlassDTO updateGlassById(Long id, GlassDTO dto);
 
 

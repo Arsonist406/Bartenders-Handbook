@@ -78,11 +78,10 @@ public class IngredientServiceImpl implements IngredientService {
             throw new IsAlreadyTakenException("name", dto.name());
         });
 
-        //todo: краще розділити?
-        //todo: чи є сенс dto->ingredient->dto? повертати dto, що прийшло - не варік: нема id; повертати лише 200 ОК??
         return ingredientMapper.ingredientToIngredientDTO(ingredientRepository.save(ingredientMapper.ingredientDTOtoIngredient(dto)));
     }
 
+    @Transactional
     public void deleteIngredientById(Long id) {
         Ingredient ingredient = ingredientRepository.findById(id)
                 .orElseThrow(() -> new NotFoundByException(Ingredient.class, "id", id));
@@ -143,6 +142,7 @@ public class IngredientServiceImpl implements IngredientService {
         return ingredientRepository.findByNameIn(ingredientsNames);
     }
 
+    @Transactional
     public void setIngredientRelations(Ingredient ingredient, IngredientDTO dto) {
 
         Set<String> cocktailsNames = dto.cocktails()
