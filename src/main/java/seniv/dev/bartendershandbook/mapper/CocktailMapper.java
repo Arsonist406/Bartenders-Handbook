@@ -1,5 +1,6 @@
 package seniv.dev.bartendershandbook.mapper;
 
+import jakarta.annotation.PostConstruct;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import seniv.dev.bartendershandbook.module.dto.CocktailDTO;
@@ -19,9 +20,19 @@ public abstract class CocktailMapper {
 
     @Autowired
     protected CocktailService cocktailService;
+    private static CocktailService staticCocktailService;
+    @PostConstruct
+    public void initCocktailService() {
+        staticCocktailService = cocktailService;
+    }
 
     @Autowired
     protected GlassService glassService;
+    private static GlassService staticGlassService;
+    @PostConstruct
+    public void initGlassService() {
+        staticGlassService = glassService;
+    }
 
     @Mapping(target = "glasses", qualifiedByName = "getGlassesNames")
     public abstract CocktailDTO cocktailToCocktailDTO(Cocktail cocktail);
@@ -46,7 +57,7 @@ public abstract class CocktailMapper {
     protected Set<Glass> findGlassesByName(Set<String> glasses) {
         return glasses
                 .stream()
-                .map(glassService::getGlassByName)
+                .map(staticGlassService::getGlassByName)
                 .collect(Collectors.toSet());
     }
 
@@ -58,6 +69,6 @@ public abstract class CocktailMapper {
             return;
         }
 
-        cocktailService.setCocktailRelations(cocktail, dto);
+        staticCocktailService.setCocktailRelations(cocktail, dto);
     }
 }

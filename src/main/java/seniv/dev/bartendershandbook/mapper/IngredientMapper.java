@@ -1,5 +1,6 @@
 package seniv.dev.bartendershandbook.mapper;
 
+import jakarta.annotation.PostConstruct;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -9,6 +10,7 @@ import seniv.dev.bartendershandbook.module.dto.CocktailIngredientDTO;
 import seniv.dev.bartendershandbook.module.dto.IngredientDTO;
 import seniv.dev.bartendershandbook.module.entity.CocktailIngredient;
 import seniv.dev.bartendershandbook.module.entity.Ingredient;
+import seniv.dev.bartendershandbook.service.CocktailService;
 import seniv.dev.bartendershandbook.service.IngredientService;
 
 import java.util.HashSet;
@@ -18,6 +20,11 @@ public abstract class IngredientMapper {
 
     @Autowired
     protected IngredientService ingredientService;
+    private static IngredientService staticIngredientService;
+    @PostConstruct
+    public void initIngredientService() {
+        staticIngredientService = ingredientService;
+    }
 
     public abstract IngredientDTO ingredientToIngredientDTO(Ingredient ingredient);
 
@@ -36,6 +43,6 @@ public abstract class IngredientMapper {
             return;
         }
 
-        ingredientService.setIngredientRelations(ingredient, dto);
+        staticIngredientService.setIngredientRelations(ingredient, dto);
     }
 }
