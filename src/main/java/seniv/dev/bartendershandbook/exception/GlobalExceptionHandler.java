@@ -1,4 +1,4 @@
-package seniv.dev.bartendershandbook.exceptionHandler;
+package seniv.dev.bartendershandbook.exception;
 
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
-import seniv.dev.bartendershandbook.exceptionHandler.errorMessage.ErrorDetail;
-import seniv.dev.bartendershandbook.exceptionHandler.errorMessage.ErrorResponse;
-import seniv.dev.bartendershandbook.exceptionHandler.exception.IsAlreadyTakenException;
-import seniv.dev.bartendershandbook.exceptionHandler.exception.MinMaxException;
-import seniv.dev.bartendershandbook.exceptionHandler.exception.NotFoundByException;
-import seniv.dev.bartendershandbook.exceptionHandler.exception.NotFoundInException;
+import seniv.dev.bartendershandbook.exception.customeException.IsAlreadyTakenException;
+import seniv.dev.bartendershandbook.exception.customeException.MinMaxException;
+import seniv.dev.bartendershandbook.exception.customeException.NotFoundByException;
+import seniv.dev.bartendershandbook.exception.customeException.NotFoundInException;
+import seniv.dev.bartendershandbook.exception.errorMessage.ErrorDetail;
+import seniv.dev.bartendershandbook.exception.errorMessage.ErrorResponse;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;

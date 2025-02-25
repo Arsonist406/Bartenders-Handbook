@@ -1,4 +1,4 @@
-package seniv.dev.bartendershandbook.exceptionHandler.exception;
+package seniv.dev.bartendershandbook.exception.customeException;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

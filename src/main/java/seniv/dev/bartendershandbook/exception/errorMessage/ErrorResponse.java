@@ -1,4 +1,4 @@
-package seniv.dev.bartendershandbook.exceptionHandler.errorMessage;
+package seniv.dev.bartendershandbook.exception.errorMessage;
 
 import java.time.LocalDateTime;
 import java.util.Set;
